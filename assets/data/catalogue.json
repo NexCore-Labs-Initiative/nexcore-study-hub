@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "updatedAt": "2026-06-21",
+  "courses": [
+    { "id": "cs101", "code": "CS101", "title": "Introduction to Programming", "college": "College of Science" },
+    { "id": "math101", "code": "MATH101", "title": "Calculus I", "college": "College of Science" },
+    { "id": "biol101", "code": "BIOL101", "title": "General Biology", "college": "College of Science" },
+    { "id": "bus101", "code": "BUS101", "title": "Principles of Management", "college": "College of Economics and Political Science" }
+  ],
+  "resources": [
+    { "id": "demo-cs101-arrays", "courseId": "cs101", "title": "Arrays and loops revision guide", "description": "A model catalogue entry showing how a concise programming revision guide will appear.", "semester": "Semester 1", "topics": ["Arrays", "Loops"], "type": "Study guide", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" },
+    { "id": "demo-cs101-functions", "courseId": "cs101", "title": "Functions practice checklist", "description": "An example checklist for revising function design, parameters, and return values.", "semester": "Semester 1", "topics": ["Functions", "Problem solving"], "type": "Practice material", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" },
+    { "id": "demo-math101-limits", "courseId": "math101", "title": "Limits and continuity summary", "description": "A representative course summary with clearly structured topic metadata.", "semester": "Semester 1", "topics": ["Limits", "Continuity"], "type": "Notes", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" },
+    { "id": "demo-math101-differentiation", "courseId": "math101", "title": "Differentiation worked examples", "description": "Example practice material for a catalogue entry with topic-level filtering.", "semester": "Semester 2", "topics": ["Differentiation", "Applications"], "type": "Worked examples", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" },
+    { "id": "demo-biol101-cells", "courseId": "biol101", "title": "Cell structure study map", "description": "An illustrative resource card for a visual biology study resource.", "semester": "Semester 1", "topics": ["Cell biology", "Organelles"], "type": "Study guide", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" },
+    { "id": "demo-bus101-planning", "courseId": "bus101", "title": "Management planning concepts", "description": "A demo record for management fundamentals and examination preparation.", "semester": "Semester 1", "topics": ["Planning", "Management theory"], "type": "Notes", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" }
+  ]
+}
