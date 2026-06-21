@@ -1,11 +1,22 @@
 {
-  "version": 1,
+  "version": 2,
   "updatedAt": "2026-06-21",
+  "colleges": [
+    { "id": "agricultural-marine-sciences", "name": "College of Agricultural and Marine Sciences" },
+    { "id": "arts-social-sciences", "name": "College of Arts and Social Sciences" },
+    { "id": "economics-political-science", "name": "College of Economics and Political Science" },
+    { "id": "education", "name": "College of Education" },
+    { "id": "engineering", "name": "College of Engineering" },
+    { "id": "law", "name": "College of Law" },
+    { "id": "medicine-health-sciences", "name": "College of Medicine and Health Sciences" },
+    { "id": "nursing", "name": "College of Nursing" },
+    { "id": "science", "name": "College of Science" }
+  ],
   "courses": [
-    { "id": "cs101", "code": "CS101", "title": "Introduction to Programming", "college": "College of Science" },
-    { "id": "math101", "code": "MATH101", "title": "Calculus I", "college": "College of Science" },
-    { "id": "biol101", "code": "BIOL101", "title": "General Biology", "college": "College of Science" },
-    { "id": "bus101", "code": "BUS101", "title": "Principles of Management", "college": "College of Economics and Political Science" }
+    { "id": "cs101", "code": "CS101", "title": "Introduction to Programming", "collegeId": "science" },
+    { "id": "math101", "code": "MATH101", "title": "Calculus I", "collegeId": "science" },
+    { "id": "biol101", "code": "BIOL101", "title": "General Biology", "collegeId": "science" },
+    { "id": "bus101", "code": "BUS101", "title": "Principles of Management", "collegeId": "economics-political-science" }
   ],
   "resources": [
     { "id": "demo-cs101-arrays", "courseId": "cs101", "title": "Arrays and loops revision guide", "description": "A model catalogue entry showing how a concise programming revision guide will appear.", "semester": "Semester 1", "topics": ["Arrays", "Loops"], "type": "Study guide", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" },

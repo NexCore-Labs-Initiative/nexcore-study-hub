@@ -1,6 +1,6 @@
 # NexCore Study Hub
 
-The organised academic resource library for the SQU community. This V1 is pure HTML, CSS, and JavaScript: NexCore owns the resource catalogue and review workflow, while Google Drive hosts approved files.
+The organized academic resource library for the SQU community. This V1 is pure HTML, CSS, and JavaScript: NexCore owns the resource catalogue and review workflow, while Google Drive hosts approved files.
 
 ## Run locally
 
