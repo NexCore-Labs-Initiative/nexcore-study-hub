@@ -13,7 +13,7 @@ Add these questions in this order:
 | Your SQU email address | Short answer | Yes | Enable email validation. |
 | Course code | Short answer | Yes | Example: `CS101`. |
 | Course title | Short answer | Yes | Use the course’s published name. |
-| Semester | Dropdown | Yes | Semester 1, Semester 2, Summer, Other. |
+| Semester | Dropdown | Yes | Use the published collection: Spring26, Fall25, Spring25, and earlier terms. |
 | Resource title | Short answer | Yes | A clear title students can recognise. |
 | Resource type | Dropdown | Yes | Notes, Study guide, Practice material, Worked examples, Past paper, Other. |
 | Main topics | Short answer | Yes | Separate topics with commas. |
@@ -62,17 +62,16 @@ Add only approved records to `assets/data/catalogue.json`. A live entry must hav
   "courseId": "cs101",
   "title": "Arrays and loops revision guide",
   "description": "A concise revision guide for array traversal and loop patterns.",
-  "semester": "Semester 1",
+  "semester": "Fall25",
   "topics": ["Arrays", "Loops"],
   "type": "Study guide",
   "language": "English",
   "status": "verified",
-  "isDemo": false,
   "driveUrl": "https://drive.google.com/file/d/your-file-id/view"
 }
 ```
 
-Remove the demo records before public launch unless you intentionally want the catalogue to show sample entries.
+Only approved, verified resources belong in the public catalogue.
 
 ## 4. Validate and deploy
 

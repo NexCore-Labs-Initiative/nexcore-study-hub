@@ -85,6 +85,7 @@
   function validate(data) {
     if (
       !data ||
+      !Array.isArray(data.semesters) ||
       !Array.isArray(data.colleges) ||
       !Array.isArray(data.courses) ||
       !Array.isArray(data.resources)
@@ -144,14 +145,7 @@
         return [college.id, college];
       }),
     );
-    options(
-      el.semester,
-      unique(
-        state.resources.map(function (r) {
-          return r.semester;
-        }),
-      ),
-    );
+    options(el.semester, data.semesters);
     options(
       el.topic,
       unique(
@@ -226,14 +220,8 @@
       );
     });
   }
-  function badge(r) {
-    return (
-      '<span class="status status-' +
-      esc(r.status) +
-      '">' +
-      (r.status === "verified" ? "Verified" : "Demo record") +
-      "</span>"
-    );
+  function badge() {
+    return '<span class="status status-verified">Verified</span>';
   }
   function renderColleges() {
     el.colleges.setAttribute("aria-busy", "false");
@@ -367,7 +355,7 @@
     });
     if (!r) return;
     var course = state.courses.get(r.courseId);
-    var canOpen = !r.isDemo && r.status === "verified" && validUrl(r.driveUrl);
+    var canOpen = r.status === "verified" && validUrl(r.driveUrl);
     var canReport = validEmail(config.reportEmail);
     var report = canReport
       ? "mailto:" +
@@ -404,9 +392,6 @@
       '<a class="button outline" href="' +
       esc(report) +
       '">Report this resource</a></div>' +
-      (r.isDemo
-        ? '<p class="config-note">This is a clearly marked demo record. It does not point to a live resource.</p>'
-        : "") +
       (!canReport
         ? '<p class="config-note">The report contact is being configured.</p>'
         : "");

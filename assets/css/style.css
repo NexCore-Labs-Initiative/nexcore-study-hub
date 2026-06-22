@@ -308,10 +308,6 @@ nav a,
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
-.status-demo {
-  color: #9a6200;
-  background: #fff5dc;
-}
 .status-verified {
   color: #117a58;
   background: #e7f7f0;
@@ -796,3 +792,4 @@ dialog::backdrop {
     padding: 16px;
   }
 }
+[hidden]{display:none!important}

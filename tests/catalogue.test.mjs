@@ -18,14 +18,16 @@ const required = [
   "type",
   "language",
   "status",
-  "isDemo",
   "driveUrl",
 ];
 test("catalogue has a supported shape", () => {
-  assert.equal(catalogue.version, 2);
+  assert.equal(catalogue.version, 3);
+  assert.ok(catalogue.semesters.length);
   assert.ok(catalogue.colleges.length);
-  assert.ok(catalogue.courses.length);
-  assert.ok(catalogue.resources.length);
+});
+test("semesters use the SQU season-year naming convention", () => {
+  assert.deepEqual(catalogue.semesters.slice(0, 2), ["Spring26", "Fall25"]);
+  assert.ok(catalogue.semesters.every((semester) => /^(Spring|Fall)\d{2}$/.test(semester)));
 });
 test("college, course, and resource IDs are unique", () => {
   assert.equal(
@@ -60,16 +62,7 @@ test("courses and resources belong to valid catalogue parents", () => {
       Array.isArray(r.topics) && r.topics.length,
       `${r.id} needs a topic`,
     );
-    assert.ok(
-      ["demo", "verified"].includes(r.status),
-      `${r.id} status is unsupported`,
-    );
-    if (r.isDemo) {
-      assert.equal(r.status, "demo");
-      assert.equal(r.driveUrl, "");
-    } else {
-      assert.equal(r.status, "verified");
-      assert.match(r.driveUrl, /^https:\/\/drive\.google\.com\//);
-    }
+    assert.equal(r.status, "verified", `${r.id} must be verified`);
+    assert.match(r.driveUrl, /^https:\/\/drive\.google\.com\//);
   }
 });

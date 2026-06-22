@@ -16,7 +16,7 @@ Then open `http://localhost:4173`.
 
 1. Create the Google Form used for contribution submissions and paste its public URL into `assets/js/config.js`.
 2. Add the report/takedown email address to the same file.
-3. Replace every `isDemo: true` record in `assets/data/catalogue.json` with an approved Google Drive resource.
+3. Add approved courses and Google Drive resources to `assets/data/catalogue.json`.
 4. Run `npm.cmd test`.
 5. Import the Git repository into Vercel and deploy the repository root. No build command or custom domain is needed for this V1.
 
