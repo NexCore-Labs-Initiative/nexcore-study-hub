@@ -16,6 +16,8 @@
     "Fall20",
     "Spring20"
   ],
+  "formats": ["pdf", "word", "powerpoint", "excel", "img", "other"],
+  "resourceTypes": ["Books", "Slides", "Notes", "Practice papers", "Exams", "Quizzes", "Worked examples", "Study guide"],
   "colleges": [
     { "id": "agricultural-marine-sciences", "name": "College of Agricultural and Marine Sciences" },
     { "id": "arts-social-sciences", "name": "College of Arts and Social Sciences" },
@@ -27,6 +29,26 @@
     { "id": "nursing", "name": "College of Nursing" },
     { "id": "science", "name": "College of Science" }
   ],
-  "courses": [],
-  "resources": []
+  "courses": [
+    { "id": "agms-sample", "code": "AGMS-SAMPLE", "title": "Agricultural and Marine Sciences sample course", "collegeId": "agricultural-marine-sciences" },
+    { "id": "arts-sample", "code": "ARTS-SAMPLE", "title": "Arts and Social Sciences sample course", "collegeId": "arts-social-sciences" },
+    { "id": "econ-sample", "code": "ECON-SAMPLE", "title": "Economics and Political Science sample course", "collegeId": "economics-political-science" },
+    { "id": "educ-sample", "code": "EDUC-SAMPLE", "title": "Education sample course", "collegeId": "education" },
+    { "id": "eng-sample", "code": "ENG-SAMPLE", "title": "Engineering sample course", "collegeId": "engineering" },
+    { "id": "law-sample", "code": "LAW-SAMPLE", "title": "Law sample course", "collegeId": "law" },
+    { "id": "med-sample", "code": "MED-SAMPLE", "title": "Medicine and Health Sciences sample course", "collegeId": "medicine-health-sciences" },
+    { "id": "nurs-sample", "code": "NURS-SAMPLE", "title": "Nursing sample course", "collegeId": "nursing" },
+    { "id": "sci-sample", "code": "SCI-SAMPLE", "title": "Science sample course", "collegeId": "science" }
+  ],
+  "resources": [
+    { "id": "sample-agms-resource", "courseId": "agms-sample", "title": "Sample agricultural and marine resource", "description": "Preview content for this college. Replace with an approved study resource before launch.", "semester": "Spring26", "topics": ["Sample content"], "type": "Study guide", "format": "pdf", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" },
+    { "id": "sample-arts-resource", "courseId": "arts-sample", "title": "Sample arts and social sciences resource", "description": "Preview content for this college. Replace with an approved study resource before launch.", "semester": "Spring26", "topics": ["Sample content"], "type": "Notes", "format": "word", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" },
+    { "id": "sample-econ-resource", "courseId": "econ-sample", "title": "Sample economics and political science resource", "description": "Preview content for this college. Replace with an approved study resource before launch.", "semester": "Spring26", "topics": ["Sample content"], "type": "Books", "format": "excel", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" },
+    { "id": "sample-educ-resource", "courseId": "educ-sample", "title": "Sample education resource", "description": "Preview content for this college. Replace with an approved study resource before launch.", "semester": "Spring26", "topics": ["Sample content"], "type": "Slides", "format": "powerpoint", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" },
+    { "id": "sample-eng-resource", "courseId": "eng-sample", "title": "Sample engineering resource", "description": "Preview content for this college. Replace with an approved study resource before launch.", "semester": "Spring26", "topics": ["Sample content"], "type": "Worked examples", "format": "pdf", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" },
+    { "id": "sample-law-resource", "courseId": "law-sample", "title": "Sample law resource", "description": "Preview content for this college. Replace with an approved study resource before launch.", "semester": "Spring26", "topics": ["Sample content"], "type": "Exams", "format": "word", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" },
+    { "id": "sample-med-resource", "courseId": "med-sample", "title": "Sample medicine and health sciences resource", "description": "Preview content for this college. Replace with an approved study resource before launch.", "semester": "Spring26", "topics": ["Sample content"], "type": "Notes", "format": "img", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" },
+    { "id": "sample-nurs-resource", "courseId": "nurs-sample", "title": "Sample nursing resource", "description": "Preview content for this college. Replace with an approved study resource before launch.", "semester": "Spring26", "topics": ["Sample content"], "type": "Practice papers", "format": "powerpoint", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" },
+    { "id": "sample-sci-resource", "courseId": "sci-sample", "title": "Sample science resource", "description": "Preview content for this college. Replace with an approved study resource before launch.", "semester": "Spring26", "topics": ["Sample content"], "type": "Study guide", "format": "other", "language": "English", "status": "demo", "isDemo": true, "driveUrl": "" }
+  ]
 }

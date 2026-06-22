@@ -12,6 +12,7 @@
       semester: "",
       topic: "",
       type: "",
+      format: "",
     },
   };
   var el = {
@@ -32,6 +33,7 @@
     semester: document.querySelector("#semesterFilter"),
     topic: document.querySelector("#topicFilter"),
     type: document.querySelector("#typeFilter"),
+    format: document.querySelector("#formatFilter"),
     clear: document.querySelector("#clearFilters"),
     emptyClear: document.querySelector("#emptyClear"),
     retry: document.querySelector("#retryLoad"),
@@ -84,9 +86,11 @@
   }
   function validate(data) {
     if (
-      !data ||
-      !Array.isArray(data.semesters) ||
-      !Array.isArray(data.colleges) ||
+        !data ||
+        !Array.isArray(data.semesters) ||
+        !Array.isArray(data.formats) ||
+        !Array.isArray(data.resourceTypes) ||
+        !Array.isArray(data.colleges) ||
       !Array.isArray(data.courses) ||
       !Array.isArray(data.resources)
     )
@@ -99,6 +103,8 @@
         !resource.id ||
         !resource.courseId ||
         !resource.title ||
+        !resource.type ||
+        !resource.format ||
         !Array.isArray(resource.topics)
       )
         throw new Error("Invalid resource");
@@ -146,6 +152,7 @@
       }),
     );
     options(el.semester, data.semesters);
+    options(el.format, data.formats, function (format) { return format.toUpperCase(); });
     options(
       el.topic,
       unique(
@@ -154,14 +161,7 @@
         }),
       ),
     );
-    options(
-      el.type,
-      unique(
-        state.resources.map(function (r) {
-          return r.type;
-        }),
-      ),
-    );
+    options(el.type, data.resourceTypes);
   }
   function restoreUrl() {
     var params = new URLSearchParams(location.search);
@@ -173,12 +173,14 @@
     el.semester.value = state.filters.semester;
     el.topic.value = state.filters.topic;
     el.type.value = state.filters.type;
+    el.format.value = state.filters.format;
     el.advanced.open = Boolean(
       state.filters.q ||
         state.filters.course ||
         state.filters.semester ||
         state.filters.topic ||
         state.filters.type,
+        state.filters.format,
     );
   }
   function updateUrl() {
@@ -202,6 +204,7 @@
         r.title,
         r.description,
         r.type,
+        r.format,
         r.semester,
         course.code,
         course.title,
@@ -217,11 +220,14 @@
         (!state.filters.semester || r.semester === state.filters.semester) &&
         (!state.filters.topic || r.topics.includes(state.filters.topic)) &&
         (!state.filters.type || r.type === state.filters.type)
+        && (!state.filters.format || r.format === state.filters.format)
       );
     });
   }
-  function badge() {
-    return '<span class="status status-verified">Verified</span>';
+  function badge(resource) {
+    return resource.status === "verified"
+      ? '<span class="status status-verified">Verified</span>'
+      : '<span class="status status-demo">Sample resource</span>';
   }
   function renderColleges() {
     el.colleges.setAttribute("aria-busy", "false");
@@ -255,7 +261,7 @@
     el.grid.innerHTML = resources
       .map(function (r) {
         var course = state.courses.get(r.courseId);
-        var tags = [course.code, r.semester, r.type].concat(
+        var tags = [course.code, r.semester, r.type, r.format.toUpperCase()].concat(
           r.topics.slice(0, 1),
         );
         return (
@@ -289,6 +295,7 @@
         state.filters.semester ||
         state.filters.topic ||
         state.filters.type,
+        state.filters.format,
     );
     var resources = college || hasAdvanced ? matchingResources() : [];
     updateUrl();
@@ -300,7 +307,7 @@
       el.subheading.textContent =
         "Advanced search is available if you already know what you need.";
       el.emptyEyebrow.textContent = "College first";
-      el.emptyTitle.textContent = "Choose your SQU college.";
+      el.emptyTitle.textContent = "Choose the SQU college.";
       el.emptyCopy.textContent =
         "Your course resources will appear here after you select it.";
       el.emptyClear.hidden = true;
@@ -344,7 +351,7 @@
     Object.keys(state.filters).forEach(function (key) {
       state.filters[key] = "";
     });
-    el.search.value = el.semester.value = el.topic.value = el.type.value = "";
+    el.search.value = el.semester.value = el.topic.value = el.type.value = el.format.value = "";
     populateCourses();
     el.advanced.open = false;
     render();
@@ -355,7 +362,7 @@
     });
     if (!r) return;
     var course = state.courses.get(r.courseId);
-    var canOpen = r.status === "verified" && validUrl(r.driveUrl);
+    var canOpen = !r.isDemo && r.status === "verified" && validUrl(r.driveUrl);
     var canReport = validEmail(config.reportEmail);
     var report = canReport
       ? "mailto:" +
@@ -375,7 +382,7 @@
       '</h2><p class="dialog-description">' +
       esc(r.description) +
       '</p><ul class="tags">' +
-      [r.semester, r.type]
+      [r.semester, r.type, r.format.toUpperCase()]
         .concat(r.topics)
         .map(function (tag) {
           return "<li>" + esc(tag) + "</li>";
@@ -392,6 +399,9 @@
       '<a class="button outline" href="' +
       esc(report) +
       '">Report this resource</a></div>' +
+      (r.isDemo
+        ? '<p class="config-note">This is sample content for the catalogue preview. It has no live Drive file.</p>'
+        : "") +
       (!canReport
         ? '<p class="config-note">The report contact is being configured.</p>'
         : "");
@@ -406,6 +416,7 @@
       [el.semester, "semester"],
       [el.topic, "topic"],
       [el.type, "type"],
+      [el.format, "format"],
     ].forEach(function (pair) {
       pair[0].addEventListener("change", function (e) {
         setFilter(pair[1], e.target.value);

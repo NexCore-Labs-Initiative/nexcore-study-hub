@@ -16,18 +16,30 @@ const required = [
   "semester",
   "topics",
   "type",
+  "format",
   "language",
   "status",
+  "isDemo",
   "driveUrl",
 ];
 test("catalogue has a supported shape", () => {
   assert.equal(catalogue.version, 3);
   assert.ok(catalogue.semesters.length);
+  assert.ok(catalogue.formats.length);
+  assert.ok(catalogue.resourceTypes.length);
   assert.ok(catalogue.colleges.length);
+  assert.equal(catalogue.courses.length, catalogue.colleges.length);
+  assert.equal(catalogue.resources.length, catalogue.colleges.length);
 });
 test("semesters use the SQU season-year naming convention", () => {
   assert.deepEqual(catalogue.semesters.slice(0, 2), ["Spring26", "Fall25"]);
   assert.ok(catalogue.semesters.every((semester) => /^(Spring|Fall)\d{2}$/.test(semester)));
+});
+test("resource formats use the supported collection", () => {
+  assert.deepEqual(catalogue.formats, ["pdf", "word", "powerpoint", "excel", "img", "other"]);
+});
+test("resource types use the supported academic collection", () => {
+  assert.deepEqual(catalogue.resourceTypes, ["Books", "Notes", "Practice papers", "Exams", "Quizzes", "Worked examples", "Study guide", "Slides"]);
 });
 test("college, course, and resource IDs are unique", () => {
   assert.equal(
@@ -62,7 +74,15 @@ test("courses and resources belong to valid catalogue parents", () => {
       Array.isArray(r.topics) && r.topics.length,
       `${r.id} needs a topic`,
     );
-    assert.equal(r.status, "verified", `${r.id} must be verified`);
-    assert.match(r.driveUrl, /^https:\/\/drive\.google\.com\//);
+    assert.ok(catalogue.formats.includes(r.format), `${r.id} has an unsupported format`);
+    assert.ok(catalogue.resourceTypes.includes(r.type), `${r.id} has an unsupported resource type`);
+    assert.ok(["demo", "verified"].includes(r.status), `${r.id} status is unsupported`);
+    if (r.isDemo) {
+      assert.equal(r.status, "demo");
+      assert.equal(r.driveUrl, "");
+    } else {
+      assert.equal(r.status, "verified");
+      assert.match(r.driveUrl, /^https:\/\/drive\.google\.com\//);
+    }
   }
 });

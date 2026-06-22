@@ -15,7 +15,7 @@ Add these questions in this order:
 | Course title | Short answer | Yes | Use the course’s published name. |
 | Semester | Dropdown | Yes | Use the published collection: Spring26, Fall25, Spring25, and earlier terms. |
 | Resource title | Short answer | Yes | A clear title students can recognise. |
-| Resource type | Dropdown | Yes | Notes, Study guide, Practice material, Worked examples, Past paper, Other. |
+| Resource type | Dropdown | Yes | Books, Notes, Practice papers, Exams, Quizzes, Worked examples, Study guide, Slides. |
 | Main topics | Short answer | Yes | Separate topics with commas. |
 | Google Drive link | Short answer | Yes | Enable URL validation. |
 | Description | Paragraph | Yes | Ask what the resource covers and why it is useful. |
