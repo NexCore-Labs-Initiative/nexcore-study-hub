@@ -1,37 +1,208 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="An organized academic resource library for the SQU community.">
-  <title>NexCore Study Hub | SQU resources, organized</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-  <a class="skip-link" href="#catalogue">Skip to catalogue</a>
-  <header class="site-header"><div class="shell nav-wrap">
-    <a class="brand" href="index.html"><img class="studyhub-mark" src="assets/imgs/nexcorelabs-studyhub.webp" alt="NexCore Study Hub"></a>
-    <nav aria-label="Primary navigation"><a href="#catalogue">Catalogue</a><a href="submit.html">Contribute</a><a href="#about">About</a></nav>
-  </div></header>
-  <main>
-    <section class="hero"><div class="shell hero-grid">
-      <div><p class="eyebrow">For the SQU community</p><h1>Study material,<br><em>properly organized.</em></h1><p>Find course resources by semester, topic, and format. NexCore keeps the catalogue clear; contributors help it grow.</p><div class="actions"><a class="button primary" href="#catalogue">Browse resources</a><a class="button secondary" href="submit.html">Share a resource</a></div></div>
-      <aside class="hero-panel"><p class="eyebrow">A library with a system</p><ol><li><strong>Browse</strong><span>By course, semester, topic, and type.</span></li><li><strong>Check</strong><span>See the resource status before you open it.</span></li><li><strong>Contribute</strong><span>Submit useful material for manual review.</span></li></ol></aside>
-    </div></section>
-    <section class="catalogue" id="catalogue"><div class="shell">
-      <div class="section-title"><div><p class="eyebrow blue">Resource catalogue</p><h2>Choose your college first.</h2><p class="catalogue-intro">We will show the courses and study resources that belong to it.</p></div><p id="catalogueStatus" aria-live="polite">Loading catalogue…</p></div>
-      <section class="college-browser" aria-labelledby="college-heading"><div class="college-heading"><div><h3 id="college-heading">SQU colleges</h3><p>Select a college to focus the catalogue.</p></div><button class="button quiet" id="allColleges" type="button">Reset selection</button></div><div class="college-grid" id="collegeGrid" aria-live="polite" aria-busy="true"></div></section>
-      <details class="advanced-search" id="advancedSearch"><summary><span>Advanced search filters</span><small>Course, semester, topic, and resource type</small></summary><div class="filters"><label class="search">Search the catalogue<input id="searchInput" type="search" placeholder="Course code, topic, or resource title" autocomplete="off"></label><div class="filter-grid"><label>Course<select id="courseFilter"><option value="">All courses</option></select></label><label>Semester<select id="semesterFilter"><option value="">All semesters</option></select></label><label>Topic<select id="topicFilter"><option value="">All topics</option></select></label><label>Resource type<select id="typeFilter"><option value="">All types</option></select></label><button class="button quiet" id="clearFilters" type="button">Clear filters</button></div></div></details>
-      <div class="resource-heading"><h3 id="resourceHeading">All resources</h3><p id="resourceSubheading">Choose a college, or browse everything.</p></div>
-      <div id="catalogueError" class="notice" hidden role="alert"><div><strong>We could not load the catalogue.</strong><p>Check your connection and try again.</p></div><button class="button outline" id="retryLoad" type="button">Try again</button></div>
-      <div class="resource-grid" id="resourceGrid" aria-live="polite" aria-busy="true"></div>
-      <div class="empty" id="emptyState" hidden><p class="eyebrow blue" id="emptyEyebrow">No matches</p><h3 id="emptyTitle">Nothing fits those filters yet.</h3><p id="emptyCopy">Try a wider search, or clear the current filters.</p><button class="button primary" id="emptyClear" type="button">Clear filters</button></div>
-    </div></section>
-    <section class="trust" id="about"><div class="shell trust-grid"><div><p class="eyebrow">Built with care</p><h2>Independent, community-powered, and review-minded.</h2></div><div><p>NexCore Study Hub is an independent resource catalogue for the SQU community. It is not an official Sultan Qaboos University service.</p><p><strong>Verified</strong> means a NexCore reviewer has checked the catalogue entry and source link. Contributors remain responsible for having permission to share their material.</p><a class="text-link" id="trustReportLink" href="submit.html#report">Report a resource or request removal</a></div></div></section>
-  </main>
-  <footer><div class="shell footer"><div><span>NexCore Labs</span></div><div>organized.</div></div></footer>
-  <dialog id="resourceDialog"><div class="dialog-head"><span>Resource details</span><button id="dialogClose" type="button">Close</button></div><div id="dialogContent"></div></dialog>
-  <noscript><div class="noscript">NexCore Study Hub needs JavaScript to load and filter the catalogue.</div></noscript>
-  <script src="assets/js/config.js"></script><script src="assets/js/app.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="An organized academic resource library for the SQU community."
+    />
+    <title>NexCore Study Hub | SQU resources, organized</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="icon" href="assets/imgs/nexcore-icon.png" type="image/png" />
+  </head>
+  <body>
+    <a class="skip-link" href="#catalogue">Skip to catalogue</a>
+    <header class="site-header">
+      <div class="shell nav-wrap">
+        <a class="brand" href="index.html"
+          ><img
+            class="studyhub-mark"
+            src="assets/imgs/nexcorelabs-studyhub.webp"
+            alt="NexCore Study Hub"
+        /></a>
+        <nav aria-label="Primary navigation">
+          <a href="#catalogue">Catalogue</a><a href="submit.html">Contribute</a
+          ><a href="#about">About</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="shell hero-grid">
+          <div>
+            <p class="eyebrow">For the SQU community</p>
+            <h1>Study material,<br /><em>properly organized.</em></h1>
+            <p>
+              Find course resources by semester, topic, and format. NexCore
+              keeps the catalogue clear; contributors help it grow.
+            </p>
+            <div class="actions">
+              <a class="button primary" href="#catalogue">Browse resources</a
+              ><a class="button secondary" href="submit.html"
+                >Share a resource</a
+              >
+            </div>
+          </div>
+          <aside class="hero-panel">
+            <p class="eyebrow">A library with a system</p>
+            <ol>
+              <li>
+                <strong>Browse</strong
+                ><span>By course, semester, topic, and type.</span>
+              </li>
+              <li>
+                <strong>Check</strong
+                ><span>See the resource status before you open it.</span>
+              </li>
+              <li>
+                <strong>Contribute</strong
+                ><span>Submit useful material for manual review.</span>
+              </li>
+            </ol>
+          </aside>
+        </div>
+      </section>
+      <section class="catalogue" id="catalogue">
+        <div class="shell">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow blue">Resource catalogue</p>
+              <h2>Choose your college first.</h2>
+              <p class="catalogue-intro">
+                We will show the courses and study resources that belong to it.
+              </p>
+            </div>
+            <p id="catalogueStatus" aria-live="polite">Loading catalogue…</p>
+          </div>
+          <section class="college-browser" aria-labelledby="college-heading">
+            <div class="college-heading">
+              <div>
+                <h3 id="college-heading">SQU colleges</h3>
+                <p>Select a college to focus the catalogue.</p>
+              </div>
+              <button class="button quiet" id="allColleges" type="button">
+                Reset selection
+              </button>
+            </div>
+            <div
+              class="college-grid"
+              id="collegeGrid"
+              aria-live="polite"
+              aria-busy="true"
+            ></div>
+          </section>
+          <details class="advanced-search" id="advancedSearch">
+            <summary>
+              <span>Advanced search filters</span
+              ><small>Course, semester, topic, and resource type</small>
+            </summary>
+            <div class="filters">
+              <label class="search"
+                >Search the catalogue<input
+                  id="searchInput"
+                  type="search"
+                  placeholder="Course code, topic, or resource title"
+                  autocomplete="off"
+              /></label>
+              <div class="filter-grid">
+                <label
+                  >Course<select id="courseFilter">
+                    <option value="">All courses</option>
+                  </select></label
+                ><label
+                  >Semester<select id="semesterFilter">
+                    <option value="">All semesters</option>
+                  </select></label
+                ><label
+                  >Topic<select id="topicFilter">
+                    <option value="">All topics</option>
+                  </select></label
+                ><label
+                  >Resource type<select id="typeFilter">
+                    <option value="">All types</option>
+                  </select></label
+                ><button class="button quiet" id="clearFilters" type="button">
+                  Clear filters
+                </button>
+              </div>
+            </div>
+          </details>
+          <div class="resource-heading">
+            <h3 id="resourceHeading">All resources</h3>
+            <p id="resourceSubheading">
+              Choose a college, or browse everything.
+            </p>
+          </div>
+          <div id="catalogueError" class="notice" hidden role="alert">
+            <div>
+              <strong>We could not load the catalogue.</strong>
+              <p>Check your connection and try again.</p>
+            </div>
+            <button class="button outline" id="retryLoad" type="button">
+              Try again
+            </button>
+          </div>
+          <div
+            class="resource-grid"
+            id="resourceGrid"
+            aria-live="polite"
+            aria-busy="true"
+          ></div>
+          <div class="empty" id="emptyState" hidden>
+            <p class="eyebrow blue" id="emptyEyebrow">No matches</p>
+            <h3 id="emptyTitle">Nothing fits those filters yet.</h3>
+            <p id="emptyCopy">
+              Try a wider search, or clear the current filters.
+            </p>
+            <button class="button primary" id="emptyClear" type="button">
+              Clear filters
+            </button>
+          </div>
+        </div>
+      </section>
+      <section class="trust" id="about">
+        <div class="shell trust-grid">
+          <div>
+            <p class="eyebrow">Built with care</p>
+            <h2>Independent, community-powered, and review-minded.</h2>
+          </div>
+          <div>
+            <p>
+              NexCore Study Hub is an independent resource catalogue for the SQU
+              community. It is not an official Sultan Qaboos University service.
+            </p>
+            <p>
+              <strong>Verified</strong> means a NexCore reviewer has checked the
+              catalogue entry and source link. Contributors remain responsible
+              for having permission to share their material.
+            </p>
+            <a class="text-link" id="trustReportLink" href="submit.html#report"
+              >Report a resource or request removal</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="shell footer">
+        <div><span>NexCore Labs</span></div>
+        <div>organized.</div>
+      </div>
+    </footer>
+    <dialog id="resourceDialog">
+      <div class="dialog-head">
+        <span>Resource details</span
+        ><button id="dialogClose" type="button">Close</button>
+      </div>
+      <div id="dialogContent"></div>
+    </dialog>
+    <noscript
+      ><div class="noscript">
+        NexCore Study Hub needs JavaScript to load and filter the catalogue.
+      </div></noscript
+    >
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
 </html>

@@ -1,29 +1,481 @@
 (function () {
   "use strict";
   var config = window.STUDY_HUB_CONFIG || {};
-  var state = { resources: [], courses: new Map(), colleges: new Map(), filters: { college: "", q: "", course: "", semester: "", topic: "", type: "" } };
-  var el = { grid: document.querySelector("#resourceGrid"), empty: document.querySelector("#emptyState"), emptyEyebrow: document.querySelector("#emptyEyebrow"), emptyTitle: document.querySelector("#emptyTitle"), emptyCopy: document.querySelector("#emptyCopy"), status: document.querySelector("#catalogueStatus"), error: document.querySelector("#catalogueError"), colleges: document.querySelector("#collegeGrid"), allColleges: document.querySelector("#allColleges"), heading: document.querySelector("#resourceHeading"), subheading: document.querySelector("#resourceSubheading"), advanced: document.querySelector("#advancedSearch"), search: document.querySelector("#searchInput"), course: document.querySelector("#courseFilter"), semester: document.querySelector("#semesterFilter"), topic: document.querySelector("#topicFilter"), type: document.querySelector("#typeFilter"), clear: document.querySelector("#clearFilters"), emptyClear: document.querySelector("#emptyClear"), retry: document.querySelector("#retryLoad"), dialog: document.querySelector("#resourceDialog"), dialogContent: document.querySelector("#dialogContent"), close: document.querySelector("#dialogClose"), trustReport: document.querySelector("#trustReportLink") };
-  function esc(value) { return String(value).replace(/[&<>'"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#039;", '"': "&quot;" }[c]; }); }
-  function validUrl(value) { try { return Boolean(value) && new URL(value).protocol === "https:"; } catch (e) { return false; } }
-  function validEmail(value) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value || ""); }
-  function unique(items) { return Array.from(new Set(items)).sort(function (a, b) { return a.localeCompare(b); }); }
-  function options(select, values, label) { select.insertAdjacentHTML("beforeend", values.map(function (value) { return '<option value="' + esc(value) + '">' + esc(label ? label(value) : value) + "</option>"; }).join("")); }
-  function validate(data) { if (!data || !Array.isArray(data.colleges) || !Array.isArray(data.courses) || !Array.isArray(data.resources)) throw new Error("Invalid catalogue"); data.courses.forEach(function (course) { if (!course.id || !course.collegeId) throw new Error("Invalid course"); }); data.resources.forEach(function (resource) { if (!resource.id || !resource.courseId || !resource.title || !Array.isArray(resource.topics)) throw new Error("Invalid resource"); }); return data; }
-  function coursesForCollege() { return Array.from(state.courses.values()).filter(function (course) { return !state.filters.college || course.collegeId === state.filters.college; }); }
-  function populateCourses() { el.course.innerHTML = '<option value="">All courses</option>'; options(el.course, coursesForCollege().map(function (course) { return course.id; }), function (id) { var course = state.courses.get(id); return course.code + " · " + course.title; }); if (state.filters.course && !coursesForCollege().some(function (course) { return course.id === state.filters.course; })) state.filters.course = ""; el.course.value = state.filters.course; }
-  function prepare(data) { state.resources = data.resources; state.courses = new Map(data.courses.map(function (course) { return [course.id, course]; })); state.colleges = new Map(data.colleges.map(function (college) { return [college.id, college]; })); options(el.semester, unique(state.resources.map(function (r) { return r.semester; }))); options(el.topic, unique(state.resources.flatMap(function (r) { return r.topics; }))); options(el.type, unique(state.resources.map(function (r) { return r.type; }))); }
-  function restoreUrl() { var params = new URLSearchParams(location.search); Object.keys(state.filters).forEach(function (key) { state.filters[key] = params.get(key) || ""; }); if (!state.colleges.has(state.filters.college)) state.filters.college = ""; el.search.value = state.filters.q; el.semester.value = state.filters.semester; el.topic.value = state.filters.topic; el.type.value = state.filters.type; el.advanced.open = Boolean(state.filters.q || state.filters.course || state.filters.semester || state.filters.topic || state.filters.type); }
-  function updateUrl() { var params = new URLSearchParams(); Object.keys(state.filters).forEach(function (key) { if (state.filters[key]) params.set(key, state.filters[key]); }); history.replaceState(null, "", location.pathname + (params.toString() ? "?" + params : "") + location.hash); }
-  function matchingResources() { var q = state.filters.q.toLowerCase(); return state.resources.filter(function (r) { var course = state.courses.get(r.courseId); var text = [r.title, r.description, r.type, r.semester, course.code, course.title].concat(r.topics).join(" ").toLowerCase(); return (!state.filters.college || course.collegeId === state.filters.college) && (!q || text.includes(q)) && (!state.filters.course || r.courseId === state.filters.course) && (!state.filters.semester || r.semester === state.filters.semester) && (!state.filters.topic || r.topics.includes(state.filters.topic)) && (!state.filters.type || r.type === state.filters.type); }); }
-  function badge(r) { return '<span class="status status-' + esc(r.status) + '">' + (r.status === "verified" ? "Verified" : "Demo record") + "</span>"; }
-  function renderColleges() { el.colleges.setAttribute("aria-busy", "false"); el.colleges.innerHTML = Array.from(state.colleges.values()).map(function (college) { var count = state.resources.filter(function (resource) { return state.courses.get(resource.courseId).collegeId === college.id; }).length; var selected = state.filters.college === college.id; return '<button class="college-card' + (selected ? " is-selected" : "") + '" type="button" data-college="' + esc(college.id) + '" aria-pressed="' + selected + '"><span>' + esc(college.name) + '</span><small>' + count + " " + (count === 1 ? "resource" : "resources") + "</small></button>"; }).join(""); el.allColleges.disabled = !state.filters.college; }
-  function renderResources(resources) { el.grid.setAttribute("aria-busy", "false"); el.grid.innerHTML = resources.map(function (r) { var course = state.courses.get(r.courseId); var tags = [course.code, r.semester, r.type].concat(r.topics.slice(0, 1)); return '<article class="card"><div class="card-top"><span class="course-code">' + esc(course.code) + "</span>" + badge(r) + '</div><h3>' + esc(r.title) + '</h3><p>' + esc(r.description) + '</p><ul class="tags">' + tags.map(function (tag) { return "<li>" + esc(tag) + "</li>"; }).join("") + '</ul><button class="button outline" data-resource="' + esc(r.id) + '" type="button">View details</button></article>'; }).join(""); el.empty.hidden = resources.length !== 0; }
-  function render() { var college = state.colleges.get(state.filters.college); var hasAdvanced = Boolean(state.filters.q || state.filters.course || state.filters.semester || state.filters.topic || state.filters.type); var resources = (college || hasAdvanced) ? matchingResources() : []; updateUrl(); renderColleges(); renderResources(resources); if (!college && !hasAdvanced) { el.status.textContent = "Select a college to browse resources"; el.heading.textContent = "Choose a college to view resources"; el.subheading.textContent = "Advanced search is available if you already know what you need."; el.emptyEyebrow.textContent = "College first"; el.emptyTitle.textContent = "Choose your SQU college."; el.emptyCopy.textContent = "Your course resources will appear here after you select it."; el.emptyClear.hidden = true; } else if (resources.length === 0) { el.status.textContent = "No resources shown"; el.heading.textContent = college ? college.name + " resources" : "Search results"; el.subheading.textContent = college ? "No catalogue entries match this college and filter combination." : "No resources match the current advanced filters."; el.emptyEyebrow.textContent = "No matches"; el.emptyTitle.textContent = "Nothing fits those filters yet."; el.emptyCopy.textContent = "Try another college or clear the current filters."; el.emptyClear.hidden = false; } else { el.status.textContent = resources.length + " " + (resources.length === 1 ? "resource" : "resources") + " shown"; el.heading.textContent = college ? college.name + " resources" : "Search results"; el.subheading.textContent = college ? "Showing resources assigned to " + college.name + "." : "Showing resources that match your advanced search."; el.emptyClear.hidden = false; } }
-  function setFilter(key, value) { state.filters[key] = value; if (key === "college") { state.filters.course = ""; populateCourses(); } render(); }
-  function clear() { Object.keys(state.filters).forEach(function (key) { state.filters[key] = ""; }); el.search.value = el.semester.value = el.topic.value = el.type.value = ""; populateCourses(); el.advanced.open = false; render(); }
-  function openResource(id) { var r = state.resources.find(function (item) { return item.id === id; }); if (!r) return; var course = state.courses.get(r.courseId); var canOpen = !r.isDemo && r.status === "verified" && validUrl(r.driveUrl); var canReport = validEmail(config.reportEmail); var report = canReport ? "mailto:" + encodeURIComponent(config.reportEmail) + "?subject=" + encodeURIComponent("Study Hub resource report: " + r.title) + "&body=" + encodeURIComponent("Resource: " + r.title + "\nID: " + r.id + "\n\nReason for report:") : "submit.html#report"; el.dialogContent.innerHTML = '<p class="dialog-course">' + esc(course.code + " · " + course.title) + '</p><h2 class="dialog-title">' + esc(r.title) + '</h2><p class="dialog-description">' + esc(r.description) + '</p><ul class="tags">' + [r.semester, r.type].concat(r.topics).map(function (tag) { return "<li>" + esc(tag) + "</li>"; }).join("") + '</ul>' + badge(r) + '<div class="dialog-actions">' + (canOpen ? '<a class="button primary" href="' + esc(r.driveUrl) + '" target="_blank" rel="noopener noreferrer">Open Google Drive resource</a>' : '<button class="button disabled" disabled type="button">Drive resource unavailable</button>') + '<a class="button outline" href="' + esc(report) + '">Report this resource</a></div>' + (r.isDemo ? '<p class="config-note">This is a clearly marked demo record. It does not point to a live resource.</p>' : "") + (!canReport ? '<p class="config-note">The report contact is being configured.</p>' : ""); el.dialog.showModal(); }
-  function bind() { el.search.addEventListener("input", function (e) { setFilter("q", e.target.value.trim()); }); [[el.course,"course"],[el.semester,"semester"],[el.topic,"topic"],[el.type,"type"]].forEach(function (pair) { pair[0].addEventListener("change", function (e) { setFilter(pair[1], e.target.value); }); }); el.colleges.addEventListener("click", function (e) { var card = e.target.closest("[data-college]"); if (card) setFilter("college", card.dataset.college); }); el.allColleges.addEventListener("click", function () { setFilter("college", ""); }); el.clear.addEventListener("click", clear); el.emptyClear.addEventListener("click", clear); el.retry.addEventListener("click", load); el.grid.addEventListener("click", function (e) { var button = e.target.closest("[data-resource]"); if (button) openResource(button.dataset.resource); }); el.close.addEventListener("click", function () { el.dialog.close(); }); el.dialog.addEventListener("click", function (e) { if (e.target === el.dialog) el.dialog.close(); }); }
-  function load() { el.error.hidden = true; el.grid.setAttribute("aria-busy", "true"); el.colleges.setAttribute("aria-busy", "true"); el.status.textContent = "Loading catalogue…"; fetch("assets/data/catalogue.json", { cache: "no-store" }).then(function (res) { if (!res.ok) throw new Error("Load failed"); return res.json(); }).then(function (data) { prepare(validate(data)); restoreUrl(); populateCourses(); render(); }).catch(function () { el.grid.setAttribute("aria-busy", "false"); el.colleges.setAttribute("aria-busy", "false"); el.status.textContent = "Catalogue unavailable"; el.error.hidden = false; }); }
-  if (validEmail(config.reportEmail)) el.trustReport.href = "mailto:" + encodeURIComponent(config.reportEmail) + "?subject=" + encodeURIComponent("Study Hub resource report");
-  bind(); load();
-}());
+  var state = {
+    resources: [],
+    courses: new Map(),
+    colleges: new Map(),
+    filters: {
+      college: "",
+      q: "",
+      course: "",
+      semester: "",
+      topic: "",
+      type: "",
+    },
+  };
+  var el = {
+    grid: document.querySelector("#resourceGrid"),
+    empty: document.querySelector("#emptyState"),
+    emptyEyebrow: document.querySelector("#emptyEyebrow"),
+    emptyTitle: document.querySelector("#emptyTitle"),
+    emptyCopy: document.querySelector("#emptyCopy"),
+    status: document.querySelector("#catalogueStatus"),
+    error: document.querySelector("#catalogueError"),
+    colleges: document.querySelector("#collegeGrid"),
+    allColleges: document.querySelector("#allColleges"),
+    heading: document.querySelector("#resourceHeading"),
+    subheading: document.querySelector("#resourceSubheading"),
+    advanced: document.querySelector("#advancedSearch"),
+    search: document.querySelector("#searchInput"),
+    course: document.querySelector("#courseFilter"),
+    semester: document.querySelector("#semesterFilter"),
+    topic: document.querySelector("#topicFilter"),
+    type: document.querySelector("#typeFilter"),
+    clear: document.querySelector("#clearFilters"),
+    emptyClear: document.querySelector("#emptyClear"),
+    retry: document.querySelector("#retryLoad"),
+    dialog: document.querySelector("#resourceDialog"),
+    dialogContent: document.querySelector("#dialogContent"),
+    close: document.querySelector("#dialogClose"),
+    trustReport: document.querySelector("#trustReportLink"),
+  };
+  function esc(value) {
+    return String(value).replace(/[&<>'"]/g, function (c) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "'": "&#039;",
+        '"': "&quot;",
+      }[c];
+    });
+  }
+  function validUrl(value) {
+    try {
+      return Boolean(value) && new URL(value).protocol === "https:";
+    } catch (e) {
+      return false;
+    }
+  }
+  function validEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value || "");
+  }
+  function unique(items) {
+    return Array.from(new Set(items)).sort(function (a, b) {
+      return a.localeCompare(b);
+    });
+  }
+  function options(select, values, label) {
+    select.insertAdjacentHTML(
+      "beforeend",
+      values
+        .map(function (value) {
+          return (
+            '<option value="' +
+            esc(value) +
+            '">' +
+            esc(label ? label(value) : value) +
+            "</option>"
+          );
+        })
+        .join(""),
+    );
+  }
+  function validate(data) {
+    if (
+      !data ||
+      !Array.isArray(data.colleges) ||
+      !Array.isArray(data.courses) ||
+      !Array.isArray(data.resources)
+    )
+      throw new Error("Invalid catalogue");
+    data.courses.forEach(function (course) {
+      if (!course.id || !course.collegeId) throw new Error("Invalid course");
+    });
+    data.resources.forEach(function (resource) {
+      if (
+        !resource.id ||
+        !resource.courseId ||
+        !resource.title ||
+        !Array.isArray(resource.topics)
+      )
+        throw new Error("Invalid resource");
+    });
+    return data;
+  }
+  function coursesForCollege() {
+    return Array.from(state.courses.values()).filter(function (course) {
+      return (
+        !state.filters.college || course.collegeId === state.filters.college
+      );
+    });
+  }
+  function populateCourses() {
+    el.course.innerHTML = '<option value="">All courses</option>';
+    options(
+      el.course,
+      coursesForCollege().map(function (course) {
+        return course.id;
+      }),
+      function (id) {
+        var course = state.courses.get(id);
+        return course.code + " · " + course.title;
+      },
+    );
+    if (
+      state.filters.course &&
+      !coursesForCollege().some(function (course) {
+        return course.id === state.filters.course;
+      })
+    )
+      state.filters.course = "";
+    el.course.value = state.filters.course;
+  }
+  function prepare(data) {
+    state.resources = data.resources;
+    state.courses = new Map(
+      data.courses.map(function (course) {
+        return [course.id, course];
+      }),
+    );
+    state.colleges = new Map(
+      data.colleges.map(function (college) {
+        return [college.id, college];
+      }),
+    );
+    options(
+      el.semester,
+      unique(
+        state.resources.map(function (r) {
+          return r.semester;
+        }),
+      ),
+    );
+    options(
+      el.topic,
+      unique(
+        state.resources.flatMap(function (r) {
+          return r.topics;
+        }),
+      ),
+    );
+    options(
+      el.type,
+      unique(
+        state.resources.map(function (r) {
+          return r.type;
+        }),
+      ),
+    );
+  }
+  function restoreUrl() {
+    var params = new URLSearchParams(location.search);
+    Object.keys(state.filters).forEach(function (key) {
+      state.filters[key] = params.get(key) || "";
+    });
+    if (!state.colleges.has(state.filters.college)) state.filters.college = "";
+    el.search.value = state.filters.q;
+    el.semester.value = state.filters.semester;
+    el.topic.value = state.filters.topic;
+    el.type.value = state.filters.type;
+    el.advanced.open = Boolean(
+      state.filters.q ||
+        state.filters.course ||
+        state.filters.semester ||
+        state.filters.topic ||
+        state.filters.type,
+    );
+  }
+  function updateUrl() {
+    var params = new URLSearchParams();
+    Object.keys(state.filters).forEach(function (key) {
+      if (state.filters[key]) params.set(key, state.filters[key]);
+    });
+    history.replaceState(
+      null,
+      "",
+      location.pathname +
+        (params.toString() ? "?" + params : "") +
+        location.hash,
+    );
+  }
+  function matchingResources() {
+    var q = state.filters.q.toLowerCase();
+    return state.resources.filter(function (r) {
+      var course = state.courses.get(r.courseId);
+      var text = [
+        r.title,
+        r.description,
+        r.type,
+        r.semester,
+        course.code,
+        course.title,
+      ]
+        .concat(r.topics)
+        .join(" ")
+        .toLowerCase();
+      return (
+        (!state.filters.college ||
+          course.collegeId === state.filters.college) &&
+        (!q || text.includes(q)) &&
+        (!state.filters.course || r.courseId === state.filters.course) &&
+        (!state.filters.semester || r.semester === state.filters.semester) &&
+        (!state.filters.topic || r.topics.includes(state.filters.topic)) &&
+        (!state.filters.type || r.type === state.filters.type)
+      );
+    });
+  }
+  function badge(r) {
+    return (
+      '<span class="status status-' +
+      esc(r.status) +
+      '">' +
+      (r.status === "verified" ? "Verified" : "Demo record") +
+      "</span>"
+    );
+  }
+  function renderColleges() {
+    el.colleges.setAttribute("aria-busy", "false");
+    el.colleges.innerHTML = Array.from(state.colleges.values())
+      .map(function (college) {
+        var count = state.resources.filter(function (resource) {
+          return state.courses.get(resource.courseId).collegeId === college.id;
+        }).length;
+        var selected = state.filters.college === college.id;
+        return (
+          '<button class="college-card' +
+          (selected ? " is-selected" : "") +
+          '" type="button" data-college="' +
+          esc(college.id) +
+          '" aria-pressed="' +
+          selected +
+          '"><span>' +
+          esc(college.name) +
+          "</span><small>" +
+          count +
+          " " +
+          (count === 1 ? "resource" : "resources") +
+          "</small></button>"
+        );
+      })
+      .join("");
+    el.allColleges.disabled = !state.filters.college;
+  }
+  function renderResources(resources) {
+    el.grid.setAttribute("aria-busy", "false");
+    el.grid.innerHTML = resources
+      .map(function (r) {
+        var course = state.courses.get(r.courseId);
+        var tags = [course.code, r.semester, r.type].concat(
+          r.topics.slice(0, 1),
+        );
+        return (
+          '<article class="card"><div class="card-top"><span class="course-code">' +
+          esc(course.code) +
+          "</span>" +
+          badge(r) +
+          "</div><h3>" +
+          esc(r.title) +
+          "</h3><p>" +
+          esc(r.description) +
+          '</p><ul class="tags">' +
+          tags
+            .map(function (tag) {
+              return "<li>" + esc(tag) + "</li>";
+            })
+            .join("") +
+          '</ul><button class="button outline" data-resource="' +
+          esc(r.id) +
+          '" type="button">View details</button></article>'
+        );
+      })
+      .join("");
+    el.empty.hidden = resources.length !== 0;
+  }
+  function render() {
+    var college = state.colleges.get(state.filters.college);
+    var hasAdvanced = Boolean(
+      state.filters.q ||
+        state.filters.course ||
+        state.filters.semester ||
+        state.filters.topic ||
+        state.filters.type,
+    );
+    var resources = college || hasAdvanced ? matchingResources() : [];
+    updateUrl();
+    renderColleges();
+    renderResources(resources);
+    if (!college && !hasAdvanced) {
+      el.status.textContent = "Select a college to browse resources";
+      el.heading.textContent = "Choose a college to view resources";
+      el.subheading.textContent =
+        "Advanced search is available if you already know what you need.";
+      el.emptyEyebrow.textContent = "College first";
+      el.emptyTitle.textContent = "Choose your SQU college.";
+      el.emptyCopy.textContent =
+        "Your course resources will appear here after you select it.";
+      el.emptyClear.hidden = true;
+    } else if (resources.length === 0) {
+      el.status.textContent = "No resources shown";
+      el.heading.textContent = college
+        ? college.name + " resources"
+        : "Search results";
+      el.subheading.textContent = college
+        ? "No catalogue entries match this college and filter combination."
+        : "No resources match the current advanced filters.";
+      el.emptyEyebrow.textContent = "No matches";
+      el.emptyTitle.textContent = "Nothing fits those filters yet.";
+      el.emptyCopy.textContent =
+        "Try another college or clear the current filters.";
+      el.emptyClear.hidden = false;
+    } else {
+      el.status.textContent =
+        resources.length +
+        " " +
+        (resources.length === 1 ? "resource" : "resources") +
+        " shown";
+      el.heading.textContent = college
+        ? college.name + " resources"
+        : "Search results";
+      el.subheading.textContent = college
+        ? "Showing resources assigned to " + college.name + "."
+        : "Showing resources that match your advanced search.";
+      el.emptyClear.hidden = false;
+    }
+  }
+  function setFilter(key, value) {
+    state.filters[key] = value;
+    if (key === "college") {
+      state.filters.course = "";
+      populateCourses();
+    }
+    render();
+  }
+  function clear() {
+    Object.keys(state.filters).forEach(function (key) {
+      state.filters[key] = "";
+    });
+    el.search.value = el.semester.value = el.topic.value = el.type.value = "";
+    populateCourses();
+    el.advanced.open = false;
+    render();
+  }
+  function openResource(id) {
+    var r = state.resources.find(function (item) {
+      return item.id === id;
+    });
+    if (!r) return;
+    var course = state.courses.get(r.courseId);
+    var canOpen = !r.isDemo && r.status === "verified" && validUrl(r.driveUrl);
+    var canReport = validEmail(config.reportEmail);
+    var report = canReport
+      ? "mailto:" +
+        encodeURIComponent(config.reportEmail) +
+        "?subject=" +
+        encodeURIComponent("Study Hub resource report: " + r.title) +
+        "&body=" +
+        encodeURIComponent(
+          "Resource: " + r.title + "\nID: " + r.id + "\n\nReason for report:",
+        )
+      : "submit.html#report";
+    el.dialogContent.innerHTML =
+      '<p class="dialog-course">' +
+      esc(course.code + " · " + course.title) +
+      '</p><h2 class="dialog-title">' +
+      esc(r.title) +
+      '</h2><p class="dialog-description">' +
+      esc(r.description) +
+      '</p><ul class="tags">' +
+      [r.semester, r.type]
+        .concat(r.topics)
+        .map(function (tag) {
+          return "<li>" + esc(tag) + "</li>";
+        })
+        .join("") +
+      "</ul>" +
+      badge(r) +
+      '<div class="dialog-actions">' +
+      (canOpen
+        ? '<a class="button primary" href="' +
+          esc(r.driveUrl) +
+          '" target="_blank" rel="noopener noreferrer">Open Google Drive resource</a>'
+        : '<button class="button disabled" disabled type="button">Drive resource unavailable</button>') +
+      '<a class="button outline" href="' +
+      esc(report) +
+      '">Report this resource</a></div>' +
+      (r.isDemo
+        ? '<p class="config-note">This is a clearly marked demo record. It does not point to a live resource.</p>'
+        : "") +
+      (!canReport
+        ? '<p class="config-note">The report contact is being configured.</p>'
+        : "");
+    el.dialog.showModal();
+  }
+  function bind() {
+    el.search.addEventListener("input", function (e) {
+      setFilter("q", e.target.value.trim());
+    });
+    [
+      [el.course, "course"],
+      [el.semester, "semester"],
+      [el.topic, "topic"],
+      [el.type, "type"],
+    ].forEach(function (pair) {
+      pair[0].addEventListener("change", function (e) {
+        setFilter(pair[1], e.target.value);
+      });
+    });
+    el.colleges.addEventListener("click", function (e) {
+      var card = e.target.closest("[data-college]");
+      if (card) setFilter("college", card.dataset.college);
+    });
+    el.allColleges.addEventListener("click", function () {
+      setFilter("college", "");
+    });
+    el.clear.addEventListener("click", clear);
+    el.emptyClear.addEventListener("click", clear);
+    el.retry.addEventListener("click", load);
+    el.grid.addEventListener("click", function (e) {
+      var button = e.target.closest("[data-resource]");
+      if (button) openResource(button.dataset.resource);
+    });
+    el.close.addEventListener("click", function () {
+      el.dialog.close();
+    });
+    el.dialog.addEventListener("click", function (e) {
+      if (e.target === el.dialog) el.dialog.close();
+    });
+  }
+  function load() {
+    el.error.hidden = true;
+    el.grid.setAttribute("aria-busy", "true");
+    el.colleges.setAttribute("aria-busy", "true");
+    el.status.textContent = "Loading catalogue…";
+    fetch("assets/data/catalogue.json", { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("Load failed");
+        return res.json();
+      })
+      .then(function (data) {
+        prepare(validate(data));
+        restoreUrl();
+        populateCourses();
+        render();
+      })
+      .catch(function () {
+        el.grid.setAttribute("aria-busy", "false");
+        el.colleges.setAttribute("aria-busy", "false");
+        el.status.textContent = "Catalogue unavailable";
+        el.error.hidden = false;
+      });
+  }
+  if (validEmail(config.reportEmail))
+    el.trustReport.href =
+      "mailto:" +
+      encodeURIComponent(config.reportEmail) +
+      "?subject=" +
+      encodeURIComponent("Study Hub resource report");
+  bind();
+  load();
+})();
