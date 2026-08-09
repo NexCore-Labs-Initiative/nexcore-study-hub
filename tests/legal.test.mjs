@@ -5,11 +5,12 @@ import { readFile } from "node:fs/promises";
 const read = (path) =>
   readFile(new URL(`../${path}`, import.meta.url), "utf8");
 
-const [home, submit, terms, submitScript] = await Promise.all([
+const [home, submit, terms, submitScript, configScript] = await Promise.all([
   read("index.html"),
   read("submit.html"),
   read("terms.html"),
   read("assets/js/submit.js"),
+  read("assets/js/config.js"),
 ]);
 
 test("every public page links to the terms", () => {
@@ -22,6 +23,8 @@ test("contribution form is gated by explicit acceptance", () => {
   assert.match(submit, /id="acceptContributionTerms"[^>]*type="checkbox"/);
   assert.match(submit, /id="openSubmissionForm"[\s\S]*?disabled/);
   assert.match(submitScript, /if \(!termsCheckbox\.checked\) return;/);
+  assert.match(submitScript, /window\.location\.assign\(config\.googleFormUrl\)/);
+  assert.match(configScript, /https:\/\/forms\.gle\/H9EBvisJQ3hfAuxW7/);
 });
 
 test("terms cover the core contribution and privacy risks", () => {

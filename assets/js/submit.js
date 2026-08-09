@@ -21,13 +21,13 @@
       formButton.disabled = !termsCheckbox.checked;
       formButton.classList.toggle("disabled", !termsCheckbox.checked);
       formState.textContent = termsCheckbox.checked
-        ? "The contribution form will open in a new tab."
+        ? "The contribution form will open when you continue."
         : "Review and accept the contribution terms before continuing.";
     }
     termsCheckbox.addEventListener("change", updateFormButton);
     formButton.addEventListener("click", function () {
       if (!termsCheckbox.checked) return;
-      window.open(config.googleFormUrl, "_blank", "noopener,noreferrer");
+      window.location.assign(config.googleFormUrl);
     });
     updateFormButton();
   } else {
