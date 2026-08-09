@@ -194,9 +194,21 @@
       box-shadow: var(--shadow);
       transition: transform .3s;
     }
-    .hcard:nth-child(1) { bottom: 0; left: 0; right: 0; z-index: 3; }
-    .hcard:nth-child(2) { bottom: 28px; left: 12px; right: 12px; z-index: 2; opacity: .65; transform: rotate(.8deg); }
-    .hcard:nth-child(3) { bottom: 52px; left: 22px; right: 22px; z-index: 1; opacity: .35; transform: rotate(1.6deg); }
+    .hcard--back,
+    .hcard--middle {
+      height: 164px;
+      pointer-events: none;
+    }
+    .hcard--back {
+      bottom: 52px; left: 22px; right: 22px; z-index: 1;
+      background: #fbfbfd;
+      transform: rotate(1.6deg);
+    }
+    .hcard--middle {
+      bottom: 28px; left: 12px; right: 12px; z-index: 2;
+      transform: rotate(.8deg);
+    }
+    .hcard--front { bottom: 0; left: 0; right: 0; z-index: 3; }
     .hcard-badge {
       display: inline-flex; align-items: center; gap: .3rem;
       font-size: .72rem; font-weight: 600;
@@ -626,15 +638,9 @@
   </div>
   <div class="hero-visual" aria-hidden="true">
     <div class="hero-card-stack">
-      <div class="hcard" style="z-index:1;opacity:.3;transform:rotate(2deg);bottom:60px;left:24px;right:24px;">
-        <div class="hcard-title">Engineering Mathematics II</div>
-        <div class="hcard-meta"><span class="hcard-meta-tag">MATH2101</span><span class="hcard-meta-tag">Sem 2</span></div>
-      </div>
-      <div class="hcard" style="z-index:2;opacity:.6;transform:rotate(1deg);bottom:32px;left:12px;right:12px;">
-        <div class="hcard-title">Organic Chemistry — Reaction Notes</div>
-        <div class="hcard-meta"><span class="hcard-meta-tag">CHEM2210</span><span class="hcard-meta-tag">Sem 1</span></div>
-      </div>
-      <div class="hcard" style="z-index:3;bottom:0;left:0;right:0;">
+      <div class="hcard hcard--back"></div>
+      <div class="hcard hcard--middle"></div>
+      <div class="hcard hcard--front">
         <div class="hcard-badge verified">
           <svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg>
           Verified
