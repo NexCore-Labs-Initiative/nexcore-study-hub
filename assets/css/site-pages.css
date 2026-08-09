@@ -50,7 +50,7 @@ a { color: inherit; }
 .nav-inner {
   max-width: 1120px; margin: 0 auto; padding: .9rem 1.5rem;
   display: flex; align-items: center; justify-content: space-between;
-  gap: 1rem;
+  gap: 1rem; position: relative;
 }
 .nav-brand {
   display: flex; align-items: center; gap: .65rem;
@@ -202,6 +202,13 @@ a { color: inherit; }
   .shell { width: min(100% - 2.5rem, 1120px); }
   .nav-links { display: none; }
   .nav-menu-btn { display: flex; }
+  .nav-links.open {
+    position: absolute; top: calc(100% - .2rem); left: 1.25rem; right: 1.25rem;
+    display: flex; flex-direction: column; align-items: stretch; gap: .25rem;
+    padding: .65rem; border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--surface); box-shadow: var(--shadow-lg);
+  }
+  .nav-links.open a { display: block; padding: .7rem .85rem; }
   .subhero { padding: 3rem 0; }
   .submit-main { padding: 3rem 0; }
   .submit-grid, .legal-layout { grid-template-columns: 1fr; gap: 2.5rem; }

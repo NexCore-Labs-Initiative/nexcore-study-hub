@@ -67,6 +67,7 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: .9rem 1.5rem;
       gap: 1rem;
+      position: relative;
     }
     .nav-brand {
       display: flex; align-items: center; gap: .65rem;
@@ -563,6 +564,13 @@
       .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
       .nav-links { display: none; }
       .nav-menu-btn { display: flex; }
+      .nav-links.open {
+        position: absolute; top: calc(100% - .2rem); left: 1.25rem; right: 1.25rem;
+        display: flex; flex-direction: column; align-items: stretch; gap: .25rem;
+        padding: .65rem; border: 1px solid var(--border); border-radius: var(--radius);
+        background: var(--surface); box-shadow: var(--shadow-lg);
+      }
+      .nav-links.open a { display: block; padding: .7rem .85rem; }
       .filter-row { flex-direction: column; }
       .search-wrap { min-width: 100%; }
     }
@@ -592,7 +600,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="submit.html" class="nav-cta">Contribute</a></li>
     </ul>
-    <button class="nav-menu-btn" aria-label="Open menu">
+    <button class="nav-menu-btn" aria-label="Open menu" aria-expanded="false" type="button">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
   </div>
@@ -1027,5 +1035,6 @@
     if (e.key === 'Escape') closeModalDirect();
   });
 </script>
+<script src="assets/js/nav.js"></script>
 </body>
 </html>
