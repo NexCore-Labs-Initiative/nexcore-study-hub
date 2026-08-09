@@ -68,6 +68,25 @@ a {
   line-height: 1.15;
   letter-spacing: -0.02em;
 }
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+.project-status {
+  flex: 0 0 auto;
+  padding: 5px 9px;
+  color: #d9ecff;
+  background: #1976e82b;
+  border: 1px solid #79bcff73;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 .brand span,
 .eyebrow,
 footer span {
@@ -605,6 +624,10 @@ dialog::backdrop {
   .nav-wrap {
     padding: 17px 0;
   }
+  .brand-lockup {
+    width: 100%;
+    justify-content: space-between;
+  }
   .hero-grid {
     padding: 62px 0;
   }
@@ -779,6 +802,11 @@ dialog::backdrop {
 @media (max-width: 460px) {
   .studyhub-mark {
     width: 184px;
+  }
+  .brand-lockup {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 9px;
   }
   .college-browser {
     padding: 16px;
