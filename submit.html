@@ -83,19 +83,31 @@
             <p class="eyebrow blue">Ready to contribute?</p>
             <h2>Send a resource for review.</h2>
             <p id="submissionState">
-              The contribution form will open in a new tab.
+              Review and accept the contribution terms before continuing.
             </p>
+            <label class="terms-consent" for="acceptContributionTerms">
+              <input id="acceptContributionTerms" type="checkbox" />
+              <span>
+                I have read and agree to the
+                <a href="terms.html#contribution-terms">Contribution Terms</a>.
+                I confirm that I am allowed to share this resource and that it
+                contains no restricted assessments or personal information.
+              </span>
+            </label>
             <button
               id="openSubmissionForm"
               class="button primary"
               type="button"
+              disabled
+              aria-describedby="submissionState contributionWarning"
             >
               Open contribution form
             </button>
-            <p class="panel-note">
+            <p class="panel-note" id="contributionWarning">
               Only submit material you created or have permission to share.
-              Personal information, copyrighted textbooks, and restricted course
-              material should not be submitted.
+              Do not submit copyrighted textbooks, active or leaked assessments,
+              instructor-only material, answer keys shared without permission,
+              or files containing personal or confidential information.
             </p>
           </aside>
         </div>
@@ -125,7 +137,8 @@
         <div>
           <a href="index.html#catalogue">Catalogue</a
           ><a href="submit.html">Contribute</a
-          ><a href="index.html#about">Trust &amp; verification</a>
+          ><a href="index.html#about">Trust &amp; verification</a
+          ><a href="terms.html">Terms &amp; Privacy</a>
         </div>
       </div>
     </footer>

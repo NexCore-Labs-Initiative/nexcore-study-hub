@@ -3,6 +3,7 @@
   var config = window.STUDY_HUB_CONFIG || {},
     formButton = document.querySelector("#openSubmissionForm"),
     formState = document.querySelector("#submissionState"),
+    termsCheckbox = document.querySelector("#acceptContributionTerms"),
     reportAction = document.querySelector("#reportAction"),
     reportState = document.querySelector("#reportState");
   function validUrl(value) {
@@ -15,13 +16,24 @@
   function validEmail(value) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value || "");
   }
-  if (validUrl(config.googleFormUrl))
+  if (validUrl(config.googleFormUrl)) {
+    function updateFormButton() {
+      formButton.disabled = !termsCheckbox.checked;
+      formButton.classList.toggle("disabled", !termsCheckbox.checked);
+      formState.textContent = termsCheckbox.checked
+        ? "The contribution form will open in a new tab."
+        : "Review and accept the contribution terms before continuing.";
+    }
+    termsCheckbox.addEventListener("change", updateFormButton);
     formButton.addEventListener("click", function () {
+      if (!termsCheckbox.checked) return;
       window.open(config.googleFormUrl, "_blank", "noopener,noreferrer");
     });
-  else {
+    updateFormButton();
+  } else {
     formButton.disabled = true;
     formButton.classList.add("disabled");
+    termsCheckbox.disabled = true;
     formState.textContent =
       "The contribution form is being configured. Add its public Google Form URL in assets/js/config.js before launch.";
   }

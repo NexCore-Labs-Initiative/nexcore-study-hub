@@ -6,6 +6,7 @@
   "scripts": {
     "check:js": "node --check assets/js/config.js && node --check assets/js/app.js && node --check assets/js/submit.js",
     "test:catalogue": "node --test tests/catalogue.test.mjs",
-    "test": "npm run check:js && npm run test:catalogue"
+    "test:legal": "node --test tests/legal.test.mjs",
+    "test": "npm run check:js && npm run test:catalogue && npm run test:legal"
   }
 }
