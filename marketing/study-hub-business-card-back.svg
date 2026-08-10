@@ -1,0 +1,14 @@
+<svg width="1050" height="600" viewBox="0 0 1050 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1050" height="600" rx="38" fill="#FFFFFF"/>
+  <rect x="28" y="28" width="994" height="544" rx="30" stroke="#DCE6EF" stroke-width="3"/>
+  <text x="70" y="100" fill="#1976E8" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="900" letter-spacing="4">CONTRIBUTE</text>
+
+  <text x="70" y="188" fill="#10243F" font-family="Inter, Arial, sans-serif" font-size="45" font-weight="900" letter-spacing="-1.5">Have a useful resource?</text>
+  <text x="70" y="254" fill="#50657B" font-family="Inter, Arial, sans-serif" font-size="29" font-weight="600">Share the Drive link through the website.</text>
+  <text x="70" y="302" fill="#50657B" font-family="Inter, Arial, sans-serif" font-size="29" font-weight="600">NexCore reviews it before publishing.</text>
+
+  <rect x="70" y="370" width="730" height="82" rx="22" fill="#EAF4FF" stroke="#CFE4F8"/>
+  <text x="104" y="423" fill="#0B61C4" font-family="Inter, Arial, sans-serif" font-size="31" font-weight="900">nexcore-study-hub.vercel.app/submit.html</text>
+
+  <text x="70" y="526" fill="#8A5C00" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Beta · Independent community catalogue · Not an official SQU service</text>
+</svg>

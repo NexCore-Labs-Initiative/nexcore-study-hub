@@ -1,0 +1,17 @@
+<svg width="1050" height="600" viewBox="0 0 1050 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1050" height="600" rx="38" fill="#07192E"/>
+  <circle cx="862" cy="86" r="160" fill="#1976E8" fill-opacity=".22"/>
+  <circle cx="938" cy="470" r="220" fill="#79BCFF" fill-opacity=".1"/>
+
+  <text x="70" y="92" fill="#79BCFF" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="900" letter-spacing="4">NEXCORE STUDY HUB</text>
+  <rect x="70" y="124" width="116" height="38" rx="19" fill="#1976E8" fill-opacity=".24" stroke="#79BCFF"/>
+  <text x="105" y="150" fill="#D9ECFF" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="900" letter-spacing="2">BETA</text>
+
+  <text x="70" y="256" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="900" letter-spacing="-2.5">Help organize</text>
+  <text x="70" y="326" fill="#A0D2FF" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="900" letter-spacing="-2.5">SQU resources.</text>
+
+  <text x="70" y="410" fill="#CFDEEE" font-family="Inter, Arial, sans-serif" font-size="29" font-weight="600">Submit notes, slides, exams, quizzes,</text>
+  <text x="70" y="452" fill="#CFDEEE" font-family="Inter, Arial, sans-serif" font-size="29" font-weight="600">practice papers, and study guides.</text>
+
+  <text x="70" y="538" fill="#79BCFF" font-family="Inter, Arial, sans-serif" font-size="27" font-weight="900">nexcore-study-hub.vercel.app</text>
+</svg>
