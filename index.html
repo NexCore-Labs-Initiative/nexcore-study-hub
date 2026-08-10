@@ -663,7 +663,7 @@
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat"><div class="stat-n">340<span>+</span></div><div class="stat-label">Resources catalogued</div></div>
-    <div class="stat"><div class="stat-n">12</div><div class="stat-label">SQU colleges covered</div></div>
+    <div class="stat"><div class="stat-n">9</div><div class="stat-label">SQU colleges covered</div></div>
     <div class="stat"><div class="stat-n">80<span>%</span></div><div class="stat-label">Verified entries</div></div>
     <div class="stat"><div class="stat-n"><span style="font-style:italic">∞</span></div><div class="stat-label">Community-powered</div></div>
   </div>
@@ -714,60 +714,67 @@
 
     <!-- College grid -->
     <div class="college-grid" id="collegeGrid">
-      <button class="college-btn" onclick="selectCollege('CENG','College of Engineering')" data-college="CENG">
-        <div class="college-icon" style="background:#eef2ff">⚙️</div>
+      <button class="college-btn" onclick="selectCollege('CAMS','College of Agricultural and Marine Sciences')" data-college="CAMS">
+        <div class="college-icon" style="background:#ecfdf5">🌊</div>
         <div class="college-btn-text">
-          <div class="college-btn-name">Engineering</div>
-          <div class="college-btn-abbr">CENG</div>
+          <div class="college-btn-name">College of Agricultural and Marine Sciences</div>
+          <div class="college-btn-abbr">CAMS</div>
         </div>
       </button>
-      <button class="college-btn" onclick="selectCollege('COS','College of Science')" data-college="COS">
-        <div class="college-icon" style="background:#f0fdf4">🔬</div>
-        <div class="college-btn-text">
-          <div class="college-btn-name">Science</div>
-          <div class="college-btn-abbr">COS</div>
-        </div>
-      </button>
-      <button class="college-btn" onclick="selectCollege('COBA','College of Economics')" data-college="COBA">
-        <div class="college-icon" style="background:#fefce8">📊</div>
-        <div class="college-btn-text">
-          <div class="college-btn-name">Economics & Business</div>
-          <div class="college-btn-abbr">COBA</div>
-        </div>
-      </button>
-      <button class="college-btn" onclick="selectCollege('CMED','College of Medicine')" data-college="CMED">
-        <div class="college-icon" style="background:#fdf2f8">🏥</div>
-        <div class="college-btn-text">
-          <div class="college-btn-name">Medicine & Health</div>
-          <div class="college-btn-abbr">CMED</div>
-        </div>
-      </button>
-      <button class="college-btn" onclick="selectCollege('CART','College of Arts')" data-college="CART">
+      <button class="college-btn" onclick="selectCollege('CASS','College of Arts and Social Sciences')" data-college="CASS">
         <div class="college-icon" style="background:#fff7ed">🎨</div>
         <div class="college-btn-text">
-          <div class="college-btn-name">Arts & Social Sciences</div>
-          <div class="college-btn-abbr">CART</div>
+          <div class="college-btn-name">College of Arts and Social Sciences</div>
+          <div class="college-btn-abbr">CASS</div>
+        </div>
+      </button>
+      <button class="college-btn" onclick="selectCollege('CEPS','College of Economics and Political Science')" data-college="CEPS">
+        <div class="college-icon" style="background:#fefce8">📊</div>
+        <div class="college-btn-text">
+          <div class="college-btn-name">College of Economics and Political Science</div>
+          <div class="college-btn-abbr">CEPS</div>
         </div>
       </button>
       <button class="college-btn" onclick="selectCollege('CEDU','College of Education')" data-college="CEDU">
         <div class="college-icon" style="background:#f0f9ff">📚</div>
         <div class="college-btn-text">
-          <div class="college-btn-name">Education</div>
+          <div class="college-btn-name">College of Education</div>
           <div class="college-btn-abbr">CEDU</div>
+        </div>
+      </button>
+      <button class="college-btn" onclick="selectCollege('CENG','College of Engineering')" data-college="CENG">
+        <div class="college-icon" style="background:#eef2ff">⚙️</div>
+        <div class="college-btn-text">
+          <div class="college-btn-name">College of Engineering</div>
+          <div class="college-btn-abbr">CENG</div>
         </div>
       </button>
       <button class="college-btn" onclick="selectCollege('CLAW','College of Law')" data-college="CLAW">
         <div class="college-icon" style="background:#f5f3ff">⚖️</div>
         <div class="college-btn-text">
-          <div class="college-btn-name">Law</div>
+          <div class="college-btn-name">College of Law</div>
           <div class="college-btn-abbr">CLAW</div>
         </div>
       </button>
-      <button class="college-btn" onclick="selectCollege('CINFO','College of IT')" data-college="CINFO">
-        <div class="college-icon" style="background:#ecfdf5">💻</div>
+      <button class="college-btn" onclick="selectCollege('CMHS','College of Medicine and Health Sciences')" data-college="CMHS">
+        <div class="college-icon" style="background:#fdf2f8">🏥</div>
         <div class="college-btn-text">
-          <div class="college-btn-name">Information Technology</div>
-          <div class="college-btn-abbr">CINFO</div>
+          <div class="college-btn-name">College of Medicine and Health Sciences</div>
+          <div class="college-btn-abbr">CMHS</div>
+        </div>
+      </button>
+      <button class="college-btn" onclick="selectCollege('CON','College of Nursing')" data-college="CON">
+        <div class="college-icon" style="background:#f0fdfa">🩺</div>
+        <div class="college-btn-text">
+          <div class="college-btn-name">College of Nursing</div>
+          <div class="college-btn-abbr">CON</div>
+        </div>
+      </button>
+      <button class="college-btn" onclick="selectCollege('COS','College of Science')" data-college="COS">
+        <div class="college-icon" style="background:#f0fdf4">🔬</div>
+        <div class="college-btn-text">
+          <div class="college-btn-name">College of Science</div>
+          <div class="college-btn-abbr">COS</div>
         </div>
       </button>
     </div>
@@ -910,12 +917,12 @@
     { id:4, title:'Linear Algebra Study Guide', course:'MATH2101', college:'CENG', semester:'1', topic:'Linear Algebra', type:'guide', format:'PDF', status:'verified', contributor:'K. Al-Riyami', year:'2024' },
     { id:5, title:'Digital Circuits Lab Notes', course:'ELEC2305', college:'CENG', semester:'2', topic:'Digital Circuits', type:'notes', format:'PDF', status:'pending', contributor:'N. Al-Kindi', year:'2024' },
     { id:6, title:'Fluid Mechanics — Chapter Summaries', course:'MENG3101', college:'CENG', semester:'1', topic:'Fluid Mechanics', type:'notes', format:'DOCX', status:'verified', contributor:'F. Al-Farsi', year:'2023' },
-    { id:7, title:'Microeconomics Exam Prep Guide', course:'ECON1101', college:'COBA', semester:'1', topic:'Microeconomics', type:'guide', format:'PDF', status:'verified', contributor:'R. Al-Saidi', year:'2024' },
-    { id:8, title:'Financial Accounting Past Papers', course:'ACCT2201', college:'COBA', semester:'2', topic:'Accounting', type:'pastpaper', format:'PDF', status:'verified', contributor:'H. Al-Zadjali', year:'2023' },
-    { id:9, title:'Human Anatomy Quick Reference', course:'ANAT1101', college:'CMED', semester:'1', topic:'Anatomy', type:'cheatsheet', format:'PDF', status:'verified', contributor:'L. Al-Maskari', year:'2024' },
-    { id:10, title:'Physiology Lecture Notes Sem 2', course:'PHYS1202', college:'CMED', semester:'2', topic:'Physiology', type:'notes', format:'PDF', status:'pending', contributor:'A. Al-Oraimi', year:'2024' },
-    { id:11, title:'Arabic Literature Essay Guide', course:'ARBL2101', college:'CART', semester:'1', topic:'Literature', type:'guide', format:'PDF', status:'verified', contributor:'S. Al-Mahrizi', year:'2023' },
-    { id:12, title:'Database Systems — SQL Notes', course:'IT2301', college:'CINFO', semester:'2', topic:'Databases', type:'notes', format:'PDF', status:'verified', contributor:'O. Al-Gheilani', year:'2024' },
+    { id:7, title:'Microeconomics Exam Prep Guide', course:'ECON1101', college:'CEPS', semester:'1', topic:'Microeconomics', type:'guide', format:'PDF', status:'verified', contributor:'R. Al-Saidi', year:'2024' },
+    { id:8, title:'Financial Accounting Past Papers', course:'ACCT2201', college:'CEPS', semester:'2', topic:'Accounting', type:'pastpaper', format:'PDF', status:'verified', contributor:'H. Al-Zadjali', year:'2023' },
+    { id:9, title:'Human Anatomy Quick Reference', course:'ANAT1101', college:'CMHS', semester:'1', topic:'Anatomy', type:'cheatsheet', format:'PDF', status:'verified', contributor:'L. Al-Maskari', year:'2024' },
+    { id:10, title:'Physiology Lecture Notes Sem 2', course:'PHYS1202', college:'CMHS', semester:'2', topic:'Physiology', type:'notes', format:'PDF', status:'pending', contributor:'A. Al-Oraimi', year:'2024' },
+    { id:11, title:'Arabic Literature Essay Guide', course:'ARBL2101', college:'CASS', semester:'1', topic:'Literature', type:'guide', format:'PDF', status:'verified', contributor:'S. Al-Mahrizi', year:'2023' },
+    { id:12, title:'Database Systems — SQL Notes', course:'IT2301', college:'COS', semester:'2', topic:'Databases', type:'notes', format:'PDF', status:'verified', contributor:'O. Al-Gheilani', year:'2024' },
   ];
 
   let activeCollege = null;

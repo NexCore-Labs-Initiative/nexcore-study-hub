@@ -8,6 +8,32 @@ const catalogue = JSON.parse(
     "utf8",
   ),
 );
+const indexHtml = await readFile(
+  new URL("../index.html", import.meta.url),
+  "utf8",
+);
+const expectedColleges = [
+  "College of Agricultural and Marine Sciences",
+  "College of Arts and Social Sciences",
+  "College of Economics and Political Science",
+  "College of Education",
+  "College of Engineering",
+  "College of Law",
+  "College of Medicine and Health Sciences",
+  "College of Nursing",
+  "College of Science",
+];
+const expectedCollegeCodes = [
+  "CAMS",
+  "CASS",
+  "CEPS",
+  "CEDU",
+  "CENG",
+  "CLAW",
+  "CMHS",
+  "CON",
+  "COS",
+];
 const required = [
   "id",
   "courseId",
@@ -37,6 +63,26 @@ test("semesters use the SQU season-year naming convention", () => {
 });
 test("resource formats use the supported collection", () => {
   assert.deepEqual(catalogue.formats, ["pdf", "word", "powerpoint", "excel", "img", "other"]);
+});
+test("catalogue data and visible college selector match the supported colleges", () => {
+  assert.deepEqual(
+    catalogue.colleges.map((college) => college.name),
+    expectedColleges,
+  );
+  assert.deepEqual(
+    [...indexHtml.matchAll(/<div class="college-btn-name">([^<]+)<\/div>/g)].map(
+      (match) => match[1],
+    ),
+    expectedColleges,
+  );
+  assert.deepEqual(
+    [...indexHtml.matchAll(/data-college="([A-Z]+)"/g)].map((match) => match[1]),
+    expectedCollegeCodes,
+  );
+  const visibleCodes = new Set(expectedCollegeCodes);
+  for (const match of indexHtml.matchAll(/college:'([A-Z]+)'/g)) {
+    assert.ok(visibleCodes.has(match[1]), `sample resource uses unknown college ${match[1]}`);
+  }
 });
 test("resource types use the supported academic collection", () => {
   assert.deepEqual(catalogue.resourceTypes, ["Books", "Notes", "Practice papers", "Exams", "Quizzes", "Worked examples", "Study guide", "Slides"]);
