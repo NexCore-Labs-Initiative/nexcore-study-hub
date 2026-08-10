@@ -59,24 +59,31 @@ test("catalogue has a supported shape", () => {
 });
 test("semesters use the SQU season-year naming convention", () => {
   const expectedSemesters = [
+    "Summer26",
     "Spring26",
     "Fall25",
+    "Summer25",
     "Spring25",
     "Fall24",
+    "Summer24",
     "Spring24",
     "Fall23",
+    "Summer23",
     "Spring23",
     "Fall22",
+    "Summer22",
     "Spring22",
     "Fall21",
+    "Summer21",
     "Spring21",
     "Fall20",
+    "Summer20",
     "Spring20",
   ];
   assert.deepEqual(catalogue.semesters, expectedSemesters);
   assert.ok(
     catalogue.semesters.every((semester) =>
-      /^(Spring|Fall)\d{2}$/.test(semester),
+      /^(Spring|Summer|Fall)\d{2}$/.test(semester),
     ),
   );
   const semesterSelect = indexHtml.match(
@@ -85,7 +92,9 @@ test("semesters use the SQU season-year naming convention", () => {
   assert.ok(semesterSelect, "visible semester filter is missing");
   assert.deepEqual(
     [
-      ...semesterSelect.matchAll(/<option value="((?:Spring|Fall)\d{2})">/g),
+      ...semesterSelect.matchAll(
+        /<option value="((?:Spring|Summer|Fall)\d{2})">/g,
+      ),
     ].map((match) => match[1]),
     expectedSemesters,
   );
