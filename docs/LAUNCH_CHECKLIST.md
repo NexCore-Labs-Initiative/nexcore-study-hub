@@ -4,23 +4,23 @@
 
 Create a blank Google Form named **NexCore Study Hub — Resource contribution**. Use this description:
 
-> Share a useful SQU study resource for review. NexCore reviews every submission before it appears in the public catalogue. Only submit material you created or have permission to share.
+> Share a useful SQU study resource for review. NexCore Study Hub is in its contribution-first beta: the public catalogue grows only after submissions are checked. Only submit material you created or have permission to share.
 
 Add these questions in this order:
 
-| Question | Type | Required | Notes |
-| --- | --- | --- | --- |
-| Your SQU email address | Short answer | Yes | Enable email validation. |
-| Course code | Short answer | Yes | Example: `CS101`. |
-| Course title | Short answer | Yes | Use the course’s published name. |
-| Semester | Dropdown | Yes | Use the published collection: Spring26, Fall25, Spring25, and earlier terms. |
-| Resource title | Short answer | Yes | A clear title students can recognise. |
-| Resource type | Dropdown | Yes | Books, Notes, Practice papers, Exams, Quizzes, Worked examples, Study guide, Slides. |
-| Main topics | Short answer | Yes | Separate topics with commas. |
-| Google Drive link | Short answer | Yes | Enable URL validation. |
-| Description | Paragraph | Yes | Ask what the resource covers and why it is useful. |
-| Rights confirmation | Checkboxes | Yes | Single required option: `I created this resource or have permission to share it publicly.` |
-| Notes for reviewers | Paragraph | No | For context that should not appear publicly. |
+| Question               | Type         | Required | Notes                                                                                      |
+| ---------------------- | ------------ | -------- | ------------------------------------------------------------------------------------------ |
+| Your SQU email address | Short answer | Yes      | Enable email validation.                                                                   |
+| Course code            | Short answer | Yes      | Example: `CS101`.                                                                          |
+| Course title           | Short answer | Yes      | Use the course’s published name.                                                           |
+| Semester               | Dropdown     | Yes      | Use the published collection: Spring26, Fall25, Spring25, and earlier terms.               |
+| Resource title         | Short answer | Yes      | A clear title students can recognise.                                                      |
+| Resource type          | Dropdown     | Yes      | Books, Notes, Practice papers, Exams, Quizzes, Worked examples, Study guide, Slides.       |
+| Main topics            | Short answer | Yes      | Separate topics with commas.                                                               |
+| Google Drive link      | Short answer | Yes      | Enable URL validation.                                                                     |
+| Description            | Paragraph    | Yes      | Ask what the resource covers and why it is useful.                                         |
+| Rights confirmation    | Checkboxes   | Yes      | Single required option: `I created this resource or have permission to share it publicly.` |
+| Notes for reviewers    | Paragraph    | No       | For context that should not appear publicly.                                               |
 
 Form settings:
 
@@ -40,7 +40,7 @@ In `assets/js/config.js`, replace the empty strings:
 ```js
 window.STUDY_HUB_CONFIG = Object.freeze({
   googleFormUrl: "https://forms.gle/your-public-form-id",
-  reportEmail: "study@nexcorelabs.com"
+  reportEmail: "study@nexcorelabs.com",
 });
 ```
 
@@ -65,6 +65,7 @@ Add only approved records to `assets/data/catalogue.json`. A live entry must hav
   "semester": "Fall25",
   "topics": ["Arrays", "Loops"],
   "type": "Study guide",
+  "format": "pdf",
   "language": "English",
   "status": "verified",
   "driveUrl": "https://drive.google.com/file/d/your-file-id/view"
@@ -72,6 +73,8 @@ Add only approved records to `assets/data/catalogue.json`. A live entry must hav
 ```
 
 Only approved, verified resources belong in the public catalogue.
+
+Do not add demo, placeholder, pending, or unreviewed records to the public JSON catalogue. If a college has no approved resources yet, leave it empty and let the website show the contribution message.
 
 ## 4. Validate and deploy
 

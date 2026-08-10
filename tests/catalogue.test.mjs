@@ -45,7 +45,6 @@ const required = [
   "format",
   "language",
   "status",
-  "isDemo",
   "driveUrl",
 ];
 test("catalogue has a supported shape", () => {
@@ -54,8 +53,8 @@ test("catalogue has a supported shape", () => {
   assert.ok(catalogue.formats.length);
   assert.ok(catalogue.resourceTypes.length);
   assert.ok(catalogue.colleges.length);
-  assert.equal(catalogue.courses.length, catalogue.colleges.length);
-  assert.equal(catalogue.resources.length, catalogue.colleges.length);
+  assert.ok(Array.isArray(catalogue.courses));
+  assert.ok(Array.isArray(catalogue.resources));
 });
 test("semesters use the SQU season-year naming convention", () => {
   const expectedSemesters = [
@@ -101,7 +100,7 @@ test("semesters use the SQU season-year naming convention", () => {
   for (const match of indexHtml.matchAll(/semester:\s*["']([^"']+)["']/g)) {
     assert.ok(
       expectedSemesters.includes(match[1]),
-      `sample resource uses unknown semester ${match[1]}`,
+      `embedded resource uses unknown semester ${match[1]}`,
     );
   }
   assert.doesNotMatch(indexHtml, /\bSem(?:ester)?\s+[12]\b/);
@@ -129,7 +128,7 @@ test("resource formats use the supported collection", () => {
   for (const match of indexHtml.matchAll(/format:\s*["']([^"']+)["']/g)) {
     assert.ok(
       expectedFormats.includes(match[1]),
-      `sample resource uses unknown format ${match[1]}`,
+      `embedded resource uses unknown format ${match[1]}`,
     );
   }
   assert.match(
@@ -162,7 +161,7 @@ test("catalogue data and visible college selector match the supported colleges",
   for (const match of indexHtml.matchAll(/college:\s*["']([A-Z]+)["']/g)) {
     assert.ok(
       visibleCodes.has(match[1]),
-      `sample resource uses unknown college ${match[1]}`,
+      `embedded resource uses unknown college ${match[1]}`,
     );
   }
 });
@@ -191,7 +190,7 @@ test("resource types use the supported academic collection", () => {
   for (const match of indexHtml.matchAll(/type:\s*["']([^"']+)["']/g)) {
     assert.ok(
       expectedResourceTypes.includes(match[1]),
-      `sample resource uses unknown type ${match[1]}`,
+      `embedded resource uses unknown type ${match[1]}`,
     );
   }
   assert.match(
@@ -241,16 +240,21 @@ test("courses and resources belong to valid catalogue parents", () => {
       catalogue.resourceTypes.includes(r.type),
       `${r.id} has an unsupported resource type`,
     );
-    assert.ok(
-      ["demo", "verified"].includes(r.status),
-      `${r.id} status is unsupported`,
-    );
-    if (r.isDemo) {
-      assert.equal(r.status, "demo");
-      assert.equal(r.driveUrl, "");
-    } else {
-      assert.equal(r.status, "verified");
-      assert.match(r.driveUrl, /^https:\/\/drive\.google\.com\//);
-    }
+    assert.ok(["verified"].includes(r.status), `${r.id} status is unsupported`);
+    assert.match(r.driveUrl, /^https:\/\/drive\.google\.com\//);
   }
+});
+
+test("beta launch page has no fake catalogue claims or demo files", () => {
+  assert.match(indexHtml, />Beta</);
+  assert.match(indexHtml, /contribution-first beta/i);
+  assert.match(indexHtml, /const RESOURCES = \[\];/);
+  assert.doesNotMatch(indexHtml, /340\s*<span>\+<\/span>/);
+  assert.doesNotMatch(indexHtml, /80\s*<span>%<\/span>/);
+  assert.doesNotMatch(indexHtml, /Classical Mechanics|PHYS3101|A\. Al-Balushi/);
+  assert.equal(
+    catalogue.resources.filter((resource) => resource.isDemo).length,
+    0,
+    "catalogue must not publish demo resources",
+  );
 });

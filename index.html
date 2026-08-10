@@ -393,7 +393,7 @@
         border-radius: 4px;
       }
 
-      /* Stats bar */
+      /* Launch status */
       .stats-bar {
         background: var(--ink);
         color: var(--paper);
@@ -416,10 +416,12 @@
         border-right: none;
       }
       .stat-n {
-        font-family: var(--font-display);
-        font-size: 2.2rem;
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        font-weight: 700;
         color: #fff;
-        line-height: 1;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
       }
       .stat-n span {
         color: var(--accent);
@@ -429,6 +431,7 @@
         font-size: 0.8rem;
         color: rgba(255, 255, 255, 0.5);
         margin-top: 0.2rem;
+        max-width: 190px;
       }
 
       /* ── How it works ── */
@@ -536,6 +539,12 @@
         margin-bottom: 2.5rem;
         flex-wrap: wrap;
         gap: 1rem;
+      }
+      .catalogue-note {
+        max-width: 620px;
+        margin-top: 0.75rem;
+        color: var(--ink-soft);
+        font-size: 0.95rem;
       }
 
       /* College selector */
@@ -1247,8 +1256,9 @@
         <div class="hero-eyebrow">SQU Community · Academic Resources</div>
         <h1>Study material,<br /><em>properly organized.</em></h1>
         <p class="hero-desc">
-          Find course notes, past papers, and study guides by semester, college,
-          and topic — contributed and verified by your fellow SQU students.
+          NexCore Study Hub is launching in a contribution-first beta. During
+          the first academic year, we are collecting, reviewing, and organizing
+          SQU study resources before publishing approved catalogue entries.
         </p>
         <div class="hero-actions">
           <a href="#catalogue" class="btn btn-primary">
@@ -1265,7 +1275,7 @@
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
-            Browse resources
+            Browse colleges
           </a>
           <a href="submit.html" class="btn btn-secondary">Share a resource →</a>
         </div>
@@ -1275,42 +1285,46 @@
           <div class="hcard hcard--back"></div>
           <div class="hcard hcard--middle"></div>
           <div class="hcard hcard--front">
-            <div class="hcard-badge verified">
-              <svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3" /></svg>
-              Verified
+            <div class="hcard-badge review">
+              <svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="3" /></svg>
+              Collection phase
             </div>
-            <div class="hcard-title">Classical Mechanics — Full Notes Pack</div>
+            <div class="hcard-title">Help build the SQU study catalogue</div>
             <div class="hcard-meta">
-              <span class="hcard-meta-tag">PHYS3101</span>
-              <span class="hcard-meta-tag">Spring24</span>
+              <span class="hcard-meta-tag">Submit a Drive link</span>
+              <span class="hcard-meta-tag">Manual review</span>
             </div>
             <div class="hcard-footer">
-              <span class="hcard-course">College of Science</span>
-              <span class="hcard-format">PDF Notes</span>
+              <span class="hcard-course">For SQU students</span>
+              <span class="hcard-format">No auto-publishing</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── Stats ── -->
+    <!-- ── Launch status ── -->
     <div class="stats-bar">
       <div class="stats-inner">
         <div class="stat">
-          <div class="stat-n">340<span>+</span></div>
-          <div class="stat-label">Resources catalogued</div>
+          <div class="stat-n">Collecting</div>
+          <div class="stat-label">
+            Student contributions through Google Forms
+          </div>
         </div>
         <div class="stat">
-          <div class="stat-n">9</div>
-          <div class="stat-label">SQU colleges covered</div>
+          <div class="stat-n">Reviewing</div>
+          <div class="stat-label">Every submission before public listing</div>
         </div>
         <div class="stat">
-          <div class="stat-n">80<span>%</span></div>
-          <div class="stat-label">Verified entries</div>
+          <div class="stat-n">Publishing</div>
+          <div class="stat-label">
+            Only approved Drive links in the catalogue
+          </div>
         </div>
         <div class="stat">
-          <div class="stat-n"><span style="font-style: italic">∞</span></div>
-          <div class="stat-label">Community-powered</div>
+          <div class="stat-n">Growing</div>
+          <div class="stat-label">One useful contribution at a time</div>
         </div>
       </div>
     </div>
@@ -1337,8 +1351,8 @@
           </div>
           <h3>Filter by what you need</h3>
           <p>
-            Pick your college, then narrow by course, semester, topic, and
-            format. No more hunting through random Drive folders.
+            Pick your college, then later narrow approved entries by course,
+            semester, topic, resource type, and format as the catalogue grows.
           </p>
         </div>
         <div class="step-card">
@@ -1351,8 +1365,9 @@
           </div>
           <h3>See the status before you open</h3>
           <p>
-            Every entry shows a verification status. <em>Verified</em> means a
-            NexCore reviewer confirmed the link and content are accurate.
+            Public records appear only after manual review. A
+            <em>Verified</em> entry means NexCore checked the catalogue details
+            and the Drive viewer link before publishing.
           </p>
         </div>
         <div class="step-card">
@@ -1384,6 +1399,10 @@
             >
               Choose your college to begin.
             </h2>
+            <p class="catalogue-note">
+              The public catalogue starts empty on purpose. Approved resources
+              will appear here only after student submissions are reviewed.
+            </p>
           </div>
           <button
             class="btn btn-secondary"
@@ -1598,17 +1617,17 @@
             </div>
             <h3>Select a college above</h3>
             <p>
-              Pick your college to load its resources, or browse everything
-              below.
+              Pick your college to see whether approved resources are already
+              published. If not, you can help start that college’s collection.
             </p>
             <br />
-            <button
+            <a
+              href="submit.html"
               class="btn btn-secondary"
-              onclick="loadAll()"
               style="margin: 0 auto"
             >
-              Browse all resources
-            </button>
+              Contribute a resource
+            </a>
           </div>
         </div>
       </div>
@@ -1621,9 +1640,9 @@
           <div class="contribute-eyebrow">Community · Open contributions</div>
           <h2>Have notes worth<br /><em>sharing?</em></h2>
           <p>
-            Every great resource in this catalogue started with someone who
-            decided to share. Submit yours and it will be reviewed and listed
-            for the whole SQU community.
+            This beta is in its collection year. Submit useful notes, slides,
+            practice papers, quizzes, worked examples, or guides, and NexCore
+            will review them before anything appears publicly.
           </p>
         </div>
         <div class="contribute-actions">
@@ -1672,8 +1691,9 @@
               <div class="trust-item-text">
                 <h4>Verified badge</h4>
                 <p>
-                  A NexCore reviewer has confirmed the source link and catalogue
-                  entry are accurate and appropriate.
+                  When a resource appears as verified, it means a NexCore
+                  reviewer checked the catalogue details and the public Drive
+                  viewer link before publishing.
                 </p>
               </div>
             </div>
@@ -1754,7 +1774,6 @@
         <div id="modalDetails"></div>
         <div class="modal-footer">
           <a
-            href="#"
             id="modalOpenLink"
             class="btn btn-primary"
             target="_blank"
@@ -1769,165 +1788,10 @@
     </div>
 
     <script>
-      // ── Sample data ──
-      const RESOURCES = [
-        {
-          id: 1,
-          title: "Classical Mechanics — Full Notes Pack",
-          course: "PHYS3101",
-          college: "COS",
-          semester: "Spring24",
-          topic: "Mechanics",
-          type: "Notes",
-          format: "pdf",
-          status: "verified",
-          contributor: "A. Al-Balushi",
-          year: "2024",
-        },
-        {
-          id: 2,
-          title: "Organic Chemistry Reaction Summary",
-          course: "CHEM2210",
-          college: "COS",
-          semester: "Fall24",
-          topic: "Organic Chemistry",
-          type: "Study guide",
-          format: "pdf",
-          status: "verified",
-          contributor: "S. Al-Rawahi",
-          year: "2024",
-        },
-        {
-          id: 3,
-          title: "Thermodynamics Past Papers 2019–2023",
-          course: "PHYS2202",
-          college: "COS",
-          semester: "Spring23",
-          topic: "Thermodynamics",
-          type: "Practice papers",
-          format: "pdf",
-          status: "verified",
-          contributor: "M. Al-Habsi",
-          year: "2023",
-        },
-        {
-          id: 4,
-          title: "Linear Algebra Study Guide",
-          course: "MATH2101",
-          college: "CENG",
-          semester: "Fall24",
-          topic: "Linear Algebra",
-          type: "Study guide",
-          format: "pdf",
-          status: "verified",
-          contributor: "K. Al-Riyami",
-          year: "2024",
-        },
-        {
-          id: 5,
-          title: "Digital Circuits Lab Notes",
-          course: "ELEC2305",
-          college: "CENG",
-          semester: "Spring24",
-          topic: "Digital Circuits",
-          type: "Notes",
-          format: "pdf",
-          status: "pending",
-          contributor: "N. Al-Kindi",
-          year: "2024",
-        },
-        {
-          id: 6,
-          title: "Fluid Mechanics — Chapter Summaries",
-          course: "MENG3101",
-          college: "CENG",
-          semester: "Fall23",
-          topic: "Fluid Mechanics",
-          type: "Notes",
-          format: "word",
-          status: "verified",
-          contributor: "F. Al-Farsi",
-          year: "2023",
-        },
-        {
-          id: 7,
-          title: "Microeconomics Exam Prep Guide",
-          course: "ECON1101",
-          college: "CEPS",
-          semester: "Fall24",
-          topic: "Microeconomics",
-          type: "Study guide",
-          format: "pdf",
-          status: "verified",
-          contributor: "R. Al-Saidi",
-          year: "2024",
-        },
-        {
-          id: 8,
-          title: "Financial Accounting Past Papers",
-          course: "ACCT2201",
-          college: "CEPS",
-          semester: "Spring23",
-          topic: "Accounting",
-          type: "Practice papers",
-          format: "pdf",
-          status: "verified",
-          contributor: "H. Al-Zadjali",
-          year: "2023",
-        },
-        {
-          id: 9,
-          title: "Human Anatomy Quick Reference",
-          course: "ANAT1101",
-          college: "CMHS",
-          semester: "Fall24",
-          topic: "Anatomy",
-          type: "Study guide",
-          format: "pdf",
-          status: "verified",
-          contributor: "L. Al-Maskari",
-          year: "2024",
-        },
-        {
-          id: 10,
-          title: "Physiology Lecture Notes — Spring24",
-          course: "PHYS1202",
-          college: "CMHS",
-          semester: "Spring24",
-          topic: "Physiology",
-          type: "Notes",
-          format: "pdf",
-          status: "pending",
-          contributor: "A. Al-Oraimi",
-          year: "2024",
-        },
-        {
-          id: 11,
-          title: "Arabic Literature Essay Guide",
-          course: "ARBL2101",
-          college: "CASS",
-          semester: "Fall23",
-          topic: "Literature",
-          type: "Study guide",
-          format: "pdf",
-          status: "verified",
-          contributor: "S. Al-Mahrizi",
-          year: "2023",
-        },
-        {
-          id: 12,
-          title: "Database Systems — SQL Notes",
-          course: "IT2301",
-          college: "COS",
-          semester: "Spring24",
-          topic: "Databases",
-          type: "Notes",
-          format: "pdf",
-          status: "verified",
-          contributor: "O. Al-Gheilani",
-          year: "2024",
-        },
-      ];
+      // ── Published catalogue entries ──
+      // V1 launches contribution-first. Approved records are added here only
+      // after manual review of Google Form submissions and Drive viewer access.
+      const RESOURCES = [];
 
       const FORMAT_LABELS = {
         pdf: "PDF",
@@ -1940,6 +1804,18 @@
 
       let activeCollege = null;
       let filtered = [];
+
+      function validDriveUrl(value) {
+        try {
+          const url = new URL(value);
+          return (
+            url.protocol === "https:" &&
+            url.hostname.endsWith("drive.google.com")
+          );
+        } catch (error) {
+          return false;
+        }
+      }
 
       function selectCollege(code, name) {
         activeCollege = code;
@@ -2002,13 +1878,32 @@
       function renderResources(list) {
         const grid = document.getElementById("resourceGrid");
         if (!list.length) {
+          const selectedCollegeName = activeCollege
+            ? document
+                .querySelector(
+                  `[data-college="${activeCollege}"] .college-btn-name`,
+                )
+                ?.textContent.trim()
+            : "";
           grid.innerHTML = `
         <div class="empty-state">
           <div class="empty-icon">
             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </div>
-          <h3>No resources found</h3>
-          <p>Try a different search or filter combination.</p>
+          <h3>${
+            activeCollege
+              ? "No approved resources yet"
+              : "No approved resources published yet"
+          }</h3>
+          <p>${
+            activeCollege
+              ? `${selectedCollegeName} is open for contributions. Submit a resource and NexCore will review it before publishing.`
+              : "The catalogue will grow as student submissions are reviewed. You can still browse colleges and contribute now."
+          }</p>
+          <br />
+          <a href="submit.html" class="btn btn-secondary" style="margin: 0 auto">
+            Contribute a resource
+          </a>
         </div>`;
           return;
         }
@@ -2071,7 +1966,16 @@
       <div class="modal-detail-row"><span class="modal-detail-label">Type</span><span class="modal-detail-value" style="text-transform:capitalize">${r.type}</span></div>
       <div class="modal-detail-row"><span class="modal-detail-label">Contributed by</span><span class="modal-detail-value">${r.contributor}</span></div>
       <div class="modal-detail-row"><span class="modal-detail-label">Year</span><span class="modal-detail-value">${r.year}</span></div>`;
-        document.getElementById("modalOpenLink").href = "#"; // would be r.driveLink
+        const openLink = document.getElementById("modalOpenLink");
+        if (validDriveUrl(r.driveUrl)) {
+          openLink.href = r.driveUrl;
+          openLink.classList.remove("disabled");
+          openLink.removeAttribute("aria-disabled");
+        } else {
+          openLink.removeAttribute("href");
+          openLink.classList.add("disabled");
+          openLink.setAttribute("aria-disabled", "true");
+        }
         document.getElementById("modalOverlay").classList.add("open");
         document.body.style.overflow = "hidden";
       }

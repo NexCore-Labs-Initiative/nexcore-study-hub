@@ -86,11 +86,11 @@
   }
   function validate(data) {
     if (
-        !data ||
-        !Array.isArray(data.semesters) ||
-        !Array.isArray(data.formats) ||
-        !Array.isArray(data.resourceTypes) ||
-        !Array.isArray(data.colleges) ||
+      !data ||
+      !Array.isArray(data.semesters) ||
+      !Array.isArray(data.formats) ||
+      !Array.isArray(data.resourceTypes) ||
+      !Array.isArray(data.colleges) ||
       !Array.isArray(data.courses) ||
       !Array.isArray(data.resources)
     )
@@ -152,7 +152,9 @@
       }),
     );
     options(el.semester, data.semesters);
-    options(el.format, data.formats, function (format) { return format.toUpperCase(); });
+    options(el.format, data.formats, function (format) {
+      return format.toUpperCase();
+    });
     options(
       el.topic,
       unique(
@@ -179,7 +181,7 @@
         state.filters.course ||
         state.filters.semester ||
         state.filters.topic ||
-        state.filters.type,
+        state.filters.type ||
         state.filters.format,
     );
   }
@@ -219,15 +221,15 @@
         (!state.filters.course || r.courseId === state.filters.course) &&
         (!state.filters.semester || r.semester === state.filters.semester) &&
         (!state.filters.topic || r.topics.includes(state.filters.topic)) &&
-        (!state.filters.type || r.type === state.filters.type)
-        && (!state.filters.format || r.format === state.filters.format)
+        (!state.filters.type || r.type === state.filters.type) &&
+        (!state.filters.format || r.format === state.filters.format)
       );
     });
   }
   function badge(resource) {
     return resource.status === "verified"
       ? '<span class="status status-verified">Verified</span>'
-      : '<span class="status status-demo">Sample resource</span>';
+      : '<span class="status status-review">Review required</span>';
   }
   function renderColleges() {
     el.colleges.setAttribute("aria-busy", "false");
@@ -236,6 +238,9 @@
         var count = state.resources.filter(function (resource) {
           return state.courses.get(resource.courseId).collegeId === college.id;
         }).length;
+        var status = count
+          ? count + " " + (count === 1 ? "resource" : "resources")
+          : "Open for contributions";
         var selected = state.filters.college === college.id;
         return (
           '<button class="college-card' +
@@ -247,9 +252,7 @@
           '"><span>' +
           esc(college.name) +
           "</span><small>" +
-          count +
-          " " +
-          (count === 1 ? "resource" : "resources") +
+          status +
           "</small></button>"
         );
       })
@@ -261,9 +264,12 @@
     el.grid.innerHTML = resources
       .map(function (r) {
         var course = state.courses.get(r.courseId);
-        var tags = [course.code, r.semester, r.type, r.format.toUpperCase()].concat(
-          r.topics.slice(0, 1),
-        );
+        var tags = [
+          course.code,
+          r.semester,
+          r.type,
+          r.format.toUpperCase(),
+        ].concat(r.topics.slice(0, 1));
         return (
           '<article class="card"><div class="card-top"><span class="course-code">' +
           esc(course.code) +
@@ -294,7 +300,7 @@
         state.filters.course ||
         state.filters.semester ||
         state.filters.topic ||
-        state.filters.type,
+        state.filters.type ||
         state.filters.format,
     );
     var resources = college || hasAdvanced ? matchingResources() : [];
@@ -302,27 +308,27 @@
     renderColleges();
     renderResources(resources);
     if (!college && !hasAdvanced) {
-      el.status.textContent = "Select a college to browse resources";
-      el.heading.textContent = "Choose a college to view resources";
+      el.status.textContent = "Collection phase";
+      el.heading.textContent = "Choose a college to view its collection status";
       el.subheading.textContent =
-        "Advanced search is available if you already know what you need.";
+        "The public catalogue starts empty and grows as submissions are reviewed.";
       el.emptyEyebrow.textContent = "College first";
       el.emptyTitle.textContent = "Choose the SQU college.";
       el.emptyCopy.textContent =
-        "Your course resources will appear here after you select it.";
+        "Approved resources will appear here after manual moderation. You can contribute now.";
       el.emptyClear.hidden = true;
     } else if (resources.length === 0) {
-      el.status.textContent = "No resources shown";
+      el.status.textContent = "No approved resources yet";
       el.heading.textContent = college
         ? college.name + " resources"
         : "Search results";
       el.subheading.textContent = college
-        ? "No catalogue entries match this college and filter combination."
-        : "No resources match the current advanced filters.";
-      el.emptyEyebrow.textContent = "No matches";
-      el.emptyTitle.textContent = "Nothing fits those filters yet.";
+        ? "This college is open for contributions. Published entries appear only after review."
+        : "The public catalogue will grow as submissions are reviewed.";
+      el.emptyEyebrow.textContent = "Collection phase";
+      el.emptyTitle.textContent = "No approved resources published yet.";
       el.emptyCopy.textContent =
-        "Try another college or clear the current filters.";
+        "Submit a useful resource and NexCore will review it before listing it publicly.";
       el.emptyClear.hidden = false;
     } else {
       el.status.textContent =
@@ -351,7 +357,12 @@
     Object.keys(state.filters).forEach(function (key) {
       state.filters[key] = "";
     });
-    el.search.value = el.semester.value = el.topic.value = el.type.value = el.format.value = "";
+    el.search.value =
+      el.semester.value =
+      el.topic.value =
+      el.type.value =
+      el.format.value =
+        "";
     populateCourses();
     el.advanced.open = false;
     render();
@@ -362,7 +373,7 @@
     });
     if (!r) return;
     var course = state.courses.get(r.courseId);
-    var canOpen = !r.isDemo && r.status === "verified" && validUrl(r.driveUrl);
+    var canOpen = r.status === "verified" && validUrl(r.driveUrl);
     var canReport = validEmail(config.reportEmail);
     var report = canReport
       ? "mailto:" +
@@ -399,9 +410,6 @@
       '<a class="button outline" href="' +
       esc(report) +
       '">Report this resource</a></div>' +
-      (r.isDemo
-        ? '<p class="config-note">This is sample content for the catalogue preview. It has no live Drive file.</p>'
-        : "") +
       (!canReport
         ? '<p class="config-note">The report contact is being configured.</p>'
         : "");
