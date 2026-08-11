@@ -84,7 +84,13 @@ test("every page exposes the optional contribution and MIT license footer", () =
     assert.match(html, /fi-brands-whatsapp/);
     assert.match(html, /fi-brands-twitter-alt/);
     assert.match(html, /fi-brands-discord/);
-    assert.doesNotMatch(html, /UIcons by Flaticon/i);
+    assert.match(html, /class="footer-credit"/);
+    assert.match(html, /assets\/css\/(?:home|site-pages)\.css\?v=locale-8/);
+    assert.match(
+      html,
+      /href="https:\/\/www\.flaticon\.com\/uicons"\s+target="_blank"\s+rel="noopener noreferrer"/,
+    );
+    assert.match(html, /UIcons by Flaticon/);
     if (path.startsWith("ar/")) {
       assert.match(html, /مساهمة اختيارية/);
     } else {
@@ -110,6 +116,8 @@ test("dynamic catalogue copy and RTL styles are localized", () => {
   assert.match(pageCss, /html\[dir="rtl"\]/);
   assert.match(homeCss, /prefers-reduced-motion/);
   assert.match(pageCss, /prefers-reduced-motion/);
+  assert.match(homeCss, /\.footer-credit/);
+  assert.match(pageCss, /\.footer-credit/);
 });
 
 test("Arabic contribution and legal experiences are complete", () => {

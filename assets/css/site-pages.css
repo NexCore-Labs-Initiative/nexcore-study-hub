@@ -657,6 +657,33 @@ a {
   stroke-linejoin: round;
   stroke-width: 1.75;
 }
+.footer-credit {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  justify-self: center;
+  margin-top: -0.45rem;
+  direction: ltr;
+  color: var(--ink-muted);
+  font-size: 0.7rem;
+  line-height: 1.4;
+  text-align: center;
+}
+.footer-credit a,
+.footer-credit a:visited {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 0.16em;
+  transition: color 0.15s ease;
+}
+.footer-credit a:hover {
+  color: var(--accent);
+}
+.footer-credit a:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 .footer-brand {
   grid-column: 1;
   grid-row: 1;
@@ -714,6 +741,10 @@ a {
   }
   [dir="rtl"] .footer-support {
     align-items: flex-end;
+  }
+  .footer-credit {
+    grid-row: 4;
+    width: 100%;
   }
   .shell {
     width: min(100% - 2.5rem, 1120px);
