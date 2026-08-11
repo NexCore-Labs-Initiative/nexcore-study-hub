@@ -37,25 +37,58 @@
   "colleges": [
     {
       "id": "agricultural-marine-sciences",
-      "name": "College of Agricultural and Marine Sciences"
+      "code": "CAMS",
+      "name": "College of Agricultural and Marine Sciences",
+      "nameAr": "كلية العلوم الزراعية والبحرية"
     },
     {
       "id": "arts-social-sciences",
-      "name": "College of Arts and Social Sciences"
+      "code": "CASS",
+      "name": "College of Arts and Social Sciences",
+      "nameAr": "كلية الآداب والعلوم الاجتماعية"
     },
     {
       "id": "economics-political-science",
-      "name": "College of Economics and Political Science"
+      "code": "CEPS",
+      "name": "College of Economics and Political Science",
+      "nameAr": "كلية الاقتصاد والعلوم السياسية"
     },
-    { "id": "education", "name": "College of Education" },
-    { "id": "engineering", "name": "College of Engineering" },
-    { "id": "law", "name": "College of Law" },
+    {
+      "id": "education",
+      "code": "CEDU",
+      "name": "College of Education",
+      "nameAr": "كلية التربية"
+    },
+    {
+      "id": "engineering",
+      "code": "CENG",
+      "name": "College of Engineering",
+      "nameAr": "كلية الهندسة"
+    },
+    {
+      "id": "law",
+      "code": "CLAW",
+      "name": "College of Law",
+      "nameAr": "كلية الحقوق"
+    },
     {
       "id": "medicine-health-sciences",
-      "name": "College of Medicine and Health Sciences"
+      "code": "CMHS",
+      "name": "College of Medicine and Health Sciences",
+      "nameAr": "كلية الطب والعلوم الصحية"
     },
-    { "id": "nursing", "name": "College of Nursing" },
-    { "id": "science", "name": "College of Science" }
+    {
+      "id": "nursing",
+      "code": "CON",
+      "name": "College of Nursing",
+      "nameAr": "كلية التمريض"
+    },
+    {
+      "id": "science",
+      "code": "COS",
+      "name": "College of Science",
+      "nameAr": "كلية العلوم"
+    }
   ],
   "courses": [],
   "resources": []

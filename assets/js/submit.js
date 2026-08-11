@@ -1,6 +1,26 @@
 (function () {
   "use strict";
   var config = window.STUDY_HUB_CONFIG || {},
+    isArabic = document.documentElement.lang.toLowerCase().startsWith("ar"),
+    copy = isArabic
+      ? {
+          ready: "سيفتح نموذج المساهمة عند المتابعة.",
+          accept: "راجع شروط المساهمة ووافق عليها قبل المتابعة.",
+          formUnavailable: "يجري إعداد نموذج المساهمة حاليًا.",
+          reportSubject: "بلاغ عن مورد في NexCore Study Hub",
+          reportReady:
+            "سيفتح هذا الخيار رسالة بريد إلكتروني إلى جهة مراجعة الموارد.",
+          reportUnavailable:
+            "يجري إعداد وسيلة التواصل الخاصة بالبلاغات حاليًا.",
+        }
+      : {
+          ready: "The contribution form will open when you continue.",
+          accept: "Review and accept the contribution terms before continuing.",
+          formUnavailable: "The contribution form is being configured.",
+          reportSubject: "Study Hub resource report",
+          reportReady: "This opens an email to the resource-review contact.",
+          reportUnavailable: "The report contact is being configured.",
+        },
     formButton = document.querySelector("#openSubmissionForm"),
     formState = document.querySelector("#submissionState"),
     termsCheckbox = document.querySelector("#acceptContributionTerms"),
@@ -20,9 +40,7 @@
     function updateFormButton() {
       formButton.disabled = !termsCheckbox.checked;
       formButton.classList.toggle("disabled", !termsCheckbox.checked);
-      formState.textContent = termsCheckbox.checked
-        ? "The contribution form will open when you continue."
-        : "Review and accept the contribution terms before continuing.";
+      formState.textContent = termsCheckbox.checked ? copy.ready : copy.accept;
     }
     termsCheckbox.addEventListener("change", updateFormButton);
     formButton.addEventListener("click", function () {
@@ -34,22 +52,19 @@
     formButton.disabled = true;
     formButton.classList.add("disabled");
     termsCheckbox.disabled = true;
-    formState.textContent =
-      "The contribution form is being configured. Add its public Google Form URL in assets/js/config.js before launch.";
+    formState.textContent = copy.formUnavailable;
   }
   if (validEmail(config.reportEmail)) {
     reportAction.href =
       "mailto:" +
       encodeURIComponent(config.reportEmail) +
       "?subject=" +
-      encodeURIComponent("Study Hub resource report");
-    reportState.textContent =
-      "This opens an email to the resource-review contact.";
+      encodeURIComponent(copy.reportSubject);
+    reportState.textContent = copy.reportReady;
   } else {
     reportAction.removeAttribute("href");
     reportAction.setAttribute("aria-disabled", "true");
     reportAction.classList.add("disabled");
-    reportState.textContent =
-      "The report contact is being configured. Add the review email in assets/js/config.js before launch.";
+    reportState.textContent = copy.reportUnavailable;
   }
 })();

@@ -2,32 +2,41 @@
 
 ## 1. Create the contribution Google Form
 
-Create a blank Google Form named **NexCore Study Hub — Resource contribution**. Use this description:
+Maintain one bilingual Google Form named **NexCore Study Hub — Resource contribution | المساهمة بمورد دراسي**. Put English and Arabic together in every title, description, option, validation message, and confirmation so both site routes use the same review queue. Use this description:
 
 > Share a useful SQU study resource for review. NexCore Study Hub is in its contribution-first beta: the public catalogue grows only after submissions are checked. Only submit material you created or have permission to share.
+>
+> شارك موردًا دراسيًا مفيدًا لطلبة SQU ليخضع للمراجعة. لا ينمو الفهرس العام في هذه المرحلة التجريبية إلا بعد مراجعة المساهمات. أرسل فقط المواد التي أنشأتها أو لديك إذن بمشاركتها.
 
 Add these questions in this order:
 
-| Question               | Type         | Required | Notes                                                                                      |
-| ---------------------- | ------------ | -------- | ------------------------------------------------------------------------------------------ |
-| Your SQU email address | Short answer | Yes      | Enable email validation.                                                                   |
-| Course code            | Short answer | Yes      | Example: `CS101`.                                                                          |
-| Course title           | Short answer | Yes      | Use the course’s published name.                                                           |
-| Semester               | Dropdown     | Yes      | Use the published collection: Spring26, Fall25, Spring25, and earlier terms.               |
-| Resource title         | Short answer | Yes      | A clear title students can recognise.                                                      |
-| Resource type          | Dropdown     | Yes      | Books, Notes, Practice papers, Exams, Quizzes, Worked examples, Study guide, Slides.       |
-| Main topics            | Short answer | Yes      | Separate topics with commas.                                                               |
-| Google Drive link      | Short answer | Yes      | Enable URL validation.                                                                     |
-| Description            | Paragraph    | Yes      | Ask what the resource covers and why it is useful.                                         |
-| Rights confirmation    | Checkboxes   | Yes      | Single required option: `I created this resource or have permission to share it publicly.` |
-| Notes for reviewers    | Paragraph    | No       | For context that should not appear publicly.                                               |
+| Question               | Type         | Required | Notes                                                                                |
+| ---------------------- | ------------ | -------- | ------------------------------------------------------------------------------------ |
+| Your SQU email address | Short answer | Yes      | Enable email validation.                                                             |
+| Course code            | Short answer | Yes      | Example: `CS101`.                                                                    |
+| Course title           | Short answer | Yes      | Use the course’s published name.                                                     |
+| Semester               | Dropdown     | Yes      | Use the published collection: Spring26, Fall25, Spring25, and earlier terms.         |
+| Resource title         | Short answer | Yes      | A clear title students can recognise.                                                |
+| Resource type          | Dropdown     | Yes      | Books, Notes, Practice papers, Exams, Quizzes, Worked examples, Study guide, Slides. |
+| Resource format        | Dropdown     | Yes      | PDF, Word, PowerPoint, Excel, Image, Other.                                          |
+| Main topics            | Short answer | Yes      | Separate topics with commas.                                                         |
+| Google Drive link      | Short answer | Yes      | Enable URL validation.                                                               |
+| Description            | Paragraph    | Yes      | Ask what the resource covers and why it is useful.                                   |
+| Consent confirmation   | Checkboxes   | Yes      | Require every confirmation listed below.                                             |
+| Notes for reviewers    | Paragraph    | No       | For context that should not appear publicly.                                         |
 
 Form settings:
 
 - Do not allow file uploads; contributors should submit a Drive link instead.
 - Keep responses editable only if that matches your review process; the recommended default is off.
 - Create a linked response spreadsheet named **NexCore Study Hub — Review queue**.
-- Use this confirmation text: `Thanks. NexCore will review your submission before publishing any catalogue entry.`
+- Require contributors to confirm all of the following in both languages:
+  - they created the resource or have clear permission to share it publicly;
+  - the resource contains no active or leaked assessment, restricted answer key, instructor-only material, unauthorised textbook copy, confidential information, or unnecessary personal data;
+  - NexCore may review the resource and publish its approved catalogue metadata and public Drive viewer link;
+  - the contribution follows academic-integrity rules; and
+  - they have read and accept the English-controlled Contribution Terms and Privacy Notice.
+- Use this bilingual confirmation text: `Thanks. NexCore will review your submission before publishing any catalogue entry. | شكرًا لك. سيراجع NexCore مساهمتك قبل نشر أي سجل في الفهرس.`
 
 Copy the form’s public URL after creating it. It must begin with `https://`.
 
@@ -61,9 +70,12 @@ Add only approved records to `assets/data/catalogue.json`. A live entry must hav
   "id": "cs101-arrays-revision-guide",
   "courseId": "cs101",
   "title": "Arrays and loops revision guide",
+  "titleAr": "دليل مراجعة المصفوفات والحلقات",
   "description": "A concise revision guide for array traversal and loop patterns.",
+  "descriptionAr": "دليل مراجعة موجز لاجتياز المصفوفات وأنماط الحلقات.",
   "semester": "Fall25",
   "topics": ["Arrays", "Loops"],
+  "topicsAr": ["المصفوفات", "الحلقات"],
   "type": "Study guide",
   "format": "pdf",
   "language": "English",
@@ -71,6 +83,8 @@ Add only approved records to `assets/data/catalogue.json`. A live entry must hav
   "driveUrl": "https://drive.google.com/file/d/your-file-id/view"
 }
 ```
+
+Arabic metadata is optional but must be human-reviewed when provided. Arabic pages use it when available and otherwise show the original approved metadata. Never add machine-generated translations at runtime.
 
 Only approved, verified resources belong in the public catalogue.
 

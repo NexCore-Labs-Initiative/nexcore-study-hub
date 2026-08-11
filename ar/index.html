@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar-OM" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="NexCore Study Hub organizes reviewed SQU study resources and community contributions."
+      content="ينظم NexCore Study Hub الموارد الدراسية المراجعة ومساهمات مجتمع جامعة السلطان قابوس."
     />
-    <title>NexCore Study Hub · SQU resources, organized</title>
-    <link rel="canonical" href="https://nexcore-study-hub.vercel.app/" />
+    <title>NexCore Study Hub · موارد جامعة السلطان قابوس منظمة بوضوح</title>
+    <link rel="canonical" href="https://nexcore-study-hub.vercel.app/ar/" />
     <link
       rel="alternate"
       hreflang="en"
@@ -24,46 +24,38 @@
       hreflang="x-default"
       href="https://nexcore-study-hub.vercel.app/"
     />
-    <link rel="icon" href="assets/imgs/brand/favicon.webp" sizes="any" />
+    <link rel="icon" href="../assets/imgs/brand/favicon.webp" sizes="any" />
     <link
       rel="icon"
-      href="assets/imgs/brand/favicon.webp"
-      type="image/webp"
-      sizes="48x48"
-    />
-    <link
-      rel="icon"
-      href="assets/imgs/brand/favicon-32.webp"
+      href="../assets/imgs/brand/favicon-32.webp"
       type="image/webp"
       sizes="32x32"
     />
     <link
       rel="apple-touch-icon"
-      href="assets/imgs/brand/apple-touch-icon.webp"
+      href="../assets/imgs/brand/apple-touch-icon.webp"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/home.css?v=locale-7" />
+    <link rel="stylesheet" href="../assets/css/home.css?v=locale-7" />
   </head>
   <body
-    data-locale="en"
-    data-locale-root="true"
-    data-catalogue-url="assets/data/catalogue.json"
+    data-locale="ar-OM"
+    data-catalogue-url="../assets/data/catalogue.json"
     data-submit-url="submit.html"
   >
-    <a href="#catalogue" class="skip-link">Skip to catalogue</a>
+    <a href="#catalogue" class="skip-link">تجاوز إلى فهرس الموارد</a>
 
-    <!-- ── Navigation ── -->
-    <nav>
+    <nav aria-label="التنقل الرئيسي" dir="ltr">
       <div class="nav-inner">
-        <a href="#" class="nav-brand">
+        <a href="./" class="nav-brand">
           <div class="nav-brand-logo" aria-hidden="true">
             <img
-              src="assets/imgs/brand/icon.webp"
+              src="../assets/imgs/brand/icon.webp"
               alt=""
               width="30"
               height="30"
@@ -73,18 +65,18 @@
           <span class="beta-pill">Lab</span>
         </a>
         <ul class="nav-links">
-          <li><a href="#catalogue">Catalogue</a></li>
-          <li><a href="#how-it-works">How it works</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="submit.html" class="nav-cta">Contribute</a></li>
+          <li><a href="#catalogue">الفهرس</a></li>
+          <li><a href="#how-it-works">آلية العمل</a></li>
+          <li><a href="#about">عن المنصة</a></li>
+          <li><a href="submit.html" class="nav-cta">ساهم بمورد</a></li>
           <li class="language-switch-item">
             <a
-              href="ar/"
+              href="../index.html"
               class="language-switch"
-              data-locale="ar-OM"
-              lang="ar"
-              dir="rtl"
-              aria-label="Switch to Arabic"
+              data-locale="en"
+              lang="en"
+              dir="ltr"
+              aria-label="التبديل إلى اللغة الإنجليزية"
               ><svg
                 class="language-switch__icon"
                 viewBox="0 0 24 24"
@@ -95,13 +87,13 @@
                   d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"
                 ></path>
               </svg>
-              <span>العربية</span></a
+              <span>English</span></a
             >
           </li>
         </ul>
         <button
           class="nav-menu-btn"
-          aria-label="Open menu"
+          aria-label="فتح القائمة"
           aria-expanded="false"
           type="button"
         >
@@ -113,6 +105,7 @@
             stroke="currentColor"
             stroke-width="2"
             stroke-linecap="round"
+            aria-hidden="true"
           >
             <line x1="3" y1="6" x2="21" y2="6" />
             <line x1="3" y1="12" x2="21" y2="12" />
@@ -122,15 +115,14 @@
       </div>
     </nav>
 
-    <!-- ── Hero ── -->
     <section class="hero">
       <div class="hero-text">
-        <div class="hero-eyebrow">SQU Community · Academic Resources</div>
-        <h1>Study material,<br /><em>properly organized.</em></h1>
+        <div class="hero-eyebrow">مجتمع SQU · موارد أكاديمية</div>
+        <h1>موادك الدراسية،<br /><em>منظمة كما ينبغي.</em></h1>
         <p class="hero-desc">
-          NexCore Study Hub is launching in a contribution-first beta. During
-          the first academic year, we are collecting, reviewing, and organizing
-          SQU study resources before publishing approved catalogue entries.
+          ينطلق NexCore Study Hub في مرحلة تجريبية تبدأ بالمساهمات. خلال العام
+          الأكاديمي الأول نجمع موارد طلبة جامعة السلطان قابوس ونراجعها وننظمها،
+          ثم ننشر في الفهرس المواد التي تجتاز المراجعة فقط.
         </p>
         <div class="hero-actions">
           <a href="#catalogue" class="btn btn-primary">
@@ -142,14 +134,14 @@
               stroke="currentColor"
               stroke-width="2.2"
               stroke-linecap="round"
-              stroke-linejoin="round"
+              aria-hidden="true"
             >
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
-            Browse colleges
+            استعرض الكليات
           </a>
-          <a href="submit.html" class="btn btn-secondary">Share a resource →</a>
+          <a href="submit.html" class="btn btn-secondary">شارك موردًا ←</a>
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
@@ -159,61 +151,50 @@
           <div class="hcard hcard--front">
             <div class="hcard-badge review">
               <svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="3" /></svg>
-              Collection phase
+              مرحلة جمع الموارد
             </div>
-            <div class="hcard-title">Help build the SQU study catalogue</div>
+            <div class="hcard-title">ساهم في بناء فهرس موارد طلبة SQU</div>
             <div class="hcard-meta">
-              <span class="hcard-meta-tag">Submit a Drive link</span>
-              <span class="hcard-meta-tag">Manual review</span>
+              <span class="hcard-meta-tag">أرسل رابط Google Drive</span>
+              <span class="hcard-meta-tag">مراجعة يدوية</span>
             </div>
             <div class="hcard-footer">
-              <span class="hcard-course">For SQU students</span>
-              <span class="hcard-format">No auto-publishing</span>
+              <span class="hcard-course">لطلبة SQU</span>
+              <span class="hcard-format">لا يوجد نشر تلقائي</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── Launch status ── -->
     <div class="stats-bar">
       <div class="stats-inner">
         <div class="stat">
-          <div class="stat-n">Collecting</div>
-          <div class="stat-label">
-            Student contributions through Google Forms
-          </div>
+          <div class="stat-n">نجمع</div>
+          <div class="stat-label">مساهمات الطلبة عبر Google Forms</div>
         </div>
         <div class="stat">
-          <div class="stat-n">Reviewing</div>
-          <div class="stat-label">Every submission before public listing</div>
+          <div class="stat-n">نراجع</div>
+          <div class="stat-label">كل مساهمة قبل إدراجها للعامة</div>
         </div>
         <div class="stat">
-          <div class="stat-n">Publishing</div>
-          <div class="stat-label">
-            Only approved Drive links in the catalogue
-          </div>
+          <div class="stat-n">ننشر</div>
+          <div class="stat-label">روابط Drive المعتمدة فقط</div>
         </div>
         <div class="stat">
-          <div class="stat-n">Growing</div>
-          <div class="stat-label">One useful contribution at a time</div>
+          <div class="stat-n">ننمو</div>
+          <div class="stat-label">بمساهمة مفيدة في كل مرة</div>
         </div>
       </div>
     </div>
 
-    <!-- ── How it works ── -->
     <section class="section" id="how-it-works">
-      <div class="section-eyebrow">The system</div>
-      <h2 class="section-title">
-        A library with<br /><em
-          style="font-family: var(--font-display); font-style: italic"
-          >a clear process.</em
-        >
-      </h2>
+      <div class="section-eyebrow">آلية المنصة</div>
+      <h2 class="section-title">مكتبة تعمل<br /><em>بخطوات واضحة.</em></h2>
       <div class="steps-grid">
         <div class="step-card">
-          <div class="step-num">01 / BROWSE</div>
-          <div class="step-icon">
+          <div class="step-num">01 / استعرض</div>
+          <div class="step-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <rect x="3" y="3" width="7" height="7" rx="1" />
               <rect x="14" y="3" width="7" height="7" rx="1" />
@@ -221,59 +202,57 @@
               <rect x="14" y="14" width="7" height="7" rx="1" />
             </svg>
           </div>
-          <h3>Filter by what you need</h3>
+          <h3>رشّح النتائج وفق ما تحتاجه</h3>
           <p>
-            Pick your college, then later narrow approved entries by course,
-            semester, topic, resource type, and format as the catalogue grows.
+            اختر كليتك، ثم ضيّق النتائج حسب المقرر والفصل والموضوع ونوع المورد
+            وصيغته كلما نما الفهرس.
           </p>
         </div>
         <div class="step-card">
-          <div class="step-num">02 / CHECK</div>
-          <div class="step-icon">
+          <div class="step-num">02 / تحقّق</div>
+          <div class="step-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <path d="M9 12l2 2 4-4" />
               <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z" />
             </svg>
           </div>
-          <h3>See the status before you open</h3>
+          <h3>اعرف حالة المورد قبل فتحه</h3>
           <p>
-            Public records appear only after manual review. A
-            <em>Verified</em> entry means NexCore checked the catalogue details
-            and the Drive viewer link before publishing.
+            لا يظهر السجل للعامة إلا بعد المراجعة اليدوية. وتعني شارة «معتمد» أن
+            NexCore راجع بيانات الفهرس ورابط العرض العام في Drive قبل النشر.
           </p>
         </div>
         <div class="step-card">
-          <div class="step-num">03 / CONTRIBUTE</div>
-          <div class="step-icon">
+          <div class="step-num">03 / ساهم</div>
+          <div class="step-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
           </div>
-          <h3>Share material with the community</h3>
+          <h3>شارك مادة مفيدة مع المجتمع</h3>
           <p>
-            Submit a Google Drive link with course details. We review every
-            submission before it enters the catalogue.
+            أرسل رابط Google Drive مع بيانات المقرر. نراجع كل مساهمة قبل إضافتها
+            إلى الفهرس.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- ── Catalogue ── -->
     <section class="catalogue-section" id="catalogue">
       <div class="catalogue-inner">
         <div class="catalogue-header">
           <div>
-            <div class="section-eyebrow">Resource catalogue</div>
+            <div class="section-eyebrow">فهرس الموارد</div>
             <h2
               class="section-title"
               style="margin-bottom: 0; font-size: 1.8rem"
             >
-              Choose your college to begin.
+              اختر كليتك للبدء.
             </h2>
             <p class="catalogue-note">
-              The public catalogue starts empty on purpose. Approved resources
-              will appear here only after student submissions are reviewed.
+              يبدأ الفهرس العام فارغًا عن قصد. لن تظهر هنا إلا الموارد المعتمدة
+              بعد مراجعة مساهمات الطلبة.
             </p>
           </div>
           <button
@@ -282,16 +261,15 @@
             style="display: none"
             type="button"
           >
-            Reset selection
+            إلغاء اختيار الكلية
           </button>
         </div>
 
-        <!-- College grid -->
         <div class="college-grid" id="collegeGrid" aria-live="polite"></div>
-        <!-- Filters -->
+
         <div class="filter-row">
           <div class="search-wrap">
-            <span class="search-icon">
+            <span class="search-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="8" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -301,35 +279,35 @@
               type="search"
               class="search-input"
               id="searchInput"
-              placeholder="Search courses, topics, or keywords…"
+              placeholder="ابحث عن مقرر أو موضوع أو كلمة مفتاحية…"
+              aria-label="البحث في الموارد"
             />
           </div>
-          <select class="filter-select" id="semFilter">
-            <option value="">All semesters</option>
-          </select>
           <select
             class="filter-select"
-            id="typeFilter"
-            aria-label="Resource type"
+            id="semFilter"
+            aria-label="الفصل الدراسي"
           >
-            <option value="">All resource types</option>
+            <option value="">جميع الفصول الدراسية</option>
+          </select>
+          <select class="filter-select" id="typeFilter" aria-label="نوع المورد">
+            <option value="">جميع أنواع الموارد</option>
           </select>
           <select
             class="filter-select"
             id="formatFilter"
-            aria-label="Resource format"
+            aria-label="صيغة المورد"
           >
-            <option value="">All formats</option>
+            <option value="">جميع الصيغ</option>
           </select>
           <button class="btn-clear" id="clearFilters" type="button">
-            Clear filters
+            مسح المرشحات
           </button>
         </div>
 
-        <!-- Resource grid -->
-        <div class="resource-grid" id="resourceGrid">
+        <div class="resource-grid" id="resourceGrid" aria-live="polite">
           <div class="empty-state">
-            <div class="empty-icon">
+            <div class="empty-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <rect x="3" y="3" width="7" height="7" rx="1" />
                 <rect x="14" y="3" width="7" height="7" rx="1" />
@@ -337,104 +315,95 @@
                 <rect x="14" y="14" width="7" height="7" rx="1" />
               </svg>
             </div>
-            <h3>Select a college above</h3>
+            <h3>اختر كلية من الأعلى</h3>
             <p>
-              Pick your college to see whether approved resources are already
-              published. If not, you can help start that college’s collection.
+              اختر كليتك لمعرفة ما إذا كانت موارد معتمدة قد نُشرت لها. وإن لم
+              توجد، يمكنك بدء مجموعتها بمساهمة مفيدة.
             </p>
             <br />
             <a
               href="submit.html"
               class="btn btn-secondary"
               style="margin: 0 auto"
+              >ساهم بمورد دراسي</a
             >
-              Contribute a resource
-            </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── Contribute CTA ── -->
     <section class="contribute-section">
       <div class="contribute-card">
         <div class="contribute-text">
-          <div class="contribute-eyebrow">Community · Open contributions</div>
-          <h2>Have notes worth<br /><em>sharing?</em></h2>
+          <div class="contribute-eyebrow">المجتمع · المساهمات متاحة</div>
+          <h2>لديك مذكرات تستحق<br /><em>أن تُشارك؟</em></h2>
           <p>
-            This beta is in its collection year. Submit useful notes, slides,
-            practice papers, quizzes, worked examples, or guides, and NexCore
-            will review them before anything appears publicly.
+            هذه السنة التجريبية مخصصة لجمع الموارد. أرسل مذكرات أو عروضًا أو
+            أوراقًا تدريبية أو اختبارات قصيرة أو أمثلة محلولة أو أدلة دراسية،
+            وسيراجعها NexCore قبل نشر أي شيء للعامة.
           </p>
         </div>
         <div class="contribute-actions">
-          <a href="submit.html" class="btn btn-white">Submit a resource</a>
-          <a href="submit.html#report" class="btn btn-ghost">Report an issue</a>
+          <a href="submit.html" class="btn btn-white">أرسل موردًا</a>
+          <a href="submit.html#report" class="btn btn-ghost">أبلغ عن مشكلة</a>
         </div>
       </div>
     </section>
 
-    <!-- ── About ── -->
     <section class="about-section" id="about">
       <div class="about-inner">
         <div class="about-text">
-          <div class="section-eyebrow">About NexCore Study Hub</div>
+          <div class="section-eyebrow">عن NexCore Study Hub</div>
           <h2 class="section-title">
-            Independent,<br />community-powered,<br /><em
-              style="font-family: var(--font-display); font-style: italic"
-              >review-minded.</em
-            >
+            مستقل،<br />يبنيه المجتمع،<br /><em>وتقوده المراجعة.</em>
           </h2>
           <p>
-            NexCore Study Hub is an independent resource catalogue built for the
-            SQU community — not an official Sultan Qaboos University service.
+            NexCore Study Hub فهرس مستقل للموارد صُمم لخدمة مجتمع جامعة السلطان
+            قابوس، وليس خدمة رسمية تابعة للجامعة.
           </p>
           <p>
-            We keep a manual review process because quality matters more than
-            quantity. Contributors stay responsible for sharing only what they
-            are permitted to share.
+            نعتمد المراجعة اليدوية لأن جودة الموارد أهم من عددها. ويبقى المساهم
+            مسؤولًا عن مشاركة المواد المصرح له بمشاركتها فقط.
           </p>
           <a
             href="submit.html#report"
             class="btn btn-secondary"
             style="margin-top: 0.5rem"
-            >Report a resource or request removal</a
+            >أبلغ عن مورد أو اطلب إزالته</a
           >
         </div>
         <div class="about-trust">
           <div class="trust-badges">
             <div class="trust-item">
-              <div class="trust-icon green">
+              <div class="trust-icon green" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <path d="M9 12l2 2 4-4" />
                   <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z" />
                 </svg>
               </div>
               <div class="trust-item-text">
-                <h4>Verified badge</h4>
+                <h4>شارة الاعتماد</h4>
                 <p>
-                  When a resource appears as verified, it means a NexCore
-                  reviewer checked the catalogue details and the public Drive
-                  viewer link before publishing.
+                  تعني أن مراجعًا من NexCore تحقق من بيانات الفهرس ومن رابط
+                  العرض العام في Drive قبل النشر.
                 </p>
               </div>
             </div>
             <div class="trust-item">
-              <div class="trust-icon blue">
+              <div class="trust-icon blue" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               </div>
               <div class="trust-item-text">
-                <h4>Manual review process</h4>
+                <h4>مراجعة يدوية</h4>
                 <p>
-                  Every submission is reviewed before it can appear in the
-                  catalogue. No auto-publishing.
+                  تُراجع كل مساهمة قبل أن تظهر في الفهرس. لا يوجد نشر تلقائي.
                 </p>
               </div>
             </div>
             <div class="trust-item">
-              <div class="trust-icon amber">
+              <div class="trust-icon amber" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                   <circle cx="9" cy="7" r="4" />
@@ -444,10 +413,10 @@
                 </svg>
               </div>
               <div class="trust-item-text">
-                <h4>Community-driven</h4>
+                <h4>يبنيه المجتمع</h4>
                 <p>
-                  Built by students, for students. Contributors grow the
-                  catalogue; NexCore Labs keeps it organized.
+                  من الطلبة وإليهم. تنمّي المساهمات الفهرس، ويحافظ NexCore Labs
+                  على تنظيمه.
                 </p>
               </div>
             </div>
@@ -456,14 +425,13 @@
       </div>
     </section>
 
-    <!-- ── Footer ── -->
     <footer>
       <div class="footer-inner">
         <div class="footer-left">
           <div class="footer-brand">
-            NexCore Study Hub · by
+            NexCore Study Hub · من
             <a href="https://nexcorelabs.vercel.app/">NexCore Labs</a>
-            · Not an official SQU service
+            · ليست خدمة رسمية تابعة لجامعة السلطان قابوس
           </div>
           <div class="footer-support">
             <a
@@ -471,7 +439,7 @@
               href="https://www.paypal.me/nexcorelabs"
               target="_blank"
               rel="noopener noreferrer"
-              title="Optional contribution via PayPal"
+              title="مساهمة اختيارية عبر PayPal"
             >
               <svg class="footer-heart" viewBox="0 0 24 24" aria-hidden="true">
                 <path
@@ -479,14 +447,14 @@
                 ></path>
               </svg>
               <i class="fa-brands fa-paypal" aria-hidden="true"></i>
-              <span>Optional contribution</span>
+              <span>مساهمة اختيارية</span>
             </a>
-            <div class="footer-social" aria-label="Contact NexCore Labs">
+            <div class="footer-social" aria-label="التواصل مع NexCore Labs">
               <a
                 class="footer-social-link"
                 href="mailto:nexcorelabs@outlook.com"
-                aria-label="Email NexCore Labs"
-                title="Email NexCore Labs"
+                aria-label="مراسلة NexCore Labs بالبريد الإلكتروني"
+                title="البريد الإلكتروني"
               >
                 <i class="fi fi-rr-envelope" aria-hidden="true"></i>
               </a>
@@ -495,7 +463,7 @@
                 href="https://api.whatsapp.com/send?phone=+96892154811&amp;text=Hello%20NexCore%20Labs!"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Message NexCore Labs on WhatsApp"
+                aria-label="مراسلة NexCore Labs عبر WhatsApp"
                 title="WhatsApp"
               >
                 <i class="fi fi-brands-whatsapp" aria-hidden="true"></i>
@@ -505,7 +473,7 @@
                 href="https://x.com/nexcorelabs"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Follow NexCore Labs on X"
+                aria-label="متابعة NexCore Labs على X"
                 title="X"
               >
                 <i class="fi fi-brands-twitter-alt" aria-hidden="true"></i>
@@ -515,13 +483,13 @@
                 href="https://discord.gg/ExtGSwy5Pn"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Join NexCore Labs on Discord"
+                aria-label="الانضمام إلى NexCore Labs على Discord"
                 title="Discord"
               >
                 <i class="fi fi-brands-discord" aria-hidden="true"></i>
               </a>
             </div>
-            <small class="footer-legal" title="All Rights Reserved">
+            <small class="footer-legal" title="جميع الحقوق محفوظة">
               NexCore Labs © <span data-current-year>2026</span>
               <span class="footer-splitter" aria-hidden="true">|</span>
               <a
@@ -549,14 +517,13 @@
           </div>
         </div>
         <div class="footer-links">
-          <a href="submit.html">Contribute</a>
-          <a href="terms.html">Terms & Privacy</a>
-          <a href="submit.html#report">Report</a>
+          <a href="submit.html">ساهم</a>
+          <a href="terms.html">الشروط والخصوصية</a>
+          <a href="submit.html#report">الإبلاغ</a>
         </div>
       </div>
     </footer>
 
-    <!-- ── Detail Modal ── -->
     <div
       class="modal-overlay"
       id="modalOverlay"
@@ -569,13 +536,13 @@
         <button
           class="modal-close"
           id="modalClose"
-          aria-label="Close"
+          aria-label="إغلاق"
           type="button"
         >
           ✕
         </button>
         <div class="modal-badge" id="modalBadge"></div>
-        <h2 id="modalTitle">Resource title</h2>
+        <h2 id="modalTitle">عنوان المورد</h2>
         <div class="modal-meta" id="modalMeta"></div>
         <hr class="modal-divider" />
         <div id="modalDetails"></div>
@@ -584,19 +551,19 @@
             id="modalOpenLink"
             class="btn btn-primary"
             target="_blank"
-            rel="noopener"
-            >Open resource ↗</a
+            rel="noopener noreferrer"
+            >فتح المورد ↗</a
           >
           <button class="btn btn-secondary" id="modalCloseButton" type="button">
-            Close
+            إغلاق
           </button>
         </div>
       </div>
     </div>
 
-    <script src="assets/js/footer.js?v=1"></script>
-    <script src="assets/js/language.js?v=1"></script>
-    <script src="assets/js/catalogue.js?v=1"></script>
-    <script src="assets/js/nav.js"></script>
+    <script src="../assets/js/footer.js?v=1"></script>
+    <script src="../assets/js/language.js?v=1"></script>
+    <script src="../assets/js/catalogue.js?v=1"></script>
+    <script src="../assets/js/nav.js"></script>
   </body>
 </html>

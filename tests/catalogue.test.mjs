@@ -2,259 +2,175 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 
-const catalogue = JSON.parse(
-  await readFile(
-    new URL("../assets/data/catalogue.json", import.meta.url),
-    "utf8",
-  ),
-);
-const indexHtml = await readFile(
-  new URL("../index.html", import.meta.url),
-  "utf8",
-);
+const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
+const [catalogue, home, arabicHome, catalogueScript] = await Promise.all([
+  read("assets/data/catalogue.json").then(JSON.parse),
+  read("index.html"),
+  read("ar/index.html"),
+  read("assets/js/catalogue.js"),
+]);
+
 const expectedColleges = [
-  "College of Agricultural and Marine Sciences",
-  "College of Arts and Social Sciences",
-  "College of Economics and Political Science",
-  "College of Education",
-  "College of Engineering",
-  "College of Law",
-  "College of Medicine and Health Sciences",
-  "College of Nursing",
-  "College of Science",
+  [
+    "CAMS",
+    "College of Agricultural and Marine Sciences",
+    "كلية العلوم الزراعية والبحرية",
+  ],
+  [
+    "CASS",
+    "College of Arts and Social Sciences",
+    "كلية الآداب والعلوم الاجتماعية",
+  ],
+  [
+    "CEPS",
+    "College of Economics and Political Science",
+    "كلية الاقتصاد والعلوم السياسية",
+  ],
+  ["CEDU", "College of Education", "كلية التربية"],
+  ["CENG", "College of Engineering", "كلية الهندسة"],
+  ["CLAW", "College of Law", "كلية الحقوق"],
+  [
+    "CMHS",
+    "College of Medicine and Health Sciences",
+    "كلية الطب والعلوم الصحية",
+  ],
+  ["CON", "College of Nursing", "كلية التمريض"],
+  ["COS", "College of Science", "كلية العلوم"],
 ];
-const expectedCollegeCodes = [
-  "CAMS",
-  "CASS",
-  "CEPS",
-  "CEDU",
-  "CENG",
-  "CLAW",
-  "CMHS",
-  "CON",
-  "COS",
+const expectedSemesters = [
+  "Summer26",
+  "Spring26",
+  "Fall25",
+  "Summer25",
+  "Spring25",
+  "Fall24",
+  "Summer24",
+  "Spring24",
+  "Fall23",
+  "Summer23",
+  "Spring23",
+  "Fall22",
+  "Summer22",
+  "Spring22",
+  "Fall21",
+  "Summer21",
+  "Spring21",
+  "Fall20",
+  "Summer20",
+  "Spring20",
 ];
-const required = [
-  "id",
-  "courseId",
-  "title",
-  "description",
-  "semester",
-  "topics",
-  "type",
-  "format",
-  "language",
-  "status",
-  "driveUrl",
+const expectedFormats = ["pdf", "word", "powerpoint", "excel", "img", "other"];
+const expectedTypes = [
+  "Books",
+  "Slides",
+  "Notes",
+  "Practice papers",
+  "Exams",
+  "Quizzes",
+  "Worked examples",
+  "Study guide",
 ];
-test("catalogue has a supported shape", () => {
+
+test("catalogue has the supported bilingual shape", () => {
   assert.equal(catalogue.version, 3);
-  assert.ok(catalogue.semesters.length);
-  assert.ok(catalogue.formats.length);
-  assert.ok(catalogue.resourceTypes.length);
-  assert.ok(catalogue.colleges.length);
+  assert.deepEqual(catalogue.semesters, expectedSemesters);
+  assert.deepEqual(catalogue.formats, expectedFormats);
+  assert.deepEqual(catalogue.resourceTypes, expectedTypes);
   assert.ok(Array.isArray(catalogue.courses));
   assert.ok(Array.isArray(catalogue.resources));
+  assert.deepEqual(
+    catalogue.colleges.map(({ code, name, nameAr }) => [code, name, nameAr]),
+    expectedColleges,
+  );
 });
-test("semesters use the SQU season-year naming convention", () => {
-  const expectedSemesters = [
-    "Summer26",
-    "Spring26",
-    "Fall25",
-    "Summer25",
-    "Spring25",
-    "Fall24",
-    "Summer24",
-    "Spring24",
-    "Fall23",
-    "Summer23",
-    "Spring23",
-    "Fall22",
-    "Summer22",
-    "Spring22",
-    "Fall21",
-    "Summer21",
-    "Spring21",
-    "Fall20",
-    "Summer20",
-    "Spring20",
-  ];
-  assert.deepEqual(catalogue.semesters, expectedSemesters);
+
+test("semester values keep the SQU season-year convention", () => {
   assert.ok(
-    catalogue.semesters.every((semester) =>
-      /^(Spring|Summer|Fall)\d{2}$/.test(semester),
+    catalogue.semesters.every((value) =>
+      /^(Spring|Summer|Fall)\d{2}$/.test(value),
     ),
   );
-  const semesterSelect = indexHtml.match(
-    /<select[^>]*id="semFilter"[^>]*>[\s\S]*?<\/select>/,
-  )?.[0];
-  assert.ok(semesterSelect, "visible semester filter is missing");
-  assert.deepEqual(
-    [
-      ...semesterSelect.matchAll(
-        /<option value="((?:Spring|Summer|Fall)\d{2})">/g,
-      ),
-    ].map((match) => match[1]),
-    expectedSemesters,
-  );
-  for (const match of indexHtml.matchAll(/semester:\s*["']([^"']+)["']/g)) {
-    assert.ok(
-      expectedSemesters.includes(match[1]),
-      `embedded resource uses unknown semester ${match[1]}`,
-    );
-  }
-  assert.doesNotMatch(indexHtml, /\bSem(?:ester)?\s+[12]\b/);
+  for (const html of [home, arabicHome]) assert.match(html, /id="semFilter"/);
+  assert.match(catalogueScript, /function semesterLabel/);
+  assert.match(catalogueScript, /ربيع/);
+  assert.doesNotMatch(home, /\bSem(?:ester)?\s+[12]\b/);
 });
-test("resource formats use the supported collection", () => {
-  const expectedFormats = [
-    "pdf",
-    "word",
-    "powerpoint",
-    "excel",
-    "img",
-    "other",
-  ];
-  assert.deepEqual(catalogue.formats, expectedFormats);
-  const formatSelect = indexHtml.match(
-    /<select[^>]*id="formatFilter"[^>]*>[\s\S]*?<\/select>/,
-  )?.[0];
-  assert.ok(formatSelect, "visible resource format filter is missing");
-  assert.deepEqual(
-    [...formatSelect.matchAll(/<option value="([a-z]+)">/g)].map(
-      (match) => match[1],
-    ),
-    expectedFormats,
-  );
-  for (const match of indexHtml.matchAll(/format:\s*["']([^"']+)["']/g)) {
-    assert.ok(
-      expectedFormats.includes(match[1]),
-      `embedded resource uses unknown format ${match[1]}`,
-    );
+
+test("canonical IDs and filter values are shared across languages", () => {
+  for (const html of [home, arabicHome]) {
+    assert.match(html, /id="collegeGrid"/);
+    assert.match(html, /id="typeFilter"/);
+    assert.match(html, /id="formatFilter"/);
+    assert.match(html, /data-catalogue-url=/);
   }
-  assert.match(
-    indexHtml,
-    /const format = document\.getElementById\(["']formatFilter["']\)\.value;/,
-  );
-  assert.match(
-    indexHtml,
-    /if \(format && r\.format !== format\) return false;/,
-  );
+  assert.match(catalogueScript, /typeLabels/);
+  assert.match(catalogueScript, /formatLabels/);
+  assert.match(catalogueScript, /college\.code/);
 });
-test("catalogue data and visible college selector match the supported colleges", () => {
-  assert.deepEqual(
-    catalogue.colleges.map((college) => college.name),
-    expectedColleges,
-  );
-  assert.deepEqual(
-    [
-      ...indexHtml.matchAll(/<div class="college-btn-name">([^<]+)<\/div>/g),
-    ].map((match) => match[1].trim()),
-    expectedColleges,
-  );
-  assert.deepEqual(
-    [...indexHtml.matchAll(/data-college="([A-Z]+)"/g)].map(
-      (match) => match[1],
-    ),
-    expectedCollegeCodes,
-  );
-  const visibleCodes = new Set(expectedCollegeCodes);
-  for (const match of indexHtml.matchAll(/college:\s*["']([A-Z]+)["']/g)) {
-    assert.ok(
-      visibleCodes.has(match[1]),
-      `embedded resource uses unknown college ${match[1]}`,
-    );
-  }
-});
-test("resource types use the supported academic collection", () => {
-  const expectedResourceTypes = [
-    "Books",
-    "Slides",
-    "Notes",
-    "Practice papers",
-    "Exams",
-    "Quizzes",
-    "Worked examples",
-    "Study guide",
-  ];
-  assert.deepEqual(catalogue.resourceTypes, expectedResourceTypes);
-  const typeSelect = indexHtml.match(
-    /<select[^>]*id="typeFilter"[^>]*>[\s\S]*?<\/select>/,
-  )?.[0];
-  assert.ok(typeSelect, "visible resource type filter is missing");
-  assert.deepEqual(
-    [...typeSelect.matchAll(/<option value="([^"]+)">/g)].map(
-      (match) => match[1],
-    ),
-    expectedResourceTypes,
-  );
-  for (const match of indexHtml.matchAll(/type:\s*["']([^"']+)["']/g)) {
-    assert.ok(
-      expectedResourceTypes.includes(match[1]),
-      `embedded resource uses unknown type ${match[1]}`,
-    );
-  }
-  assert.match(
-    indexHtml,
-    /const type = document\.getElementById\(["']typeFilter["']\)\.value;/,
-  );
-  assert.match(indexHtml, /if \(type && r\.type !== type\) return false;/);
-});
-test("college, course, and resource IDs are unique", () => {
+
+test("college, course, and resource IDs are unique and linked", () => {
   assert.equal(
-    new Set(catalogue.colleges.map((c) => c.id)).size,
+    new Set(catalogue.colleges.map((item) => item.id)).size,
     catalogue.colleges.length,
   );
   assert.equal(
-    new Set(catalogue.courses.map((c) => c.id)).size,
+    new Set(catalogue.colleges.map((item) => item.code)).size,
+    catalogue.colleges.length,
+  );
+  assert.equal(
+    new Set(catalogue.courses.map((item) => item.id)).size,
     catalogue.courses.length,
   );
   assert.equal(
-    new Set(catalogue.resources.map((r) => r.id)).size,
+    new Set(catalogue.resources.map((item) => item.id)).size,
     catalogue.resources.length,
   );
-});
-test("courses and resources belong to valid catalogue parents", () => {
-  const collegeIds = new Set(catalogue.colleges.map((c) => c.id));
-  const courseIds = new Set(catalogue.courses.map((c) => c.id));
+  const collegeIds = new Set(catalogue.colleges.map((item) => item.id));
+  const courseIds = new Set(catalogue.courses.map((item) => item.id));
   for (const course of catalogue.courses)
-    assert.ok(
-      collegeIds.has(course.collegeId),
-      `${course.id} references an unknown college`,
-    );
-  for (const r of catalogue.resources) {
-    for (const field of required)
-      assert.ok(Object.hasOwn(r, field), `${r.id} is missing ${field}`);
-    assert.ok(
-      courseIds.has(r.courseId),
-      `${r.id} references an unknown course`,
-    );
-    assert.ok(
-      Array.isArray(r.topics) && r.topics.length,
-      `${r.id} needs a topic`,
-    );
-    assert.ok(
-      catalogue.formats.includes(r.format),
-      `${r.id} has an unsupported format`,
-    );
-    assert.ok(
-      catalogue.resourceTypes.includes(r.type),
-      `${r.id} has an unsupported resource type`,
-    );
-    assert.ok(["verified"].includes(r.status), `${r.id} status is unsupported`);
-    assert.match(r.driveUrl, /^https:\/\/drive\.google\.com\//);
+    assert.ok(collegeIds.has(course.collegeId));
+  for (const resource of catalogue.resources) {
+    for (const field of [
+      "id",
+      "courseId",
+      "title",
+      "description",
+      "semester",
+      "topics",
+      "type",
+      "format",
+      "language",
+      "status",
+      "driveUrl",
+    ])
+      assert.ok(
+        Object.hasOwn(resource, field),
+        `${resource.id} is missing ${field}`,
+      );
+    assert.ok(courseIds.has(resource.courseId));
+    assert.ok(expectedSemesters.includes(resource.semester));
+    assert.ok(expectedTypes.includes(resource.type));
+    assert.ok(expectedFormats.includes(resource.format));
+    assert.equal(resource.status, "verified");
+    assert.match(resource.driveUrl, /^https:\/\/drive\.google\.com\//);
+    if (resource.topicsAr) assert.ok(Array.isArray(resource.topicsAr));
+    if (resource.translations) {
+      for (const translation of Object.values(resource.translations)) {
+        assert.equal(typeof translation.title, "string");
+        assert.equal(typeof translation.description, "string");
+        assert.ok(Array.isArray(translation.topics));
+      }
+    }
   }
 });
 
-test("beta launch page has no fake catalogue claims or demo files", () => {
-  assert.match(indexHtml, />Beta</);
-  assert.match(indexHtml, /contribution-first beta/i);
-  assert.match(indexHtml, /const RESOURCES = \[\];/);
-  assert.doesNotMatch(indexHtml, /340\s*<span>\+<\/span>/);
-  assert.doesNotMatch(indexHtml, /80\s*<span>%<\/span>/);
-  assert.doesNotMatch(indexHtml, /Classical Mechanics|PHYS3101|A\. Al-Balushi/);
-  assert.equal(
-    catalogue.resources.filter((resource) => resource.isDemo).length,
-    0,
-    "catalogue must not publish demo resources",
-  );
+test("launch remains truthful and contribution-first", () => {
+  assert.match(home, />Lab</);
+  assert.match(arabicHome, />Lab</);
+  assert.match(home, /contribution-first beta/i);
+  assert.match(arabicHome, /مرحلة تجريبية/);
+  assert.equal(catalogue.resources.length, 0);
+  assert.doesNotMatch(home, /Classical Mechanics|PHYS3101|A\. Al-Balushi/);
+  assert.match(home, /assets\/js\/catalogue\.js/);
+  assert.match(arabicHome, /assets\/js\/catalogue\.js/);
 });

@@ -2,28 +2,62 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 
-const read = (path) =>
-  readFile(new URL(`../${path}`, import.meta.url), "utf8");
+const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 
-const [home, submit, terms, submitScript, configScript] = await Promise.all([
+const [
+  home,
+  submit,
+  terms,
+  arabicHome,
+  arabicSubmit,
+  arabicTerms,
+  submitScript,
+  configScript,
+] = await Promise.all([
   read("index.html"),
   read("submit.html"),
   read("terms.html"),
+  read("ar/index.html"),
+  read("ar/submit.html"),
+  read("ar/terms.html"),
   read("assets/js/submit.js"),
   read("assets/js/config.js"),
 ]);
 
 test("every public page links to the terms", () => {
-  for (const [name, html] of Object.entries({ home, submit, terms })) {
-    assert.match(html, /href="terms\.html(?:#[^"]+)?"/, `${name} needs a terms link`);
+  for (const [name, html] of Object.entries({
+    home,
+    submit,
+    terms,
+    arabicHome,
+    arabicSubmit,
+    arabicTerms,
+  })) {
+    assert.match(
+      html,
+      /href="terms\.html(?:#[^"]+)?"/,
+      `${name} needs a terms link`,
+    );
   }
+});
+
+test("Arabic contribution form is gated by the same explicit acceptance", () => {
+  assert.match(
+    arabicSubmit,
+    /id="acceptContributionTerms"[^>]*type="checkbox"/,
+  );
+  assert.match(arabicSubmit, /id="openSubmissionForm"[\s\S]*?disabled/);
+  assert.match(arabicSubmit, /href="terms\.html#contribution-terms"/);
 });
 
 test("contribution form is gated by explicit acceptance", () => {
   assert.match(submit, /id="acceptContributionTerms"[^>]*type="checkbox"/);
   assert.match(submit, /id="openSubmissionForm"[\s\S]*?disabled/);
   assert.match(submitScript, /if \(!termsCheckbox\.checked\) return;/);
-  assert.match(submitScript, /window\.location\.assign\(config\.googleFormUrl\)/);
+  assert.match(
+    submitScript,
+    /window\.location\.assign\(config\.googleFormUrl\)/,
+  );
   assert.match(configScript, /https:\/\/forms\.gle\/H9EBvisJQ3hfAuxW7/);
 });
 
@@ -41,4 +75,6 @@ test("terms cover the core contribution and privacy risks", () => {
   }
   assert.match(terms, /nexcorelabs@outlook\.com/);
   assert.match(terms, /9 August 2026/);
+  assert.match(arabicTerms, /9 أغسطس 2026/);
+  assert.match(arabicTerms, /nexcorelabs@outlook\.com/);
 });
