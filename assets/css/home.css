@@ -1166,14 +1166,6 @@ footer {
 .license-link:hover {
   color: var(--accent);
 }
-.uicons-credit {
-  color: var(--ink-muted);
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-.uicons-credit:hover {
-  color: var(--accent);
-}
 .license-link svg {
   width: 0.9rem;
   height: 0.9rem;

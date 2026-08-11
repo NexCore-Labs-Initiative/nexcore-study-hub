@@ -84,7 +84,7 @@ test("every page exposes the optional contribution and MIT license footer", () =
     assert.match(html, /fi-brands-whatsapp/);
     assert.match(html, /fi-brands-twitter-alt/);
     assert.match(html, /fi-brands-discord/);
-    assert.match(html, /UIcons by Flaticon/i);
+    assert.doesNotMatch(html, /UIcons by Flaticon/i);
     if (path.startsWith("ar/")) {
       assert.match(html, /مساهمة اختيارية/);
     } else {
