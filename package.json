@@ -4,10 +4,11 @@
   "private": true,
   "description": "Static SQU academic resource catalogue for NexCore Labs.",
   "scripts": {
-    "check:js": "node --check assets/js/config.js && node --check assets/js/catalogue.js && node --check assets/js/language.js && node --check assets/js/submit.js && node --check assets/js/nav.js && node --check assets/js/footer.js",
+    "check:js": "node --check assets/js/config.js && node --check assets/js/catalogue.js && node --check assets/js/language.js && node --check assets/js/submit.js && node --check assets/js/nav.js && node --check assets/js/footer.js && node --check assets/js/service-worker-registration.js && node --check service-worker.js",
     "test:catalogue": "node --test tests/catalogue.test.mjs",
     "test:legal": "node --test tests/legal.test.mjs",
     "test:i18n": "node --test tests/localization.test.mjs",
-    "test": "npm run check:js && npm run test:catalogue && npm run test:legal && npm run test:i18n"
+    "test:service-worker": "node --test tests/service-worker.test.mjs",
+    "test": "npm run check:js && npm run test:catalogue && npm run test:legal && npm run test:i18n && npm run test:service-worker"
   }
 }
