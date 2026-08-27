@@ -11,13 +11,13 @@
       collectionPhase: "Collection phase",
       noApproved: "No approved resources yet",
       noPublished: "No approved resources published yet",
-      catalogueUnavailable: "The catalogue is temporarily unavailable.",
+      catalogueUnavailable: "The Resource Library is temporarily unavailable.",
       tryAgain: "Please refresh the page and try again.",
       contribute: "Contribute a resource",
       collegeOpen:
         "{college} is open for contributions. Submit a resource and NexCore will review it before publishing.",
       catalogueGrowing:
-        "The catalogue will grow as student submissions are reviewed. You can still browse colleges and contribute now.",
+        "The Resource Library will grow as student submissions are reviewed. You can still browse colleges and contribute now.",
       resource: "resource",
       resources: "resources",
       openForContributions: "Open for contributions",
@@ -37,7 +37,7 @@
       description: "Description",
       openResource: "Open resource ↗",
       close: "Close",
-      loading: "Loading catalogue…",
+      loading: "Loading Resource Library…",
     },
     ar: {
       allSemesters: "جميع الفصول الدراسية",
@@ -46,13 +46,13 @@
       collectionPhase: "مرحلة جمع الموارد",
       noApproved: "لا توجد موارد معتمدة بعد",
       noPublished: "لم تُنشر موارد معتمدة بعد",
-      catalogueUnavailable: "يتعذر تحميل الفهرس مؤقتًا.",
+      catalogueUnavailable: "يتعذر تحميل مكتبة الموارد مؤقتًا.",
       tryAgain: "يرجى تحديث الصفحة والمحاولة مرة أخرى.",
       contribute: "ساهم بمورد دراسي",
       collegeOpen:
         "تستقبل {college} المساهمات حاليًا. أرسل موردًا وسيراجعه NexCore قبل نشره.",
       catalogueGrowing:
-        "سينمو الفهرس مع مراجعة مساهمات الطلبة. يمكنك استعراض الكليات والمساهمة من الآن.",
+        "ستنمو مكتبة الموارد مع مراجعة مساهمات الطلبة. يمكنك استعراض الكليات والمساهمة من الآن.",
       resource: "مورد",
       resources: "موارد",
       openForContributions: "متاحة للمساهمات",
@@ -72,7 +72,7 @@
       description: "الوصف",
       openResource: "فتح المورد ↗",
       close: "إغلاق",
-      loading: "جارٍ تحميل الفهرس…",
+      loading: "جارٍ تحميل مكتبة الموارد…",
     },
   }[localeKey];
 
@@ -393,7 +393,7 @@
       "</h3><p>" +
       esc(description) +
       '</p><br /><a href="' +
-      esc(document.body.dataset.submitUrl || "submit.html") +
+      esc(document.body.dataset.submitUrl || "contribution.html") +
       '" class="btn btn-secondary" style="margin:0 auto">' +
       esc(copy.contribute) +
       "</a></div>"
@@ -592,7 +592,7 @@
       cache: "no-store",
     })
       .then(function (response) {
-        if (!response.ok) throw new Error("Catalogue load failed");
+        if (!response.ok) throw new Error("Resource Library load failed");
         return response.json();
       })
       .then(function (data) {

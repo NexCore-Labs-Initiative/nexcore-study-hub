@@ -15,10 +15,10 @@ const [
   configScript,
 ] = await Promise.all([
   read("index.html"),
-  read("submit.html"),
+  read("contribution.html"),
   read("terms.html"),
   read("ar/index.html"),
-  read("ar/submit.html"),
+  read("ar/contribution.html"),
   read("ar/terms.html"),
   read("assets/js/submit.js"),
   read("assets/js/config.js"),
@@ -53,12 +53,21 @@ test("Arabic contribution form is gated by the same explicit acceptance", () => 
 test("contribution form is gated by explicit acceptance", () => {
   assert.match(submit, /id="acceptContributionTerms"[^>]*type="checkbox"/);
   assert.match(submit, /id="openSubmissionForm"[\s\S]*?disabled/);
-  assert.match(submitScript, /if \(!termsCheckbox\.checked\) return;/);
+  assert.match(submit, /id="submissionFormPanel"[\s\S]*?hidden/);
+  assert.match(submit, /id="submissionFormFrame"/);
+  assert.match(submit, /id="submissionFormDirectLink"/);
   assert.match(
     submitScript,
-    /window\.location\.assign\(config\.googleFormUrl\)/,
+    /if \(!termsCheckbox\.checked \|\| !formPanel \|\| !formFrame\) return;/,
   );
-  assert.match(configScript, /https:\/\/forms\.gle\/H9EBvisJQ3hfAuxW7/);
+  assert.match(submitScript, /formPanel\.hidden = false/);
+  assert.match(submitScript, /formFrame\.src = config\.googleFormEmbedUrl/);
+  assert.match(configScript, /googleFormUrl/);
+  assert.match(configScript, /googleFormEmbedUrl/);
+  assert.match(
+    configScript,
+    /1FAIpQLSdM7F9wcsuuX2zmQ5jJ3hg6qmvrCFQh82hSZdJfQG6P-B8wxQ/,
+  );
 });
 
 test("terms cover the core contribution and privacy risks", () => {

@@ -1,7 +1,7 @@
 "use strict";
 
 const CACHE_PREFIX = "nexcore-study-hub-";
-const CACHE_VERSION = "v2";
+const CACHE_VERSION = "v5";
 const PRECACHE_NAME = `${CACHE_PREFIX}precache-${CACHE_VERSION}`;
 const RUNTIME_NAME = `${CACHE_PREFIX}runtime-${CACHE_VERSION}`;
 const CATALOGUE_PATH = "/assets/data/catalogue.json";
@@ -10,20 +10,22 @@ const PRECACHE_URLS = [
   "/",
   "/index.html",
   "/submit.html",
+  "/contribution.html",
   "/terms.html",
   "/ar/",
   "/ar/index.html",
   "/ar/submit.html",
+  "/ar/contribution.html",
   "/ar/terms.html",
   "/assets/css/home.css?v=locale-8",
-  "/assets/css/site-pages.css?v=locale-8",
-  "/assets/js/catalogue.js?v=1",
-  "/assets/js/config.js?v=2",
+  "/assets/css/site-pages.css?v=embed-1",
+  "/assets/js/catalogue.js?v=3",
+  "/assets/js/config.js?v=3",
   "/assets/js/footer.js?v=1",
   "/assets/js/language.js?v=1",
   "/assets/js/nav.js",
   "/assets/js/service-worker-registration.js?v=1",
-  "/assets/js/submit.js?v=2",
+  "/assets/js/submit.js?v=3",
   CATALOGUE_PATH,
   "/assets/imgs/brand/apple-touch-icon.webp",
   "/assets/imgs/brand/favicon-32.webp",

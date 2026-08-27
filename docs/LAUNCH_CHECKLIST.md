@@ -4,9 +4,9 @@
 
 Maintain one bilingual Google Form named **NexCore Study Hub — Resource contribution | المساهمة بمورد دراسي**. Put English and Arabic together in every title, description, option, validation message, and confirmation so both site routes use the same review queue. Use this description:
 
-> Share a useful SQU study resource for review. NexCore Study Hub is in its contribution-first beta: the public catalogue grows only after submissions are checked. Only submit material you created or have permission to share.
+> Share a useful SQU study resource for review. NexCore Study Hub is in its contribution-first beta: the public Resource Library grows only after submissions are checked. Only submit material you created or have permission to share.
 >
-> شارك موردًا دراسيًا مفيدًا لطلبة SQU ليخضع للمراجعة. لا ينمو الفهرس العام في هذه المرحلة التجريبية إلا بعد مراجعة المساهمات. أرسل فقط المواد التي أنشأتها أو لديك إذن بمشاركتها.
+> شارك موردًا دراسيًا مفيدًا لطلبة SQU ليخضع للمراجعة. لا تنمو مكتبة الموارد العامة في هذه المرحلة التجريبية إلا بعد مراجعة المساهمات. أرسل فقط المواد التي أنشأتها أو لديك إذن بمشاركتها.
 
 Add these questions in this order:
 
@@ -33,10 +33,10 @@ Form settings:
 - Require contributors to confirm all of the following in both languages:
   - they created the resource or have clear permission to share it publicly;
   - the resource contains no active or leaked assessment, restricted answer key, instructor-only material, unauthorised textbook copy, confidential information, or unnecessary personal data;
-  - NexCore may review the resource and publish its approved catalogue metadata and public Drive viewer link;
+  - NexCore may review the resource and publish its approved Resource Library metadata and public Drive viewer link;
   - the contribution follows academic-integrity rules; and
   - they have read and accept the English-controlled Contribution Terms and Privacy Notice.
-- Use this bilingual confirmation text: `Thanks. NexCore will review your submission before publishing any catalogue entry. | شكرًا لك. سيراجع NexCore مساهمتك قبل نشر أي سجل في الفهرس.`
+- Use this bilingual confirmation text: `Thanks. NexCore will review your submission before publishing any resource library entry. | شكرًا لك. سيراجع NexCore مساهمتك قبل نشر أي سجل في مكتبة الموارد.`
 
 Copy the form’s public URL after creating it. It must begin with `https://`.
 
@@ -86,9 +86,9 @@ Add only approved records to `assets/data/catalogue.json`. A live entry must hav
 
 Arabic metadata is optional but must be human-reviewed when provided. Arabic pages use it when available and otherwise show the original approved metadata. Never add machine-generated translations at runtime.
 
-Only approved, verified resources belong in the public catalogue.
+Only approved, verified resources belong in the public Resource Library.
 
-Do not add demo, placeholder, pending, or unreviewed records to the public JSON catalogue. If a college has no approved resources yet, leave it empty and let the website show the contribution message.
+Do not add demo, placeholder, pending, or unreviewed records to the public JSON Resource Library. If a college has no approved resources yet, leave it empty and let the website show the contribution message.
 
 ## 4. Validate and deploy
 

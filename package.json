@@ -2,7 +2,7 @@
   "name": "nexcore-study-hub",
   "version": "0.1.0",
   "private": true,
-  "description": "Static SQU academic resource catalogue for NexCore Labs.",
+  "description": "Static SQU academic resource library for NexCore Labs.",
   "scripts": {
     "check:js": "node --check assets/js/config.js && node --check assets/js/catalogue.js && node --check assets/js/language.js && node --check assets/js/submit.js && node --check assets/js/nav.js && node --check assets/js/footer.js && node --check assets/js/service-worker-registration.js && node --check service-worker.js",
     "test:catalogue": "node --test tests/catalogue.test.mjs",

@@ -2,7 +2,7 @@
   "name": "NexCore Study Hub contribution poster",
   "canvas": { "width": 1080, "height": 1350, "aspectRatio": "4:5" },
   "target": "social sharing",
-  "url": "https://nexcore-study-hub.vercel.app/submit.html",
+  "url": "https://nexcore-study-hub.vercel.app/contribution.html",
   "source": "nexcore-study-hub-contribute-poster.svg",
   "exports": [
     "nexcore-study-hub-contribute-poster.png",

@@ -1,8 +1,10 @@
 # Bilingual Google Form handoff
 
-The public contribution form must remain a single Google Form with one response spreadsheet and the existing public URL:
+The public contribution form must remain a single Google Form with one response spreadsheet and this public URL:
 
-<https://forms.gle/H9EBvisJQ3hfAuxW7>
+<https://docs.google.com/forms/d/e/1FAIpQLSdM7F9wcsuuX2zmQ5jJ3hg6qmvrCFQh82hSZdJfQG6P-B8wxQ/viewform>
+
+The contribution page embeds the same form with Google's `embedded=true` URL after the visitor accepts the contribution terms.
 
 The currently available Google account can submit the form but does not own it. Apply this specification from the account that owns the form before production launch.
 
@@ -14,9 +16,9 @@ NexCore Study Hub — Resource contribution | المساهمة بمورد درا
 
 **Description**
 
-Share a useful SQU study resource for review. NexCore Study Hub is in its contribution-first beta: the public catalogue grows only after submissions are checked. Only submit material you created or have permission to share.
+Share a useful SQU study resource for review. NexCore Study Hub is in its contribution-first beta: the public Resource Library grows only after submissions are checked. Only submit material you created or have permission to share.
 
-شارك موردًا دراسيًا مفيدًا لطلبة SQU ليخضع للمراجعة. لا ينمو الفهرس العام في هذه المرحلة التجريبية إلا بعد مراجعة المساهمات. أرسل فقط المواد التي أنشأتها أو لديك إذن بمشاركتها.
+شارك موردًا دراسيًا مفيدًا لطلبة SQU ليخضع للمراجعة. لا تنمو مكتبة الموارد العامة في هذه المرحلة التجريبية إلا بعد مراجعة المساهمات. أرسل فقط المواد التي أنشأتها أو لديك إذن بمشاركتها.
 
 ## Questions
 
@@ -27,7 +29,7 @@ All questions are required except **Notes for reviewers | ملاحظات للم�
 3. **Course title | اسم المقرر** — short answer.
 4. **Semester | الفصل الدراسي** — dropdown using the canonical semester values from `assets/data/catalogue.json`. Display each value bilingually without changing its stored value, for example `Spring26 | ربيع 2026`.
 5. **Resource title | عنوان المورد** — short answer.
-6. **Resource type | نوع المورد** — dropdown aligned with the catalogue:
+6. **Resource type | نوع المورد** — dropdown aligned with the Resource Library:
    - `Book | كتاب`
    - `Presentation | عرض تقديمي`
    - `Notes | مذكرات`
@@ -36,7 +38,7 @@ All questions are required except **Notes for reviewers | ملاحظات للم�
    - `Quiz | اختبار قصير`
    - `Worked examples | أمثلة محلولة`
    - `Study guide | دليل دراسي`
-7. **Resource format | صيغة المورد** — dropdown aligned with the catalogue:
+7. **Resource format | صيغة المورد** — dropdown aligned with the Resource Library:
    - `PDF`
    - `Word`
    - `PowerPoint`
@@ -61,7 +63,7 @@ In the confirmations question description, link both versions of the terms:
 
 ## Confirmation message
 
-Thanks. NexCore will review your submission before publishing any catalogue entry. | شكرًا لك. سيراجع NexCore مساهمتك قبل نشر أي سجل في الفهرس.
+Thanks. NexCore will review your submission before publishing any resource library entry. | شكرًا لك. سيراجع NexCore مساهمتك قبل نشر أي سجل في مكتبة الموارد.
 
 ## Owner verification
 

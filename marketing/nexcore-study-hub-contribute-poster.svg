@@ -634,7 +634,7 @@ QmCC
          fill="#7A7F94"
          font-size="16"
          font-weight="500"
-         id="text149">Join the catalogue.</text></g></g><!-- CTA panel --><rect
+         id="text149">Join the Resource Library.</text></g></g><!-- CTA panel --><rect
      x="36"
      y="986"
      width="1008"
@@ -684,7 +684,7 @@ QmCC
      font-family="Arial, sans-serif"
      font-size="19"
      font-weight="700"
-     id="text167">nexcore-study-hub.vercel.app/submit.html</text><rect
+     id="text167">nexcore-study-hub.vercel.app/contribution.html</text><rect
      x="745"
      y="1018"
      width="232"
@@ -715,7 +715,7 @@ QmCC
      font-family="Arial, sans-serif"
      font-size="14"
      font-weight="600"
-     id="text175">Independent community catalogue · Not an official SQU service · Share only material you have permission to share</text><image
+     id="text175">Independent community Resource Library · Not an official SQU service · Share only material you have permission to share</text><image
      width="216.79485"
      height="216.79485"
      preserveAspectRatio="none"

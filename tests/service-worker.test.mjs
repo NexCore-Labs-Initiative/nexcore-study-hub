@@ -5,10 +5,10 @@ import { access, readFile } from "node:fs/promises";
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 const pagePaths = [
   "index.html",
-  "submit.html",
+  "contribution.html",
   "terms.html",
   "ar/index.html",
-  "ar/submit.html",
+  "ar/contribution.html",
   "ar/terms.html",
 ];
 
@@ -36,6 +36,24 @@ test("every public route loads the root-scoped service worker registration", () 
   assert.match(registration, /\.catch\(/);
 });
 
+test("legacy submit routes redirect to contribution routes", async () => {
+  const [englishRedirect, arabicRedirect] = await Promise.all([
+    read("submit.html"),
+    read("ar/submit.html"),
+  ]);
+
+  assert.match(englishRedirect, /url=contribution\.html/);
+  assert.match(
+    englishRedirect,
+    /href="https:\/\/nexcore-study-hub\.vercel\.app\/contribution\.html"/,
+  );
+  assert.match(arabicRedirect, /url=contribution\.html/);
+  assert.match(
+    arabicRedirect,
+    /href="https:\/\/nexcore-study-hub\.vercel\.app\/ar\/contribution\.html"/,
+  );
+});
+
 test("the worker precaches only files that exist in the repository", async () => {
   const list = worker.match(/const PRECACHE_URLS = \[([\s\S]*?)\];/);
   assert.ok(list, "PRECACHE_URLS should be declared");
@@ -44,7 +62,8 @@ test("the worker precaches only files that exist in the repository", async () =>
   const urls = [...list[1].matchAll(/"(\/[^\"]+)"/g)].map(
     (match) => match[1],
   );
-  if (list[1].includes("CATALOGUE_PATH") && cataloguePath) urls.push(cataloguePath);
+  if (list[1].includes("CATALOGUE_PATH") && cataloguePath)
+    urls.push(cataloguePath);
 
   assert.ok(urls.length > 0, "the precache should not be empty");
 
@@ -65,7 +84,7 @@ test("the worker precaches only files that exist in the repository", async () =>
   );
 });
 
-test("the worker keeps documents and catalogue data fresh with offline fallbacks", () => {
+test("the worker keeps documents and resource library data fresh with offline fallbacks", () => {
   assert.match(worker, /self\.addEventListener\("install"/);
   assert.match(worker, /self\.addEventListener\("activate"/);
   assert.match(worker, /self\.addEventListener\("fetch"/);

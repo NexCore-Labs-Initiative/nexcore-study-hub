@@ -71,7 +71,7 @@ const expectedTypes = [
   "Study guide",
 ];
 
-test("catalogue has the supported bilingual shape", () => {
+test("Resource Library has the supported bilingual shape", () => {
   assert.equal(catalogue.version, 3);
   assert.deepEqual(catalogue.semesters, expectedSemesters);
   assert.deepEqual(catalogue.formats, expectedFormats);

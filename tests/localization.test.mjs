@@ -7,10 +7,10 @@ const pages = Object.fromEntries(
   await Promise.all(
     [
       "index.html",
-      "submit.html",
+      "contribution.html",
       "terms.html",
       "ar/index.html",
-      "ar/submit.html",
+      "ar/contribution.html",
       "ar/terms.html",
     ].map(async (path) => [path, await read(path)]),
   ),
@@ -23,7 +23,7 @@ const [languageScript, catalogueScript, homeCss, pageCss] = await Promise.all([
 ]);
 
 test("all Arabic routes declare Arabic-Oman and RTL", () => {
-  for (const path of ["ar/index.html", "ar/submit.html", "ar/terms.html"]) {
+  for (const path of ["ar/index.html", "ar/contribution.html", "ar/terms.html"]) {
     assert.match(pages[path], /<html lang="ar-OM" dir="rtl">/);
     assert.match(
       pages[path],
@@ -44,10 +44,10 @@ test("every page exposes a reciprocal language switch and hreflang", () => {
       /href="\.\.\/index\.html"[^>]*data-locale="en"/,
     ],
     [
-      "submit.html",
-      /href="ar\/submit\.html"[^>]*data-locale="ar-OM"/,
-      "ar/submit.html",
-      /href="\.\.\/submit\.html"[^>]*data-locale="en"/,
+      "contribution.html",
+      /href="ar\/contribution\.html"[^>]*data-locale="ar-OM"/,
+      "ar/contribution.html",
+      /href="\.\.\/contribution\.html"[^>]*data-locale="en"/,
     ],
     [
       "terms.html",
@@ -85,7 +85,10 @@ test("every page exposes the optional contribution and MIT license footer", () =
     assert.match(html, /fi-brands-twitter-alt/);
     assert.match(html, /fi-brands-discord/);
     assert.match(html, /class="footer-credit"/);
-    assert.match(html, /assets\/css\/(?:home|site-pages)\.css\?v=locale-8/);
+    assert.match(
+      html,
+      /assets\/css\/home\.css\?v=locale-8|assets\/css\/site-pages\.css\?v=embed-1/,
+    );
     assert.match(
       html,
       /href="https:\/\/www\.flaticon\.com\/uicons"\s+target="_blank"\s+rel="noopener noreferrer"/,
@@ -107,7 +110,7 @@ test("remembered locale preserves location state without browser detection", () 
   assert.doesNotMatch(languageScript, /navigator\.language/);
 });
 
-test("dynamic catalogue copy and RTL styles are localized", () => {
+test("dynamic Resource Library copy and RTL styles are localized", () => {
   assert.match(catalogueScript, /لا توجد موارد معتمدة بعد/);
   assert.match(catalogueScript, /function localized/);
   assert.match(catalogueScript, /translations/);
@@ -121,9 +124,11 @@ test("dynamic catalogue copy and RTL styles are localized", () => {
 });
 
 test("Arabic contribution and legal experiences are complete", () => {
-  assert.match(pages["ar/submit.html"], /id="acceptContributionTerms"/);
-  assert.match(pages["ar/submit.html"], /شروط المساهمة/);
-  assert.match(pages["ar/submit.html"], /معلومات\s+شخصية\s+أو\s+سرية/);
+  assert.match(pages["ar/contribution.html"], /id="acceptContributionTerms"/);
+  assert.match(pages["ar/contribution.html"], /id="submissionFormPanel"/);
+  assert.match(pages["ar/contribution.html"], /فتح النموذج الكامل/);
+  assert.match(pages["ar/contribution.html"], /شروط المساهمة/);
+  assert.match(pages["ar/contribution.html"], /معلومات\s+شخصية\s+أو\s+سرية/);
   for (const id of [
     "terms-of-use",
     "acceptable-use",
