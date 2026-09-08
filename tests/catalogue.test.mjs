@@ -38,6 +38,9 @@ const expectedColleges = [
   ["COS", "College of Science", "كلية العلوم"],
 ];
 const expectedSemesters = [
+  "Fall27",
+  "Summer27",
+  "Spring27",
   "Summer26",
   "Spring26",
   "Fall25",
@@ -69,6 +72,7 @@ const expectedTypes = [
   "Quizzes",
   "Worked examples",
   "Study guide",
+  "Study plan",
 ];
 
 test("Resource Library has the supported bilingual shape", () => {

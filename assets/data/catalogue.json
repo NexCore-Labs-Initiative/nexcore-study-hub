@@ -2,6 +2,9 @@
   "version": 3,
   "updatedAt": "2026-06-22",
   "semesters": [
+    "Fall27",
+    "Summer27",
+    "Spring27",
     "Summer26",
     "Spring26",
     "Fall25",
@@ -32,7 +35,8 @@
     "Exams",
     "Quizzes",
     "Worked examples",
-    "Study guide"
+    "Study guide",
+    "Study plan"
   ],
   "colleges": [
     {

@@ -85,6 +85,7 @@
     Quizzes: { en: "Quizzes", ar: "اختبارات قصيرة" },
     "Worked examples": { en: "Worked examples", ar: "أمثلة محلولة" },
     "Study guide": { en: "Study guide", ar: "دليل دراسي" },
+    "Study plan": { en: "Study plan", ar: "خطة دراسية" },
   };
   var formatLabels = {
     pdf: "PDF",
