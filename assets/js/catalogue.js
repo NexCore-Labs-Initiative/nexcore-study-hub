@@ -154,14 +154,7 @@
   }
 
   function validDriveUrl(value) {
-    try {
-      var url = new URL(value);
-      return (
-        url.protocol === "https:" && url.hostname.endsWith("drive.google.com")
-      );
-    } catch (error) {
-      return false;
-    }
+    return window.StudyHubCatalogueData.validDriveUrl(value);
   }
 
   function localized(item, field) {
@@ -174,26 +167,42 @@
 
   function localizedTopics(resource) {
     var topics = localized(resource, "topics");
-    return Array.isArray(topics) ? topics : resource.topics || [];
+    return Array.isArray(topics) && topics.length
+      ? topics
+      : resource.topics || [];
   }
 
   function collegeName(college) {
     return isArabic ? college.nameAr || college.name : college.name;
   }
 
+  function canonicalLabel(value) {
+    return String(value || "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
   function typeLabel(value) {
-    return typeLabels[value] ? typeLabels[value][localeKey] : value;
+    var key = canonicalLabel(value);
+    return typeLabels[key] ? typeLabels[key][localeKey] : key || value;
   }
 
   function semesterLabel(value) {
-    if (!isArabic) return value;
-    var match = /^(Spring|Summer|Fall)(\d{2})$/.exec(value);
-    if (!match) return value;
+    var key = canonicalLabel(value);
+    if (!isArabic) return key || value;
+    var match = /^(Spring|Summer|Fall)(\d{2})$/.exec(key);
+    if (!match) return key || value;
     var season = { Spring: "ربيع", Summer: "صيف", Fall: "خريف" }[match[1]];
     return season + " 20" + match[2];
   }
 
   function languageLabel(value) {
+    if (Array.isArray(value))
+      return value
+        .map(function (language) {
+          return languageLabel(language === "ar" ? "Arabic" : "English");
+        })
+        .join(" / ");
     var normalized = String(value || "").toLowerCase();
     if (normalized === "arabic") return isArabic ? "العربية" : "Arabic";
     if (normalized === "english") return isArabic ? "الإنجليزية" : "English";
@@ -231,6 +240,9 @@
       throw new Error("Invalid catalogue");
     }
     state.data = data;
+    state.data.resources = data.resources.filter(function (resource) {
+      return resource.status === "published";
+    });
     state.colleges = new Map(
       data.colleges.map(function (college) {
         return [college.id, college];
@@ -313,6 +325,9 @@
       resource.format,
       resource.semester,
       resource.language,
+      resource.credit,
+      typeLabel(resource.type),
+      languageLabel(resource.languages || resource.language),
     ]
       .concat(resource.topics || [])
       .concat(resource.topicsAr || []);
@@ -430,7 +445,10 @@
           '</span><span class="meta-chip">' +
           esc(topics[0] || typeLabel(resource.type)) +
           '</span></div><div class="resource-card-footer"><span class="contributor">' +
-          esc(languageLabel(resource.language)) +
+          esc(
+            resource.credit ||
+              languageLabel(resource.languages || resource.language),
+          ) +
           '</span><span class="open-link">' +
           esc(copy.view) +
           '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></article>'
@@ -490,7 +508,16 @@
       ) +
       detailRow(copy.description, localized(resource, "description")) +
       detailRow(copy.topics, topics.join("، ")) +
-      detailRow(copy.language, languageLabel(resource.language));
+      detailRow(
+        copy.language,
+        languageLabel(resource.languages || resource.language),
+      ) +
+      (resource.credit
+        ? detailRow(
+            isArabic ? "المساهم / المصدر" : "Contributor / source",
+            resource.credit,
+          )
+        : "");
     elements.modalOpen.textContent = copy.openResource;
     if (validDriveUrl(resource.driveUrl)) {
       elements.modalOpen.href = resource.driveUrl;
@@ -589,18 +616,26 @@
 
   function load() {
     elements.grid.setAttribute("aria-busy", "true");
-    fetch(document.body.dataset.catalogueUrl || "assets/data/catalogue.json", {
-      cache: "no-store",
-    })
-      .then(function (response) {
-        if (!response.ok) throw new Error("Resource Library load failed");
-        return response.json();
-      })
+    var controls = [
+      elements.search,
+      elements.semester,
+      elements.type,
+      elements.format,
+      elements.clear,
+      elements.reset,
+    ];
+    controls.forEach(function (control) {
+      control.disabled = true;
+    });
+    window.StudyHubCatalogueData.load(window.STUDY_HUB_CONFIG)
       .then(function (data) {
         prepare(data);
         restoreState();
         bind();
         render();
+        controls.forEach(function (control) {
+          control.disabled = false;
+        });
       })
       .catch(showLoadError)
       .finally(function () {

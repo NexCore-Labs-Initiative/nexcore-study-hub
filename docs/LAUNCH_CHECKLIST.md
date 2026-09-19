@@ -63,32 +63,13 @@ For every Google Form response, verify:
 2. The material is appropriate to share and does not include restricted textbooks, answer keys, personal data, or copyrighted material without permission.
 3. The course, semester, title, type, and topic information are clear.
 
-Add only approved records to `assets/data/catalogue.json`. A live entry must have:
+Index selected contributions in the dedicated NexCore Labs Study Hub workspace. An assigned Study Hub Editor saves a draft, completes the required metadata and submits it for review. A Labs administrator checks the link, sharing rights and metadata, then approves publication. New-course proposals are approved or matched to an existing course during that review.
 
-```json
-{
-  "id": "cs101-arrays-revision-guide",
-  "courseId": "cs101",
-  "title": "Arrays and loops revision guide",
-  "titleAr": "دليل مراجعة المصفوفات والحلقات",
-  "description": "A concise revision guide for array traversal and loop patterns.",
-  "descriptionAr": "دليل مراجعة موجز لاجتياز المصفوفات وأنماط الحلقات.",
-  "semester": "Fall25",
-  "topics": ["Arrays", "Loops"],
-  "topicsAr": ["المصفوفات", "الحلقات"],
-  "type": "Study guide",
-  "format": "pdf",
-  "language": "English",
-  "status": "verified",
-  "driveUrl": "https://drive.google.com/file/d/your-file-id/view"
-}
-```
+The public catalogue reads published resources from Supabase. Do not add resources to the retired local JSON file. Published resources can be revised without exposing the proposed changes, and admins can archive or restore them.
 
-Arabic metadata is optional but must be human-reviewed when provided. Arabic pages use it when available and otherwise show the original approved metadata. Never add machine-generated translations at runtime.
+Optional Arabic/English metadata translations must be reviewed. Both languages may be selected for bilingual files or folders. Show optional contributor credit only with permission, and retain contact information in the Google Form review process.
 
-Only approved, verified resources belong in the public Resource Library.
-
-Do not add demo, placeholder, pending, or unreviewed records to the public JSON Resource Library. If a college has no approved resources yet, leave it empty and let the website show the contribution message.
+Apply and verify the Labs migrations and management API before deploying the matching Study Hub frontend; follow the coordinated deployment section in README.md and Labs' docs/study-hub-management.md.
 
 ## 4. Validate and deploy
 

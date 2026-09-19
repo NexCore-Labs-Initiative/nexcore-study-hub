@@ -105,7 +105,7 @@ test("canonical IDs and filter values are shared across languages", () => {
     assert.match(html, /id="collegeGrid"/);
     assert.match(html, /id="typeFilter"/);
     assert.match(html, /id="formatFilter"/);
-    assert.match(html, /data-catalogue-url=/);
+    assert.match(html, /data-catalogue-source="supabase"/);
   }
   assert.match(catalogueScript, /typeLabels/);
   assert.match(catalogueScript, /formatLabels/);
@@ -173,7 +173,7 @@ test("launch remains truthful and contribution-first", () => {
   assert.match(arabicHome, />Lab</);
   assert.match(home, /contribution-first beta/i);
   assert.match(arabicHome, /مرحلة تجريبية/);
-  assert.equal(catalogue.resources.length, 0);
+  assert.match(catalogueScript, /StudyHubCatalogueData.load/);
   assert.doesNotMatch(home, /Classical Mechanics|PHYS3101|A\. Al-Balushi/);
   assert.match(home, /assets\/js\/catalogue\.js/);
   assert.match(arabicHome, /assets\/js\/catalogue\.js/);

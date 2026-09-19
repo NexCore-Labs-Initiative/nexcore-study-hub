@@ -112,6 +112,12 @@ test("remembered locale preserves location state without browser detection", () 
 
 test("dynamic Resource Library copy and RTL styles are localized", () => {
   assert.match(catalogueScript, /لا توجد موارد معتمدة بعد/);
+  assert.match(catalogueScript, /"Study plan": \{ en: "Study plan", ar: "خطة دراسية" \}/);
+  assert.equal(catalogueScript.match(/"Study plan":/g).length, 1);
+  assert.match(catalogueScript, /function canonicalLabel/);
+  assert.match(catalogueScript, /typeLabels\[key\]/);
+  assert.match(pages["index.html"], /assets\/js\/catalogue\.js\?v=5/);
+  assert.match(pages["ar/index.html"], /assets\/js\/catalogue\.js\?v=5/);
   assert.match(catalogueScript, /function localized/);
   assert.match(catalogueScript, /translations/);
   assert.match(catalogueScript, /searchableText/);

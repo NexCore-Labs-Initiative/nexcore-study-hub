@@ -84,7 +84,7 @@ test("the worker precaches only files that exist in the repository", async () =>
   );
 });
 
-test("the worker keeps documents and resource library data fresh with offline fallbacks", () => {
+test("the worker keeps the offline shell but never caches live catalogue responses", () => {
   assert.match(worker, /self\.addEventListener\("install"/);
   assert.match(worker, /self\.addEventListener\("activate"/);
   assert.match(worker, /self\.addEventListener\("fetch"/);
@@ -93,7 +93,9 @@ test("the worker keeps documents and resource library data fresh with offline fa
   assert.match(worker, /request\.mode === "navigate"/);
   assert.match(worker, /url\.pathname === CATALOGUE_PATH/);
   assert.match(worker, /networkFirst\(request, fallbackUrl\)/);
-  assert.match(worker, /networkFirst\(request\)/);
+  assert.match(worker, /fetch\(request, \{ cache: "no-store" \}\)/);
+  assert.match(worker, /url.origin !== self.location.origin/);
+  assert.doesNotMatch(worker.match(/const PRECACHE_URLS = \[([\s\S]*?)\];/)[1], /CATALOGUE_PATH/);
   assert.match(worker, /cacheFirst\(request\)/);
   assert.match(worker, /name\.startsWith\(CACHE_PREFIX\)/);
   assert.match(worker, /matchStudyHubCache\(request/);
