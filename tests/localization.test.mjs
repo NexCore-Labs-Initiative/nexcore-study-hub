@@ -87,7 +87,7 @@ test("every page exposes the optional contribution and MIT license footer", () =
     assert.match(html, /class="footer-credit"/);
     assert.match(
       html,
-      /assets\/css\/home\.css\?v=locale-8|assets\/css\/site-pages\.css\?v=embed-1/,
+      /assets\/css\/home\.css\?v=(?:locale-8|welcome-1)|assets\/css\/site-pages\.css\?v=embed-1/,
     );
     assert.match(
       html,

@@ -47,7 +47,7 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/home.css?v=locale-8" />
+    <link rel="stylesheet" href="assets/css/home.css?v=welcome-1" />
   </head>
   <body
     data-locale="en"
@@ -541,6 +541,7 @@
           </div>
         </div>
         <div class="footer-links">
+          <button class="welcome-replay" type="button" data-welcome-replay>Watch introduction again</button>
           <a href="contribution.html">Contribute</a>
           <a href="terms.html">Terms & Privacy</a>
           <a href="contribution.html#report">Report</a>
@@ -594,7 +595,23 @@
       </div>
     </div>
 
+    <!-- Floating introduction card; the YouTube iframe is created only on play. -->
+    <aside class="welcome-video" id="welcomeVideo" role="dialog" aria-modal="false" aria-labelledby="welcomeTitle" aria-describedby="welcomeDescription" hidden>
+      <button class="welcome-close" type="button" aria-label="Close introduction" data-welcome-close>×</button>
+      <p class="welcome-eyebrow">NexCore Labs · Study Hub</p>
+      <h2 id="welcomeTitle">A better way to find your study resources.</h2>
+      <p id="welcomeDescription">Take a quick look around the Study Hub.</p>
+      <div class="welcome-player" data-welcome-player>
+        <button class="welcome-play" type="button" aria-label="Play the Study Hub introduction">
+          <span class="welcome-play-icon" aria-hidden="true">▶</span>
+          <span>Play introduction</span>
+        </button>
+      </div>
+      <span class="welcome-caption">A short introduction · NexCore Labs</span>
+    </aside>
+
     <script src="assets/js/footer.js?v=1"></script>
+    <script src="assets/js/welcome-video.js?v=1" defer></script>
     <script src="assets/js/language.js?v=1"></script>
     <script src="assets/js/config.js?v=4"></script>
     <script src="assets/js/catalogue-data.js?v=1"></script>
